@@ -1,0 +1,24 @@
+.welcome {
+	margin-top: 30px;
+	font-size: 20px;
+}
+.fb {
+	width: 100%;
+}
+.fb iframe {
+	border: none;
+	overflow: hidden;
+	width: 400px;
+	height: 62px;
+}
+.teaser {
+	overflow: auto;
+}
+.teaser .left {
+	float: left;
+	width: 50%;
+}
+.teaser .right {
+	float: left;
+	width: 50%;
+}

@@ -1,0 +1,1 @@
+{include file="termine_krippenspiel_teaser.tpl"}

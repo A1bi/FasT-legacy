@@ -1,0 +1,219 @@
+body {
+	margin: 0 0 15px 0;
+	font-family: "Arial", "DejaVu Sans";
+	background: #0869ed url(/gfx/bg.png) repeat-x;
+	font-size: 15px;
+	color: #043448;
+	margin: auto;
+	position: relative;
+	width: 918px;
+}
+img {
+	border: none;
+}
+a {
+	text-decoration: underline;
+	color: #0064ec;
+}
+a:hover {
+	text-decoration: none;
+}
+table {
+	width: 100%;
+}
+
+#sky {
+	width: 993px;
+	height: 283px;
+	background: url(/gfx/sky.png) no-repeat;
+	z-index: -1;
+	position: absolute;
+	top: 0px;
+	left: -30px;
+}
+#slides {
+	position: absolute;
+	top: 0px;
+	left: 280px;
+	width: 550px;
+	height: 176px;
+	overflow: hidden;
+}
+#slides div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+#slides .slide {
+	background-position: top;
+	height: 400px;
+	background-repeat: no-repeat;
+	display: none;
+}
+#slides .slide.ani {
+	z-index: 1;
+}
+#slides .fg {
+	background: url(/gfx/sky.png) no-repeat;
+	background-position: 0px -285px;
+	z-index: 2;
+}
+#left {
+	position: absolute;
+	width: 258px;
+	left: 5px;
+	z-index: 4;
+}
+#right {
+	position: absolute;
+	width: 699px;
+	right: 0px;
+	z-index: 3;
+}
+#logo {
+	width: 100%;
+	height: 149px;
+	background: url(/gfx/left.png) no-repeat;
+	display: inline-block;
+	text-indent: -999px;
+}
+
+/* navi */
+#navi {
+	position: relative;
+	left: 23px;
+	height: 100%;
+}
+#navi ul {
+	position: relative;
+	width: 235px;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+#navi li, #navi .bottom {
+	background: url(/gfx/left.png) no-repeat;
+}
+#navi a {
+	width: 70%;
+	height: 100%;
+}
+#navi a {
+	display: inline-block;
+	text-indent: -999px;
+}
+#navi #home {
+	background-position: -23px -149px;
+	height: 50px;
+}
+#navi #geschichte {
+	background-position: -23px -199px;
+	height: 54px;
+}
+#navi #theater {
+	background-position: -23px -253px;
+	height: 52px;
+}
+#navi #termine {
+	background-position: -23px -305px;
+	height: 53px;
+}
+#navi #gallery {
+	background-position: -23px -358px;
+	height: 55px;
+}
+#navi #gbook {
+	background-position: -23px -413px;
+	height: 59px;
+}
+#navi .bottom {
+	height: 186px;
+	background-position: -23px -476px;
+}
+
+/* content space */
+#content {
+	position: relative;
+	width: 100%;
+}
+#content > .top {
+	background: url(/gfx/content_top.png) no-repeat;
+	height: 55px;
+	width: 100%;
+	margin-top: 95px;
+}
+#content > .content {
+	position: relative;
+	background: url(/gfx/content_bg.png) repeat-y;
+	padding: 10px 33px;
+	min-height: 550px;
+}
+#content > .content > div {
+	position: relative;
+	top: -10px;
+}
+#content > .bottom {
+	position: relative;
+	background: url(/gfx/content_bottom.png) no-repeat;
+	width: 100%;
+	padding-top: 30px;
+	height: 50px;
+}
+#content > .bottom div {
+	text-align: center;
+	font-size: 11px;
+	color: #ffffff;
+	opacity: 0.6;
+	width: 100%;
+}
+#content > .bottom div a {
+	color: #ffffff;
+}
+
+
+/* common classes */
+.hcen {
+	text-align: center;
+}
+.vcen {
+	vertical-align: middle;
+}
+.hl {
+	text-align: center;
+	margin-bottom: 10px;
+}
+.small {
+	font-size: 13px;
+	color: #cccccc;
+}
+.trenner {
+	background: url(/gfx/trenner.png) no-repeat;
+	width: 578px;
+	height: 6px;
+	margin: 30px auto;
+}
+
+/* box */
+.box {
+	width: 98%;
+	margin: 15px auto;
+	border: 1px solid #aae7ff;
+	border-radius: 10px;
+	box-shadow: 0px 2px 4px 1px #e1e1e1, inset 0 0 2px 2px #d7f1fb;
+	-moz-box-shadow: 0px 2px 4px 1px #e1e1e1, inset 0 0 2px 2px #d7f1fb;
+	-webkit-box-shadow: 0px 2px 4px 1px #e1e1e1, inset 0 0 2px 2px #d7f1fb;
+}
+.box .top {
+	padding: 3px 10px;
+	color: #ffffff;
+	text-shadow: #000000 1px 1px 3px;
+	font-size: 17px;
+	border-bottom: 1px solid #d7f1fb;
+	border-radius: 10px;
+	background: url(/gfx/sky.png) no-repeat center;
+}
+.box .con {
+	padding: 10px;
+}

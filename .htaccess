@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteRule ^gbook/([a-z]+)$ /gbook.php?action=$1
+RewriteRule ^gbook(/([0-9]+))?$ /gbook.php?page=$2
+RewriteRule ^theater/([a-z]+)$ /index.php?page=theater_$1
+RewriteRule ^gallery(/([0-9a-zA-Z]+)(/([0-9]+))?)?$ /gallery.php?id=$2&pic=$4
+RewriteRule ^([a-z]+)$ index.php?page=$1
