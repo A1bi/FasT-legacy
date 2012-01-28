@@ -47,7 +47,7 @@ function createId($digits) {
 
 // get config
 require("./include/config.inc.php");
-$_base = $_SERVER['DOCUMENT_ROOT'];
+$_base = $_SERVER['DOCUMENT_ROOT'] . "/";
 
 // components to load
 $comps = array("templates", "database");

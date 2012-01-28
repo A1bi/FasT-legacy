@@ -6,7 +6,7 @@
 	<meta name="keywords" content="Theater, Freilichtbühne, Verein, Kaisersesch{$meta_keys}" />
 	<link rel="shortcut icon" href="/gfx/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="/css/main.css{fileVersion file="/css/main.css"}" />
-	<script src="/js/fw/jquery.js"></script>
+	<script src="http://system.albisigns.de/js/lib/jquery.js"></script>
 	<script src="/gfx/cache/slides.js{fileVersion file="/gfx/cache/slides.js"}"></script>
 	<script src="/js/main.js{fileVersion file="/js/main.js"}"></script>
 {if $css != ""}
