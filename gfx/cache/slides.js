@@ -1,1 +1,0 @@
-var slides = ["SvVttb","LCfuXy","kzHfqx"];
