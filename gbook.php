@@ -1,7 +1,7 @@
 <?php
 include('include/main.php');
 
-$codes = array("0", "KMPY", "LRWK", "T4A1", "S74P", "ZN6X", "FGRN", "KD5W", "ZUS5", "H73K", "MBSD");
+$codes = array("MBSD", "KMPY", "LRWK", "T4A1", "S74P", "ZN6X", "FGRN", "KD5W", "ZUS5", "H73K");
 $_db = new database;
 
 /*
@@ -19,7 +19,7 @@ if ($_GET['action'] == "new") {
 		}
 	}
 
-	$_tpl->assign("code", rand(1, count($codes)));
+	$_tpl->assign("code", rand(1, count($codes))-1);
 	$_tpl->display("gbook_new.tpl");
 
 /*
