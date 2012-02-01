@@ -22,3 +22,11 @@
 	float: left;
 	width: 50%;
 }
+.teaser .info {
+	text-align: justify;
+	padding: 17px;
+}
+.teaser .title {
+	font-size: 19px;
+	margin-top: 10px;
+}

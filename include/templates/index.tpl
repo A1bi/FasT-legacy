@@ -7,13 +7,16 @@
 		</div>
 		<div class="trenner"></div>
 		<div class="teaser">
-			<img src="/gfx/index/sommernacht.png" alt="Sommernachtstheater 2011" />
-			<div style="text-align: justify; padding: 17px;">
-				Unser Sommernachtstheater 2011 ist nunmehr Geschichte. Mit etwas Wehmut verabschieden sich die Akteure auf, vor und hinter der Bühne von einer erfolgreichen Theatersaison und einem kunstverständigem und großartigen Publikum.<br />
-				<div class="hcen" style="margin: 20px;"><a href="/theater/hexenjagd"><img src="/gfx/theater/hexenjagd/title.png" alt="Hexenjagd" /></a></div>
-				<p>Im vierten Jahr unserer Vereinsgeschichte inszenierten wir nach langen Diskussionen und anfänglichen Zweifeln, das äusserst anspruchsvolle Stück „Hexenjagd“ von Arthur Miller. Mit vereinten Kräften, gemäß unseres Wahlspruches „Gemeinsam sind wir stark“, gelang dieses schwierige und aufwändige Vorhaben.
-				<br />Wir danken all den vielen Helfern, die diese unvergessliche Saison 2011 möglich gemacht haben. Wir danken auch unserem großartigen Publikum, das uns durch die sechs wunderbaren Vorstellungen getragen und uns mit viel Lob und Applaus belohnt hat.</p>
-				Schon heute laden wir Sie ein, wenn es im nächsten Jahr heißt: „Vorhang auf für das Sommernachtstheater 2012“.
+			<img src="/gfx/index/sommernacht.png" alt="Sommernachtstheater 2012" />
+			<div class="title hcen">
+				„Das Haus in Montevideo“ auf der Escher Freilichtbühne<br />Sommernachtstheater 2012 für die ganze Familie
+			</div>
+			<div class="info">
+				<p>Über die Komödie „Das Haus in Montevideo“ von Curt Goetz lacht das Publikum seit nunmehr 60 Jahren. Und das aus gutem Grund. Wenn einem Moralapostel wie dem despotischen Professor Nägler seine vermeintlichen Tugenden über die Habgier und intellektuelle Haarspalterei verloren gehen, so ist das Stoff genug für eine beißende Gesellschaftskomödie, die auch heute nichts von ihrem Witz und ihrer Ironie verloren hat.</p>
+				<p>Der moralisch integre Professor lebt mit Frau und zwölf Kindern in bescheidenen Verhältnissen. Vor Jahren verstieß er hartherzig seine jüngere Schwester, die ein uneheliches Kind erwartete. In deren Testament wird nun seine Tochter Atlanta großzügig bedacht, allerdings nur mit Auflagen, die den sittenstrengen Vater in arge Gewissensnöte stürzen.</p>
+				<p>Die Aufführungen finden jeweils um 19.00 Uhr an folgenden Terminen statt:<br />17.08., 18.08., 24.08., 31.08. und 01.09.
+				<br />Zum ersten Mal bietet die Freilichtbühne am schiefen Turm auch eine Nachmittagsvorstellung am 19.08. um 15 Uhr für die ganze Familie an.</p>
+				<p>Informationen zum Vorverkauf finden Sie hier in Kürze.</p>
 			</div>
 		</div>
 		<div class="trenner"></div>

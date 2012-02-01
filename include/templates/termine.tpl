@@ -1,1 +1,1 @@
-{include file="termine_krippenspiel_teaser.tpl"}
+{include file="termine_montevideo.tpl"}

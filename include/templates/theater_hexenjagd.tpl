@@ -1,6 +1,6 @@
 {include file="head.tpl" cssfile="hexenjagd" title="Hexenjagd von Arthur Miller"}
 	<div class="info">
-		Die „Freilichtbühne am schiefen Turm“ hält für Sie in diesem Jahr ein ganz besonderes Stück bereit:
+		Die „Freilichtbühne am schiefen Turm“ hielt für die Zuschauer im Jahr 2011 ein ganz besonderes Stück bereit:
 		<br />„<b>Hexenjagd</b>“ von dem modernen amerikanischen Dramatiker <b>Arthur Miller</b>.
 		<br />Unter der bewährten Regie von Helmut Mattern erleben Sie einen besonderen Theaterklassiker voller Emotionen und Spannung.
 		<p>Mit den beiden letzten Stücken „<a href="/theater/medicus">Der Medicus vom Orient</a>“ und „<a href="/theater/phantasus">Der Riese Phantasus</a>“ wollten wir besonders unser junges und junggebliebenes Publikum mit phantasievollem und amüsantem Spiel begeistern. Mit „Hexenjagd“ inszenieren wir nunmehr ein hochdramatisches und anspruchsvolles Stück auf unserer wunderbaren Freilichtbühne.</p>
@@ -13,7 +13,5 @@
 		
 		<p>Lassen Sie sich von der Intensität und Aktualität des Stückes mitreißen.
 		<br />Erleben Sie einen bezaubernden Abend unter freiem Himmel am „schiefen Turm“.</p>
-		<p><br />Alle Informationen zu den Aufführungen und dem Kartenvorverkauf finden Sie <a href="/termine">hier</a>.</p>
-		<br />
 	</div>
 {include file="foot.tpl"}
