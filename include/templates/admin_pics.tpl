@@ -18,9 +18,10 @@
 			</div>
 		</div>
 		</form>
+		<div class="hcen" style="margin: 10px;"><a href="pics.php?id={$smarty.get.id|escape}&amp;import=1">Massen-Import aus Ordner</a></div>
 		{else}
 		<div style="font-size: 14px;">
-			Bitte w&auml;hlen Sie eine Gallerie, in die Sie die Fotos einf&uuml;gen m&ouml;chten:
+			Bitte wählen Sie eine Gallerie, in die Sie die Fotos einfügen möchten:
 			{foreach $galleries as $gallery}
 			<div style="text-align: center;"><a href="pics.php?id={$gallery.id}">{$gallery.title|escape}</a></div>
 			{/foreach}
