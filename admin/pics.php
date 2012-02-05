@@ -34,7 +34,7 @@ if (!empty($_GET['id']) && (!empty($_POST['submit']) || $_GET['import'])) {
 			
 			$pics = $_db->query('SELECT COUNT(*) AS count FROM gallery_pics WHERE gallery = ?', array($_GET['id']))->fetch();
 
-			$_db->query('INSERT INTO gallery_pics VALUES (?, ?, ?, ?)', array($id, $_GET['id'], $_POST['desc'], $pics['count']));
+			$_db->query('INSERT INTO gallery_pics VALUES (?, ?, ?, ?)', array($id, $_GET['id'], (!empty($_POST['desc'])) ? $_POST['desc'] : "", $pics['count']));
 			$resize->gallery($id, $_GET['id']);
 			$i++;
 		}
