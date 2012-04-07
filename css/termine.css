@@ -7,6 +7,14 @@
 	position: absolute;
 	top: 0px;
 }
+.termine .point {
+	background: url(/gfx/point.png) no-repeat;
+	width: 25px;
+	height: 25px;
+}
+.termine table {
+	font-weight: bold;
+}
 .container {
 	margin: 20px 0px;
 	position: relative;
