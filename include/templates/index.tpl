@@ -1,13 +1,15 @@
 {include file="head.tpl" cssfile="index"}
 		<div class="hl">
-			<img src="/gfx/index/hl.png" alt="Herzlich Willkommen!" />
+			Herzlich willkommen!
 		</div>
 		<div class="welcome hcen">
 			Die Freilichtbühne am schiefen Turm heißt Sie herzlich willkommen auf unserer Homepage!
 		</div>
 		<div class="trenner"></div>
 		<div class="teaser">
-			<img src="/gfx/index/sommernacht.png" alt="Sommernachtstheater 2012" />
+			<div class="hl">
+				Sommernachtstheater 2012
+			</div>
 			<div class="title hcen">
 				„Das Haus in Montevideo“ auf der Escher Freilichtbühne<br />Sommernachtstheater 2012 für die ganze Familie
 			</div>

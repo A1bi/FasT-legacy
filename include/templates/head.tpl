@@ -39,12 +39,17 @@
 		<a href="/" id="logo">Freilichtbühne am schiefen Turm</a>
 		<div id="navi">
 			<ul>
-				<li id="home"><a href="/">Home</a></li>
-				<li id="geschichte"><a href="/geschichte">Unsere Geschichte</a></li>
-				<li id="theater"><a href="/theater">Theater</a></li>
-				<li id="termine"><a href="/termine">Termine</a></li>
-				<li id="gallery"><a href="/gallery">Fotogalerie</a></li>
-				<li id="gbook"><a href="/gbook">Gästebuch</a></li>
+				<li><a href="/">Home</a></li>
+				<li class="spacer"></li>
+				<li><a href="/geschichte">Unsere Geschichte</a></li>
+				<li class="spacer"></li>
+				<li><a href="/theater">Theater</a></li>
+				<li class="spacer"></li>
+				<li><a href="/termine">Termine</a></li>
+				<li class="spacer"></li>
+				<li><a href="/gallery">Fotogalerie</a></li>
+				<li class="spacer"></li>
+				<li><a href="/gbook">Gästebuch</a></li>
 			</ul>
 			<div class="bottom"></div>
 		</div>

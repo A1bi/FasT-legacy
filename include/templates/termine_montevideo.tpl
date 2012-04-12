@@ -35,8 +35,8 @@
 	Alle anderen Aufführungen beginnen um <strong>19.00 Uhr</strong>.</p>
 	<p>Erleben Sie einen unvergesslichen Abend in Kaisersesch!</p>
 	<div class="trenner"></div>
-	<div>
-		<img src="/gfx/termine/kartenvorverkauf.png" alt="Kartenvorverkauf" />
+	<div class="hl">
+		Kartenvorverkauf
 	</div>
 	<div style="margin-top: 10px;">
 		<div style="font-size: 16px;">

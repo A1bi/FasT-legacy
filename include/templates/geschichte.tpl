@@ -1,6 +1,6 @@
 {include file="head.tpl" title="Unsere Geschichte"}
 		<div class="hl">
-			<img src="/gfx/geschichte/hl.png" alt="Unsere Geschichte" />
+			Unsere Geschichte
 		</div>
 		<div class="hcen">
 			<img src="/gfx/geschichte/pic.png" alt="" />

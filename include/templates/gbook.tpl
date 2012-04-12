@@ -1,12 +1,13 @@
-{include file="head.tpl" title="Gästebuch"}
+{include file="head.tpl" title="Gästebuch" cssfile="gbook"}
+		<div class="hl">
+			Gästebuch
+		</div>
 		Wir würden uns sehr über einen Eintrag in unserem Gästebuch freuen.
-		<div style="position: relative;">
-			<div style="text-align: right;">
-				<a href="/gbook/new"><img src="/gfx/gbook/newentry.png" alt="eintragen" title="eintragen" /></a>
-			</div>
-			<div style="position: absolute; top: 15px; left: 10px; font-size: 16px; padding: 3px; width: 150px;">
-				Seite: {$navi}
-			</div>
+		<div class="new">
+			<a href="/gbook/new">eintragen</a>
+		</div>
+		<div class="pages">
+			Seite: {$navi}
 		</div>
 		{foreach $entries as $entry}
 			<div class="box">
@@ -21,7 +22,7 @@
 				</div>
 			</div>
 		{/foreach}
-		<div style="margin-left: 10px; margin-top: 10px; font-size: 16px; padding: 3px; width: 150px;">
+		<div class="pages">
 			Seite: {$navi}
 		</div>
 {include file="foot.tpl"}

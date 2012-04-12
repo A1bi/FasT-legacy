@@ -1,6 +1,6 @@
 {include file="head.tpl" title="Fotogalerie" cssfile="gallery"}
 		<div class="hl">
-			<img src="/gfx/gallery/hl.png" alt="Galerien" />
+			Fotogalerie
 		</div>
 		{foreach $galleries as $gallery}
 		<div class="box">

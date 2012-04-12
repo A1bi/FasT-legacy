@@ -22,6 +22,14 @@ table {
 	width: 100%;
 }
 
+@font-face{
+	font-family: 'Qlassik';
+	src: url('/media/fonts/qlassik.eot');
+	src: url('/media/fonts/qlassik.eot?#iefix') format('embedded-opentype'),
+		 url('/media/fonts/qlassik.woff') format('woff')
+		 /*url('/media/fonts/Qlassik.ttf') format('truetype')*/
+}
+
 #sky {
 	width: 993px;
 	height: 283px;
@@ -83,54 +91,53 @@ table {
 /* navi */
 #navi {
 	position: relative;
-	left: 23px;
-	height: 100%;
+	background: url(/gfx/left.png) no-repeat;
+	background-position: 0px -149px;
+	height: 510px;
 }
 #navi ul {
 	position: relative;
-	width: 235px;
+	left: 37px;
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
+	font-family: "Qlassik", "Arial";
 }
-#navi li, #navi .bottom {
-	background: url(/gfx/left.png) no-repeat;
+#navi ul a {
+	color: #ffffff;
+	text-decoration: none;
 }
-#navi a {
+#navi ul li {
+	padding: 10px 0px 10px 0px;
+	font-size: 28px;
+	text-shadow: #000000 1px 1px 5px;
+}
+#navi ul li.spacer {
+	margin-left: 5px;
+	background: #ffffff;
+	background: -moz-linear-gradient(
+		left center,
+		rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%
+    );
+	background: -webkit-linear-gradient(
+		left bottom,
+		rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%
+	);
+	padding: 0px;
+	height: 2px;
+	width: 55%;
+}
+#navi ul li:nth-of-type(2) {
 	width: 70%;
-	height: 100%;
 }
-#navi a {
-	display: inline-block;
-	text-indent: -999px;
+#navi ul li:nth-of-type(4) {
+	width: 67%;
 }
-#navi #home {
-	background-position: -23px -149px;
-	height: 50px;
+#navi ul li:nth-of-type(6) {
+	width: 63%;
 }
-#navi #geschichte {
-	background-position: -23px -199px;
-	height: 54px;
-}
-#navi #theater {
-	background-position: -23px -253px;
-	height: 52px;
-}
-#navi #termine {
-	background-position: -23px -305px;
-	height: 53px;
-}
-#navi #gallery {
-	background-position: -23px -358px;
-	height: 55px;
-}
-#navi #gbook {
-	background-position: -23px -413px;
-	height: 59px;
-}
-#navi .bottom {
-	height: 186px;
-	background-position: -23px -476px;
+#navi ul li:nth-of-type(8) {
+	width: 59%;
 }
 
 /* content space */
@@ -153,6 +160,7 @@ table {
 #content > .content > div {
 	position: relative;
 	top: -10px;
+	width: 99%;
 }
 #content > .bottom {
 	position: relative;
@@ -182,7 +190,11 @@ table {
 }
 .hl {
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
+	text-shadow: #cccccc 1px 1px 2px;
+	color: #000000;
+	font-size: 40px;
+	font-family: "Qlassik", "Arial";
 }
 .small {
 	font-size: 13px;

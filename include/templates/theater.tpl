@@ -1,6 +1,6 @@
 {include file="head.tpl" title="Unsere Theaterstücke"}
 		<div class="hl">
-			<img src="/gfx/theater/hl.png" alt="Theaterstücke" />
+			Unsere Theaterstücke
 		</div>
 		<div>
 			Hier finden Sie einige Theaterstücke, die wir seit 2004 in Kaisersesch aufgeführt haben.
