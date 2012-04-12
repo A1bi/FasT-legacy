@@ -17,8 +17,4 @@
 				<p>Informationen zu den Terminen finden Sie <a href="/termine">hier</a>.</p>
 			</div>
 		</div>
-		<div class="trenner"></div>
-		<div class="fb hcen">
-			<iframe id="fbBox" src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FFreilichtb%25C3%25BChne-am-schiefen-Turm%2F216138401759669&amp;width=450&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=false&amp;height=62"></iframe>
-		</div>
 {include file="foot.tpl"}

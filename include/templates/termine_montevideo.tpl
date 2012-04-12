@@ -33,7 +33,6 @@
 	</div>
 	<p>Zum ersten Mal bietet die Freilichtbühne am schiefen Turm auch eine <b>Nachmittagsvorstellung</b> am 19. August um 15 Uhr <b>für die ganze Familie</b> an.<br />
 	Alle anderen Aufführungen beginnen um <strong>19.00 Uhr</strong>.</p>
-	<p>Wie in den letzten Jahren wird die bekannt gute Küche des Waldhotels Kurfürst und der Brasserie Alt Esch für Ihr leibliches Wohl sorgen.</p>
 	<p>Erleben Sie einen unvergesslichen Abend in Kaisersesch!</p>
 	<div class="trenner"></div>
 	<div>
