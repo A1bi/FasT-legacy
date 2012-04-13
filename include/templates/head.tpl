@@ -19,6 +19,9 @@
 {if $cssfile != ""}
 	<link rel="stylesheet" type="text/css" href="/css/{$cssfile}.css{fileVersion file="/css/{$cssfile}.css"}" />	  
 {/if}
+{if $globjsfile != ""}
+	<script src="{$globjsfile}"></script>
+{/if}
 {if $jsfile != ""}
 	<script src="/js/{$jsfile}.js{fileVersion file="/js/{$jsfile}.js"}"></script>
 {/if}
