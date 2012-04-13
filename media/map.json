@@ -1,0 +1,23 @@
+{
+	"icons": [
+		{
+			"name": "theater",
+			"size": [93, 95],
+			"offset": [-3, -95],
+			"file": "map_marker_theater.png"
+		}
+	],
+	"locations": [
+		[7.141527, 50.230761],
+		[7.13797, 50.23136]
+	],
+	"centerLoc": 1,
+	"zoom": 15,
+	"markers": [
+		{
+			"loc": 0,
+			"icon": "theater",
+			"text": "bla"
+		}
+	]
+}

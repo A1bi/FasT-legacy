@@ -21,6 +21,10 @@ a:hover {
 table {
 	width: 100%;
 }
+h3 {
+	margin-bottom: 4px;
+	margin-top: 20px;
+}
 
 @font-face{
 	font-family: 'Qlassik';
