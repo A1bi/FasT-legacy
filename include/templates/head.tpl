@@ -44,11 +44,13 @@
 			<ul>
 				<li><a href="/">Home</a></li>
 				<li class="spacer"></li>
-				<li><a href="/geschichte">Unsere Geschichte</a></li>
-				<li class="spacer"></li>
-				<li><a href="/theater">Theater</a></li>
-				<li class="spacer"></li>
 				<li><a href="/termine">Termine</a></li>
+				<li class="spacer"></li>
+				<li><a href="/info">Informationen</a></li>
+				<li class="spacer"></li>
+				<li><a href="/geschichte">Geschichte</a></li>
+				<li class="spacer"></li>
+				<li><a href="/theater">Theaterstücke</a></li>
 				<li class="spacer"></li>
 				<li><a href="/gallery">Fotogalerie</a></li>
 				<li class="spacer"></li>

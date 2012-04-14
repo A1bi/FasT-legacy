@@ -87,7 +87,42 @@ function Map() {
 	}
 }
 
+function Weather() {
+	
+	var weatherData = {};
+	
+	var getMapData = function () {
+		$.getJSON("ajax.php", {action: "weather"}, function (data) {
+			weatherData = data.data;
+			
+			initWeather();
+		});
+	}
+	
+	var initWeather = function () {
+		var wBox = $(".weather");
+		
+		var image = $("<img />").attr("src", "http://l.yimg.com/a/i/us/nws/weather/gr/"+weatherData.code+weatherData.daytime+".png");
+		$(".icon", wBox).append(image);
+		$(".temp").html("<h2>"+weatherData.temp + "° C</h2>Heute Min: "+weatherData.high+"° C | Max: "+weatherData.low+"° C<br />Regenwahrscheinlichkeit: "+weatherData.pop+" %");
+		
+		image.load(function () {
+			$(".loader", wBox).fadeOut(function () {
+				$(".info", wBox).fadeIn();
+			});
+		});
+	}
+	
+	this.init = function () {
+		getMapData();
+	}
+	
+}
+
 $(function () {
 	var map = new Map();
 	map.init();
+	
+	var weather = new Weather();
+	weather.init();
 });

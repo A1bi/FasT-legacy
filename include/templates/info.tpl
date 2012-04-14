@@ -16,4 +16,18 @@
 				Der Weg zur Freilichtbühne ist ausgeschildert.
 			</div>
 		</div>
+		<div class="trenner"></div>
+		<div class="hl">
+			Wetter
+		</div>
+		<div class="weather">
+			<div class="info">
+				<div class="icon"></div>
+				<div class="temp"></div>
+				<div class="yahoo">
+					<a href="http://weather.yahoo.com/germany/rhineland-palatinate/kaisersesch-664471/" target="_blank"><img src="/gfx/info/yahoo.png" alt="Yahoo!" title="Wetterdaten zur Verfügung gestellt von Yahoo!" /></a>
+				</div>
+			</div>
+			<div class="loader"></div>
+		</div>
 {include file="foot.tpl"}

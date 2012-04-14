@@ -24,3 +24,34 @@
 	-o-transition: opacity 0.2s linear;
 	transition: opacity 0.2s linear;
 }
+
+.weather {
+	height: 140px;
+}
+.weather .loader {
+	background: url(/gfx/loader.gif) no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: auto;
+	margin-top: 20px;
+}
+.weather .info {
+	position: relative;
+	top: 0px;
+	width: 70%;
+	height: 100%;
+	margin: auto;
+	display: none;
+}
+.weather .icon {
+	position: absolute;
+}
+.weather .temp {
+	position: absolute;
+	left: 200px;
+}
+.weather .yahoo {
+	position: absolute;
+	right: -40px;
+	bottom: 20px;
+}
