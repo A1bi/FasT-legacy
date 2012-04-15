@@ -104,7 +104,11 @@ function Weather() {
 		
 		var image = $("<img />").attr("src", "http://l.yimg.com/a/i/us/nws/weather/gr/"+weatherData.code+weatherData.daytime+".png");
 		$(".icon", wBox).append(image);
-		$(".temp").html("<h2>"+weatherData.temp + "° C</h2>Heute Min: "+weatherData.high+"° C | Max: "+weatherData.low+"° C<br />Regenwahrscheinlichkeit: "+weatherData.pop+" %");
+		var weatherBox = $(".weather");
+		
+		$.each(weatherData, function (key, value) {
+			$("."+key, weatherBox).html(value);
+		});
 		
 		image.load(function () {
 			$(".loader", wBox).fadeOut(function () {

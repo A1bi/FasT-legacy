@@ -18,14 +18,18 @@
 		</div>
 		<div class="trenner"></div>
 		<div class="hl">
-			Wetter
+			Wetter in Kaisersesch
 		</div>
 		<div class="weather">
 			<div class="info">
 				<div class="icon"></div>
-				<div class="temp"></div>
+				<div class="data">
+					<h2><span class="temp"></span>° C</h2>
+					Heute Min: <span class="high"></span>° C | Max: <span class="low"></span>° C
+					<br />Regenwahrscheinlichkeit: <span class="pop"></span> %
+				</div>
 				<div class="yahoo">
-					<a href="http://weather.yahoo.com/germany/rhineland-palatinate/kaisersesch-664471/" target="_blank"><img src="/gfx/info/yahoo.png" alt="Yahoo!" title="Wetterdaten zur Verfügung gestellt von Yahoo!" /></a>
+					Stand: <span class="date"></span> Uhr &nbsp;<a href="http://weather.yahoo.com/germany/rhineland-palatinate/kaisersesch-664471/" target="_blank"><img src="/gfx/info/yahoo.png" alt="Yahoo!" title="Wetterdaten zur Verfügung gestellt von Yahoo!" /></a>
 				</div>
 			</div>
 			<div class="loader"></div>

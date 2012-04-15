@@ -22,7 +22,8 @@ switch ($_GET['action']) {
 			$forecast = $yweather->forecast->attributes();
 			$data['low'] = (string)$forecast['low'];
 			$data['high'] = (string)$forecast['high'];
-			$data['daytime'] = (date("HH") > 6 && date("HH") < 21) ? "d" : "n";
+			$data['daytime'] = (date("H") > 6 && date("H") < 21) ? "d" : "n";
+			$data['date'] = strtotime($condition['date']);
 
 			foreach ($infos as $info) {
 				$data[$info] = (string)$condition[$info];
@@ -43,6 +44,8 @@ switch ($_GET['action']) {
 		} else {
 			$data = $cache['data'];
 		}
+		
+		$data['date'] = date("H:i", $data['date']);
 		
 		break;
 	

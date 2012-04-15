@@ -26,7 +26,7 @@
 }
 
 .weather {
-	height: 140px;
+	height: 150px;
 }
 .weather .loader {
 	background: url(/gfx/loader.gif) no-repeat;
@@ -46,12 +46,21 @@
 .weather .icon {
 	position: absolute;
 }
-.weather .temp {
+.weather .data {
 	position: absolute;
 	left: 200px;
 }
+.weather .data h2 {
+	font-size: 30px;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+	margin-bottom: 10px;
+}
 .weather .yahoo {
 	position: absolute;
-	right: -40px;
-	bottom: 20px;
+	right: -60px;
+	bottom: 0px;
+	font-size: 12px;
+}
+.weather .yahoo img {
+	vertical-align: bottom;
 }
