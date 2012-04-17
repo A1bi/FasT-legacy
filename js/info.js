@@ -38,10 +38,10 @@ function Map() {
 			var feature = new OpenLayers.Feature(layer, loc); 
 			feature.closeBox = true;
 			feature.popupClass = OpenLayers.Class(OpenLayers.Popup.FramedCloud, {'autoSize': true});
-			feature.data.popupContentHTML = value.text;
+			feature.data.popupContentHTML = "<b>" + value.title + "</b><br />" + value.desc;
 			feature.data.overflow = "auto";
 		
-			var marker = new OpenLayers.Marker(loc, icons[value.icon]);
+			var marker = new OpenLayers.Marker(loc, icons[value.icon].clone());
 			marker.feature = feature;
 			marker.events.register("mousedown", feature, function (event) {
 				if (this.popup == null) {
