@@ -5,30 +5,23 @@
 }
 #content > .content {
 	background: url(/gfx/theater/hexenjagd/content_bg.png) repeat-y;
-	padding: 0px;
 	min-height: 0px;
-	height: 760px;
-}
-#content > .content > div {
-	top: -40px;
+	padding: 1px 58px;
 }
 #content > .bottom {
 	background: url(/gfx/theater/hexenjagd/content_bottom.png) no-repeat;
 }
 
 @font-face {
-  font-family: 'Ovo';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Ovo'), url(/media/fonts/ovo.woff) format('woff');
+	font-family: 'Ovo';
+	src: url('/media/fonts/ovo.eot');
+	src: url('/media/fonts/ovo.eot?#iefix') format('embedded-opentype'),
+		 url(/media/fonts/ovo.woff) format('woff');
 }
 
 .info {
 	color: #b09668;
 	text-align: justify;
-	width: 100%;
-	margin-left: 58px;
-	width: 83%;
 	text-shadow: #000000 1px 1px 10px;
 	font-size: 18px;
 	font-family: 'Ovo', cursive;
@@ -38,7 +31,7 @@
 	font-style: italic;
 	text-decoration: none;
 }
-.info .heading {
+.info h2 {
 	margin-left: -15px;
 	margin-top: 30px;
 	margin-bottom: 15px;

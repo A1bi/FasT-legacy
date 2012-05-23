@@ -5,7 +5,7 @@
 		<br />Unter der bewährten Regie von Helmut Mattern erleben Sie einen besonderen Theaterklassiker voller Emotionen und Spannung.
 		<p>Mit den beiden letzten Stücken „<a href="/theater/medicus">Der Medicus vom Orient</a>“ und „<a href="/theater/phantasus">Der Riese Phantasus</a>“ wollten wir besonders unser junges und junggebliebenes Publikum mit phantasievollem und amüsantem Spiel begeistern. Mit „Hexenjagd“ inszenieren wir nunmehr ein hochdramatisches und anspruchsvolles Stück auf unserer wunderbaren Freilichtbühne.</p>
 		
-		<div class="heading">Über das Stück</div>
+		<h2>Über das Stück</h2>
 		Die Zuschauer erleben die authentische, geschichtlich belegte „Hexenjagd“ im puritanischen Salem in Massachusetts des Jahres 1692.
 		<br />Tanz und ähnliche Zerstreuungen sind in der strenggläubigen Gemeinde verpönt, jedoch Aberglaube, Hexerei und Teufelspakte sind fest im Alltag verankert. Eines Nachts tanzen die jungen Mädchen des Dorfes übermütig im Wald.
 		<br />Die geheime Zusammenkunft wird jedoch aufgedeckt. Aus Angst vor Strafe verfallen einige der Mädchen in eine merkwürdige, nicht zu erklärende Ohnmacht. Schon werden in der Gemeinde Teufelswerk und Hexerei vermutet. Darauf steht die Todesstrafe.

@@ -63,4 +63,3 @@
 		<div id="content">
 			<div class="top"></div>
 			<div class="content">
-				<div>
