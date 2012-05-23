@@ -17,14 +17,17 @@
 .teaser .left {
 	float: left;
 	width: 50%;
+	margin-top: 10px;
 }
 .teaser .right {
 	float: left;
 	width: 50%;
+	margin-top: 20px;
 }
-.teaser .info {
-	text-align: justify;
-	padding: 17px;
+.teaser .right .hl {
+	color: #000000;
+	font-size: 34px;
+	display: block;
 }
 .teaser .title {
 	font-size: 19px;
