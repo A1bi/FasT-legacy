@@ -45,6 +45,18 @@ function createId($digits) {
 	return $id;
 }
 
+function requireSSL() {
+	if (!$_SERVER['HTTPS']) {
+		redirectTo("https://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+	}
+}
+
+function rejectSSL() {
+	if ($_SERVER['HTTPS']) {
+		redirectTo("http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+	}
+}
+
 // get config
 require("./include/config.inc.php");
 $_base = $_SERVER['DOCUMENT_ROOT'] . "/";
