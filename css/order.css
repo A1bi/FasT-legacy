@@ -1,0 +1,233 @@
+.front ul li {
+	margin-top: 20px;
+}
+.btns {
+	position: relative;
+	width: 90%;
+	margin: auto;
+	margin-top: 10px;
+	height: 50px;
+}
+.btn {
+	padding: 5px 20px;
+	border-radius: 20px;
+	background: #0869ed;
+	background: -moz-linear-gradient(
+		top,
+		#0668ec 0%, #b8e1f9 90%
+    );
+	background: -webkit-linear-gradient(
+		top,
+		#0668ec 0%, #b8e1f9 90%
+    );
+	color: #ffffff;
+	text-decoration: none;
+	box-shadow: #666666 0px 0px 6px;
+	margin: 10px;
+	cursor: pointer;
+}
+.btn:hover {
+	text-decoration: underline;
+	box-shadow: #666666 0px 0px 8px;
+}
+.btn.disabled {
+	cursor: default;
+	background: #cccccc;
+}
+.btn.disabled:hover {
+	text-decoration: none;
+	box-shadow: #666666 0px 0px 6px;
+}
+.btn .spinner {
+	display: none;
+	vertical-align: middle;
+}
+.btn.disabled .spinner {
+	display: inline;
+}
+.btn.prev, .btn.next {
+	position: absolute;
+	top: 0px;
+}
+.btn.prev {
+	left: 0px;
+}
+.btn.next {
+	right: 0px;
+}
+.rTable {
+	border-spacing: 0px;
+	border-radius: 10px;
+	border: 1px solid #cccccc;
+}
+.rTable td {
+	padding: 7px;
+	border-bottom: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+}
+.rTable tr td:last-child {
+	border-right: none;
+}
+.rTable tr:last-child td {
+	border-bottom: none;
+}
+table td {
+	vertical-align: top;
+}
+
+.secure {
+	margin: 10px;
+	text-align: right;
+	opacity: 0.8;
+}
+.secure span {
+	background: #cccccc;
+	font-size: 10px;
+	border-radius: 10px;
+	padding: 3px 8px;
+}
+.progress {
+	position: relative;
+	border: 1px solid #cccccc;
+	width: 95%;
+	overflow: hidden;
+	margin: auto;
+	border-radius: 7px;
+}
+.progress .step {
+	position: relative;
+	float: left;
+	width: 25%;
+	text-align: center;
+	padding: 2px 0px;
+	font-size: 12px;
+	color: #cccccc;
+	z-index: 2;
+	-moz-transition-property: color;
+	-moz-transition-duration: .5s;
+	-moz-transition-timing-function: ease-in-out;
+}
+.progress .step.bar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: #0668ec;
+	background: -moz-linear-gradient(
+		top,
+		#b8e1f9 0%, #0668ec 100%
+    );
+	background: -webkit-linear-gradient(
+		top,
+		#b8e1f9 0%, #0668ec 100%
+	);
+	height: 100%;
+	-moz-transition-property: left;
+	-moz-transition-duration: .5s;
+	-moz-transition-timing-function: ease-in-out;
+	-webkit-transition-property: left;
+	-webkit-transition-duration: .5s;
+	-webkit-transition-timing-function: ease-in-out;
+}
+.progress.address .step.bar {
+	left: 25%;
+}
+.progress.payment .step.bar {
+	left: 50%;
+}
+.progress.confirm .step.bar {
+	left: 75%;
+}
+.progress .step.current {
+	color: #ffffff;
+}
+.stepCon {
+	margin: auto;
+	margin-top: 30px;
+	border: 1px solid #cccccc;
+	width: 91%;
+	border-radius: 7px;
+	padding: 10px;
+	display: none;
+}
+.stepCon .inner {
+	width: 80%;
+	margin: 20px auto;
+}
+.stepCon .field {
+	width: 250px;
+}
+.stepCon .accept {
+	margin: 20px 10px;
+}
+
+.stepCon.date ul {
+	list-style-type: none;
+}
+.stepCon.date ul li .string {
+	font-size: 18px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.stepCon.date ul li .string:hover {
+	text-decoration: none;
+}
+.stepCon.date ul li .string.selected {
+	font-weight: bold;
+	text-decoration: none;
+}
+.stepCon.date ul li .id {
+	display: none;
+}
+.stepCon.date div.number {
+	display: none;
+}
+.stepCon.date td.number {
+	width: 12%;
+	border-right: none;
+}
+.stepCon.date .type {
+	border-left: none;
+}
+.stepCon.date .single, .date td.total {
+	width: 15%;
+	text-align: right;
+}
+.stepCon.date tr.total, .stepCon.confirm tr.total {
+	font-weight: bold;
+}
+.stepCon.date tr.total td, .stepCon.confirm tr.total td {
+	border-top: 1px solid #cccccc;
+}
+.stepCon.address .error {
+	color: #ff0000;
+	display: none;
+}
+.stepCon.address td {
+	padding: 5px;
+}
+.stepCon.address td .small {
+	margin-top: 5px;
+	color: #000000;
+}
+.stepCon.payment td {
+	padding-top: 10px;
+}
+.stepCon.payment td .small {
+	color: #000000;
+}
+.stepCon.payment .charge {
+	margin-top: 30px;
+	display: none;
+}
+.stepCon.confirm .payment {
+	margin-top: 10px;
+}
+.stepCon.confirm .date {
+	font-weight: bold;
+}
+.stepCon.finish .hl {
+	font-size: 27px;
+}
+.stepCon.finish .payment {
+	margin-top: 20px;
+}

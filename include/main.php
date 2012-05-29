@@ -57,6 +57,18 @@ function rejectSSL() {
 	}
 }
 
+function limitAccess($groups) {
+	global $_user;
+	
+	foreach ($_user['groups'] as $group) {
+		if (in_array($group, $groups)) {
+			return;
+		}
+	}
+	
+	redirectTo("/");
+}
+
 // get config
 require("./include/config.inc.php");
 $_base = $_SERVER['DOCUMENT_ROOT'] . "/";
@@ -67,8 +79,30 @@ foreach ($comps as $comp) {
 	loadComponent($comp);
 }
 
-if ($_COOKIE['admin'] == $_config['pass']) {
-	$_vars['admin'] = true;
+// start session
+ini_set("session.use_only_cookies", 1);
+session_name("FasT_sess");
+session_set_cookie_params(0, "/");
+session_start();
+
+$_user = array("groups" => array());
+
+// check if logged in
+if (is_array($_SESSION['user'])) {
+	// look in database for given user
+	//$result = $_db->query('SELECT id, name, credit, email FROM users WHERE id = ? AND pass = ?', array($_SESSION['user']['id'], $_SESSION['user']['pass']));
+
+	// found ?
+	if (!empty($user['id'])) {
+		array_merge($_user, $user);
+		// check groups
+		
+	} else {
+		// not correct -> delete session
+		unset($_SESSION['user']);
+	}
 }
 
+$_tpl->assign("_user", $_user);
+	
 ?>
