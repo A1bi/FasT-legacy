@@ -30,20 +30,27 @@
 	text-decoration: underline;
 	box-shadow: #666666 0px 0px 8px;
 }
-.btn.disabled {
+.btn .spinner {
+	position: absolute;
+	top: 5px;
+	right: 8px;
+	display: none;
+}
+.btn.loading .spinner {
+	display: block;
+	padding-left: 2px;
+	vertical-align: top;
+}
+.btn.loading .action {
+	padding-right: 10px;
+}
+.btn.disabled, .btn.loading {
 	cursor: default;
 	background: #cccccc;
 }
-.btn.disabled:hover {
+.btn.disabled:hover, .btn.loading:hover {
 	text-decoration: none;
 	box-shadow: #666666 0px 0px 6px;
-}
-.btn .spinner {
-	display: none;
-	vertical-align: middle;
-}
-.btn.disabled .spinner {
-	display: inline;
 }
 .btn.prev, .btn.next {
 	position: absolute;

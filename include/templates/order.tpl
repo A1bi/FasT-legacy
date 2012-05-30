@@ -57,7 +57,7 @@
 			<td>
 				<input type="text" name="email" value="" class="field" />
 				<div class="small">Bitte achten Sie auf die Richtigkeit Ihrer e-mail-Adresse, da an sie später Ihre Karten geschickt werden!</div>
-				<div class="error">Adresse nicht korrekt.</div>
+				<div class="error">e-mail-Adresse nicht korrekt.</div>
 			</td>
 		</tr>
 	</table>
@@ -214,6 +214,9 @@
 </div>
 <div class="btns">
 	<div class="btn prev disabled">zurück</div>
-	<div class="btn next disabled">weiter</div>
+	<div class="btn next disabled">
+		<span class="action">weiter</span>
+		<span class="spinner"><img src="/gfx/order/loading.gif" alt="Bitte warten" /></span>
+	</div>
 </div>
 {include file="foot.tpl"}

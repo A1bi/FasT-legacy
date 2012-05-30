@@ -7,7 +7,13 @@ var order = new function () {
 			goPrev();
 			
 		} else {
-			showNext();
+			if (order.step == 3) {
+				order.step++;
+				updateBtns();
+				placeOrder();
+			} else {
+				showNext();
+			}
 		}
 	}
 	
@@ -45,20 +51,27 @@ var order = new function () {
 		$(".progress .step").eq(order.step+1).addClass("current");
 	}
 	
+	var updateBtnAction = function (btn) {
+		var btnBox = $(".btn."+btn);
+		
+		if (order.step == 4) {
+			btnBox.addClass("loading");
+		
+		} else {
+			var action = "weiter";
+			if (order.step == 3) {
+				action = "bestätigen";
+			}
+			btnBox.find(".action").html(action);
+		}
+	}
+	
 	var toggleBtn = function (btn, toggle) {
 		var btnBox = $(".btn."+btn);
 		btnBox.toggleClass("disabled", !toggle).unbind();
 		
 		if (toggle) {
 			btnBox.click(goNext);
-		}
-
-		if (btn == "next") {
-			var text = "weiter";
-			if (steps[order.step] == "confirm") {
-				text = "bestätigen";
-			}
-			btnBox.html(text);
 		}
 	}
 	
@@ -102,11 +115,18 @@ var order = new function () {
 		}
 		
 		toggleBtn("next", ok);
-		toggleBtn("prev", order.step > 0);
+		toggleBtn("prev", order.step > 0 && order.step < steps.length-1);
+		updateBtnAction("next");
 	}
 	
 	var makeRequest = function (data, action, callback) {
-		$.getJSON("/order.php?ajax=1", $.extend({"action": action}, data), callback);
+		$.ajax({
+			url: "/order.php?ajax=1",
+			data: $.extend({"action": action}, data),
+			dataType: "json",
+			type: "post",
+			success: callback
+		});
 	}
 	
 	var updateInfo = function () {
@@ -218,6 +238,16 @@ var order = new function () {
 		order.accepted = $(this).is(":checked");
 		
 		updateBtns();
+	}
+	
+	var placeOrder = function () {
+		makeRequest({"order": order}, "placeOrder", function (data) {
+			if (data.status == "ok") {
+				updateStep();
+			} else {
+				alert("error: "+data.error);
+			}
+		});
 	}
 	
 	var registerEvents = function () {
