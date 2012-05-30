@@ -3,6 +3,11 @@ include('./include/main.php');
 
 requireSSL();
 $_db = new database;
+setlocale(LC_ALL, 'de_DE');
+
+function getStringForDate($date) {
+	return strftime("%A, den %d. %B um %H Uhr", $date);
+}
 
 if ($_GET['ajax']) {
 	$response = array();
@@ -20,9 +25,8 @@ if ($_GET['ajax']) {
 				"prices" => $prices
 			);
 			
-			setlocale(LC_ALL, 'de_DE');
 			foreach ($dates as $key => $date) {
-				$response['info']['dates'][$key] = strftime("%A, den %d. %B um %H Uhr", $date);
+				$response['info']['dates'][$key] = getStringForDate($date);
 			}
 
 			if (!is_array($_SESSION['order']) || $_SESSION['order']['lastUpdate']+600 < time()) {
@@ -105,10 +109,23 @@ if ($_GET['ajax']) {
 				foreach ($_SESSION['order']['number'] as $type => $val) {
 					for ($i = 0; $i < $order['number'][$type]; $i++) {
 						$sId = createId(6, "orders_tickets", "sId", true);
-						$_db->query('INSERT INTO orders_tickets VALUES (null, ?, ?, ?, ?, 0, 0, "", 0)', array($sId, $orderId, $order['date'], $t));
+						$_db->query('INSERT INTO orders_tickets VALUES (null, ?, ?, ?, ?, 0, "", 0)', array($sId, $orderId, $order['date'], $t));
 					}
 					$t++;
 				}
+				
+				// mail info to customer
+				$tempOrder = $order;
+				$tempOrder['date'] = getStringForDate($dates[$order['date']]);
+				$_tpl->assign("order", $tempOrder);
+				$_tpl->assign("prices", $prices);
+				
+				$body = $_tpl->fetch("order_mail_confirmation.tpl");
+				$header = "From: " . mb_encode_mimeheader("Freilichtbühne am schiefen Turm", "UTF-8", "Q") . "<noreply@theater-kaisersesch.de>\n";
+				$header .= "Reply-To:info@theater-kaisersesch.de\n";
+				$header .= "Mime-Version: 1.0 Content-Type: text/plain; charset=utf-8 Content-Transfer-Encoding: quoted-printable";
+				
+				@mail($order['address']['email'], "Ihre Bestellung", $body, $header);
 			}
 			
 			$response['status'] = ($ok) ? "ok" : "error";
