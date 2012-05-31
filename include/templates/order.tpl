@@ -202,6 +202,10 @@
 					<td>Bankname:</td>
 					<td>Raiffeisenbank Kaisersesch</td>
 				</tr>
+				<tr>
+					<td>Verwendungszweck:</td>
+					<td>ON<span class="sId"></span></td>
+				</tr>
 			</table>
 		</div>
 		<div class="charge">

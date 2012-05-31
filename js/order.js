@@ -243,6 +243,9 @@ var order = new function () {
 	var placeOrder = function () {
 		makeRequest({"order": order}, "placeOrder", function (data) {
 			if (data.status == "ok") {
+				$.extend(order, data.order);
+				
+				$(".stepCon.finish .sId").html(order.sId);
 				updateStep();
 			} else {
 				alert("error: "+data.error);

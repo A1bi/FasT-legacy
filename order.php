@@ -54,6 +54,7 @@ if ($_GET['ajax']) {
 					$order->mailTickets();
 				}
 				
+				$response['order'] = array("sId" => $order->getSId());
 				$response['status'] = "ok";
 			
 			} else {
