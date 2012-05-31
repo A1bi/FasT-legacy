@@ -1,6 +1,6 @@
 Hallo {$address['firstname']} {$address['lastname']}!
 
-Ihre Tickets stehen nun zum Download bereit unter:
+Ihre Karten stehen nun zum Download als PDF-Dokument bereit unter:
 https://{$smarty.server.SERVER_NAME}/media/tickets/{$hash}.pdf
 
 Alle Hinweise zur Verwendung finden Sie unterhalb der Tickets.

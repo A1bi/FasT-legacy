@@ -93,6 +93,9 @@ table td {
 	border-radius: 10px;
 	padding: 3px 8px;
 }
+.secure img {
+	vertical-align: bottom;
+}
 .progress {
 	position: relative;
 	border: 1px solid #cccccc;

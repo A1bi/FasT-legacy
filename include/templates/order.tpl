@@ -1,6 +1,6 @@
 {include file="head.tpl" title="Karten bestellen" cssfile="order" jsfile="order"}
 <div class="secure">
-	<span><img src="/gfx/order/secure.png" alt="" style="vertical-align: bottom;" /> Ihre Bestellung wird über eine gesicherte Verbindung ausgeführt.</span>
+	<span><img src="/gfx/order/secure.png" alt="" /> Ihre Bestellung wird über eine gesicherte Verbindung ausgeführt.</span>
 </div>	
 <div class="hl">
 	Karten bestellen
@@ -19,13 +19,13 @@
 		Bitte wählen Sie die gewünschte Anzahl an Karten:
 		<table class="inner rTable">
 			<tr class="kids">
-				<td class="number"><select name="kids">{for $i=0 to 10}<option>{$i}</option>{/for}</select></td>
+				<td class="number"><select name="kids">{for $i=0 to 15}<option>{$i}</option>{/for}</select></td>
 				<td class="type">Kinder</td>
 				<td class="single">je <span>5</span> €</td>
 				<td class="total"><span>0</span> €</td>
 			</tr>
 			<tr class="adults">
-				<td class="number"><select name="adults">{for $i=0 to 10}<option>{$i}</option>{/for}</select></td>
+				<td class="number"><select name="adults">{for $i=0 to 15}<option>{$i}</option>{/for}</select></td>
 				<td class="type">Erwachsene</td>
 				<td class="single">je <span>10</span> €</td>
 				<td class="total"><span>0</span> €</td>

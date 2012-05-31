@@ -7,10 +7,6 @@ setlocale(LC_ALL, 'de_DE');
 $_db = new database;
 loadComponent("orders");
 
-function getStringForDate($date) {
-	return strftime("%A, den %d. %B um %H Uhr", $date);
-}
-
 if ($_GET['ajax']) {
 	$response = array();
 	

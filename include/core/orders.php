@@ -180,7 +180,7 @@ class Order {
 
 				$pdf->setXY($orX + 2, $orY + 44);
 				$pdf->SetFont("Helvetica", "", "9");
-				$pdf->Cell(43, 16, "KN: ".$ticket->getSId()." | BN: ".$this->sId, 0, 0);
+				$pdf->Cell(43, 16, "TN: ".$ticket->getSId()." | ON: ".$this->sId, 0, 0);
 
 				$pdf->SetFont("Code39", "", "33");
 				$pdf->Cell(50, 10, "*".$ticket->getSId()."A".$this->sId."*", 0, 2);
