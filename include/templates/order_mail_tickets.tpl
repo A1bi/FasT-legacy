@@ -1,4 +1,4 @@
-Hallo {$order['address']['firstname']} {$order['address']['lastname']}!
+Hallo {$address['firstname']} {$address['lastname']}!
 
 Ihre Tickets stehen nun zum Download bereit unter:
 https://{$smarty.server.SERVER_NAME}/media/tickets/{$hash}.pdf
