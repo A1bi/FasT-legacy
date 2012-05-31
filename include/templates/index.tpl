@@ -9,6 +9,7 @@
 		<div class="teaser">
 			<div class="hl">
 				Sommernachtstheater 2012
+				{if $smarty.now > 1338760800}<div>Der Vorverkauf hat begonnen!</div>{/if}
 			</div>
 			<div class="title hcen">
 				„Das Haus in Montevideo“ auf der Escher Freilichtbühne<br />Sommernachtstheater 2012 für die ganze Familie

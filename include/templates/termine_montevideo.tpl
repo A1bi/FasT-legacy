@@ -37,6 +37,7 @@
 	<div class="trenner"></div>
 	<div class="hl">
 		Kartenvorverkauf
+		<div class="small">vom 4. Juni bis 15. August 2012</div>
 	</div>
 	<div style="margin-top: 10px;">
 		<div style="font-size: 18px;">
@@ -51,17 +52,19 @@
 				</tr>
 			</table>
 		</div>
-		<div style="font-size: 16px;">
-			<p>Info-Hotline: <strong>(0 26 53) 28 27 09</strong> <em class="small" style="vertical-align: top;">(zum normalen Ortstarif)</em></p>
-			<strong>Vorverkauf vom 4. Juni bis 15. August 2011 bei:</strong>
-			<div style="margin: 10px; font-size: 14px;">
+		<a href="/tickets" class="hl online">Karten jetzt online bestellen!</a>
+		<div style="font-size: 14px;">
+			<b>Oder auch an folgenden Vorverkaufsstellen:</b>
+			<div style="margin: 10px; margin-left: 20px;">
 				<img src="/gfx/point.png" alt="" class="vcen" /> Sportstudio Otto Krechel, Kaisersesch<br />
 				<img src="/gfx/point.png" alt="" class="vcen" /> Poststelle „Die Zwei“, Kaisersesch<br />
 				<img src="/gfx/point.png" alt="" class="vcen" /> Buchhandlung Walgenbach, Kaisersesch<br />
 				<img src="/gfx/point.png" alt="" class="vcen" /> Buchhandlung Layaa-Laulhé, Cochem<br />
 				<img src="/gfx/point.png" alt="" class="vcen" /> röhrig forum, Treis-Karden
 			</div>
+			<p class="hcen hotline">
+				Info-Hotline: <strong>(0 26 53) 28 27 09</strong> <em class="small" style="vertical-align: top;">(zum Ortstarif)</em>
+			</p>
 		</div>
 	</div>
-	<div class="trenner"></div>
 {include file="foot.tpl"}

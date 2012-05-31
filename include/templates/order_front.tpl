@@ -14,7 +14,13 @@
 		<li><b>4.</b> Sie erhalten schließlich eine e-mail mit Ihren Karten, die Sie sich anschließend ausdrucken können.</li>
 	</ul>
 </div>
+{if $smarty.now < 1338760800}
+<div class="hl" style="font-size: 24px;">
+	Der Vorverkauf beginnt am 4. Juni
+</div>
+{else}
 <div class="btns hcen">
 	<a href="/tickets/bestellen" class="btn">Jetzt bestellen</a>
 </div>
+{/if}
 {include file="foot.tpl"}
