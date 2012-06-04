@@ -20,7 +20,7 @@
 		<table class="inner rTable">
 			<tr class="kids">
 				<td class="number"><select name="kids">{for $i=0 to 15}<option>{$i}</option>{/for}</select></td>
-				<td class="type">Kinder</td>
+				<td class="type">Ermäßigt<div class="small">Jugendliche bis 16 Jahre</div></td>
 				<td class="single">je <span>5</span> €</td>
 				<td class="total"><span>0</span> €</td>
 			</tr>
@@ -133,7 +133,7 @@
 		Karten für <span class="date"></span>:
 		<table class="rTable">
 			<tr class="kids">
-				<td><span class="number"></span> Kinder</td>
+				<td><span class="number"></span> Ermäßigt</td>
 				<td class="single">je <span></span> €</td>
 				<td class="total"><span></span> €</td>
 			</tr>

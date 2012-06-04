@@ -169,7 +169,7 @@ class Order {
 				$pdf->SetFont("Qlassik", "", "25");
 				$pdf->Cell(50, 10, "Eintrittskarte", 0, 2);
 				$pdf->SetFont("Qlassik", "", "18");
-				$pdf->Cell(50, 9, ($ticket->getType()) ? "Erwachsener" : "Kind", 0, 2);
+				$pdf->Cell(50, 9, ($ticket->getType()) ? "Erwachsener" : utf8_decode("Ermäßigt"), 0, 2);
 				$pdf->SetFont("Helvetica", "", "12");
 				$pdf->Cell(50, 13, utf8_decode("Aufführung: ".$ticket->getDateString()), 0, 2);
 				$pdf->SetFont("Helvetica", "", "18");

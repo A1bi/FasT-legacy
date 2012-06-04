@@ -3,7 +3,7 @@ Vielen Dank für Ihre Bestellung, {$address['firstname']} {$address['lastname']}
 Folgende Karten haben Sie für die Aufführung am {$tickets[0]->getDateString()} bestellt:
 
 {foreach $tickets as $ticket}
-{$ticket@iteration}. {if $ticket->getType() == 1}Erwachsener{else}Kind{/if} - {$ticket->getPrice()} €
+{$ticket@iteration}. {if $ticket->getType() == 1}Erwachsener{else}Ermäßigt{/if} - {$ticket->getPrice()} €
 {/foreach}
 ----------------------------
 Gesamtbetrag: {$order->GetTotal()} €
