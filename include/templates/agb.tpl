@@ -6,7 +6,7 @@
 		<div class="parag">
 			1. Kartenvorverkauf
 			<div class="nrs">
-				Der Kartenvorverkauf erfolgt durch die in den Flyern und der Presse genannten Vorverkaufsstellen.
+				Der Kartenvorverkauf erfolgt durch Online-Bestellung über die Homepage www.theater-kaisersesch.de, die Nummer der Ticket-Hotline und die in den Flyern, Plakaten und der Presse genannten Vorverkaufsstellen.
 			</div>
 		</div>
 		<div class="parag">
@@ -47,7 +47,7 @@
 		<div class="parag">
 			7. Inkrafttreten
 			<div class="nrs">
-				Diese allgemeinen Geschäftsbedingungen treten am 14. August 2011 in Kraft.
+				Diese allgemeinen Geschäftsbedingungen treten am 01. Juni 2012 in Kraft.
 			</div>
 		</div>
 		<p>Mit dem Erwerb der Eintrittskarte werden die allgemeinen Geschäftsbedingungen anerkannt.</p>
