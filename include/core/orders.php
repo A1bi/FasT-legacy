@@ -4,6 +4,12 @@ class OrderManager {
 	
 	static $dates = array(1 => "1345222800", 2 => "1345309200", 3 => "1345381200", 4 => "1345827600", 5 => "1346432400", 6 => "1346518800");
 	static $prices = array("kids" => 6, "adults" => 12);
+	static $title = "Das Haus in Montevideo";
+	static $company = array(
+		"name" => "Freilichtbühne am schiefen Turm",
+		"email" => "info@theater-kaisersesch.de",
+		"noreply" => "noreply@theater-kaisersesch.de"
+	);
 	
 	static function getStringForDate($date) {
 		return strftime("%A, den %d. %B um %H Uhr", $date);
@@ -75,8 +81,8 @@ class Order {
 	}
 	
 	private function getMailHeaders() {
-		$headers = "From: " . mb_encode_mimeheader("Freilichtbühne am schiefen Turm", "UTF-8", "Q") . "<noreply@theater-kaisersesch.de>\n";
-		$headers .= "Reply-To:info@theater-kaisersesch.de\n";
+		$headers = sprintf("From:%s<%s>\n", mb_encode_mimeheader(OrderManager::$company['name'], "UTF-8", "Q"), OrderManager::$company['noreply']);
+		$headers .= sprintf("Reply-To:%s\n", OrderManager::$company['email']);
 		$headers .= "Mime-Version: 1.0 Content-Type: text/plain; charset=utf-8 Content-Transfer-Encoding: quoted-printable";
 		
 		return $headers;
@@ -121,8 +127,12 @@ class Order {
 		require('/usr/share/php/fpdf/fpdf.php');
 
 		$pdf = new FPDF();
+		$pdf->SetTitle("Eintrittskarten - " . OrderManager::$title, true);
+		$pdf->SetAuthor(OrderManager::$company['name'], true);
+		
 		$pdf->AddFont("Qlassik", "", "Qlassik_TB.php");
 		$pdf->AddFont("Code39", "", "code39.php");
+		
 		$pdf->AddPage();
 		$pdf->SetAutoPageBreak(false);
 
@@ -170,20 +180,24 @@ class Order {
 				$pdf->Cell(50, 10, "Eintrittskarte", 0, 2);
 				$pdf->SetFont("Qlassik", "", "18");
 				$pdf->Cell(50, 9, ($ticket->getType()) ? "Erwachsener" : utf8_decode("Ermäßigt"), 0, 2);
-				$pdf->SetFont("Helvetica", "", "12");
-				$pdf->Cell(50, 13, utf8_decode("Aufführung: ".$ticket->getDateString()), 0, 2);
+				$pdf->SetXY($pdf->GetX(), $pdf->GetY() + 2);
+				$pdf->SetFont("Helvetica", "", "11");
+				$pdf->Cell(22, 6, utf8_decode("Aufführung:"), 0, 0);
+				$pdf->Cell(28, 6, utf8_decode(OrderManager::$title), 0, 2);
+				$pdf->Cell(28, 6, utf8_decode($ticket->getDateString()), 0, 2);
 				$pdf->SetFont("Helvetica", "", "18");
-				$pdf->SetX($pdf->GetX() + 4);
+				$pdf->SetXY($orX + 8, $pdf->GetY() + 3);
 				$pdf->Cell(50, 7, $ticket->getPrice().",00 ".chr(128), 0, 2);
 
-				$pdf->Line($orX + 2, $orY + 48, $orX + 42, $orY + 48);
+				$pdf->SetLineWidth(0.3);
+				$pdf->Line($orX + 1, $orY + 48, $orX + 41, $orY + 48);
 
-				$pdf->setXY($orX + 2, $orY + 44);
+				$pdf->SetXY($orX + 1, $orY + 44);
 				$pdf->SetFont("Helvetica", "", "9");
-				$pdf->Cell(43, 16, "TN: ".$ticket->getSId()." | ON: ".$this->sId, 0, 0);
+				$pdf->Cell(42, 16, sprintf("TN: %s | ON: %s", $ticket->getSId(), $this->sId), 0, 0);
 
-				$pdf->SetFont("Code39", "", "33");
-				$pdf->Cell(50, 10, "*".$ticket->getSId()."A".$this->sId."*", 0, 2);
+				$pdf->SetFont("Code39", "", "32");
+				$pdf->Cell(50, 10, sprintf("*T%sO%s*", $ticket->getSId(), $this->sId), 0, 2);
 			}
 
 		}
