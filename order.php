@@ -2,7 +2,6 @@
 include('./include/main.php');
 
 requireSSL();
-setlocale(LC_ALL, 'de_DE');
 
 $_db = new database;
 loadComponent("orders");

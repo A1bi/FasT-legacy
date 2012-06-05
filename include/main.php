@@ -4,6 +4,8 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL ^ E_NOTICE);
 
+setlocale(LC_ALL, 'de_DE.UTF-8');
+
 /**
  * redirects to given url
  *
