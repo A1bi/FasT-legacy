@@ -1,15 +1,7 @@
-{$days = ["Freitag", "Samstag", "Sonntag"]}
-{$dates = [
-	[0, "17. August"],
-	[1, "18. August"],
-	[2, "19. August"],
-	[0, "24. August"],
-	[0, "31. August"],
-	[1, "01. September"]
-]}
+{$theater = getData("theater_montevideo")}
 {include file="head.tpl" title="Termine - Das Haus in Montevideo" cssfile="termine"}
 {include file="termine_head.tpl"}
-	Unser Sommernachtstheater 2012 „<a href="/theater/montevideo">Das Haus in Montevideo</a>“ von Curt Goetz wird auf der Freilichtbühne im Historischen Ortskern von Kaisersesch an folgenden Tagen aufgeführt:
+	Unser <b>Sommernachtstheater 2012 „<a href="/theater/montevideo">Das Haus in Montevideo</a>“</b> von Curt Goetz wird auf der Freilichtbühne im Historischen Ortskern von Kaisersesch an folgenden Tagen aufgeführt:
 	<div class="container">
 		<div class="title">
 			<a href="/theater/montevideo"><img src="/gfx/theater/montevideo/title.png" alt="Das Haus in Montevideo" /></a>
@@ -20,11 +12,12 @@
 			</div>
 			<div class="con">
 				<table>
-					{foreach $dates as $date}
+					{foreach $theater['dates'] as $date}
 					<tr>
 						<td class="point"></td>
-						<td class="day">{$days[$date[0]]},</td>
-						<td class="date">{$date[1]} 2012</td>
+						<td class="day">{$date|date_format:"%A"},</td>
+						<td class="date">{$date|date_format:"%d. %B"}</td>
+						<td class="date">{$date|date_format:"%H"} Uhr</td>
 					</tr>
 					{/foreach}
 				</table>

@@ -22,10 +22,12 @@
 }
 .container .title {
 	float: left;
-	margin-top: 40px;
+	margin-top: 45px;
+	margin-left: 10px;
+	text-align: center;
 }
 .container .termine {
-	width: 45%;
+	width: 47%;
 	float: right;
 	margin: 10px;
 }
