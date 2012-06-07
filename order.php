@@ -1,8 +1,6 @@
 <?php
 include('./include/main.php');
 
-requireSSL();
-
 $_db = new database;
 loadComponent("orders");
 

@@ -68,18 +68,6 @@ function createId($digits, $table = "", $column = "", $numbers = false) {
 	return $id;
 }
 
-function requireSSL() {
-	if (!$_SERVER['HTTPS']) {
-		redirectTo("https://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
-	}
-}
-
-function rejectSSL() {
-	if ($_SERVER['HTTPS']) {
-		redirectTo("http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
-	}
-}
-
 function limitAccess($groups) {
 	global $_user;
 	
@@ -92,6 +80,22 @@ function limitAccess($groups) {
 	redirectTo("/");
 }
 
+
+// check if SSL required
+$sslRequired = array("order");
+
+if (in_array(substr($_SERVER['PHP_SELF'], 1, -4), $sslRequired)) {
+	if (!$_SERVER['HTTPS']) {
+		$redirect = 1;
+	}
+} else if ($_SERVER['HTTPS']) {
+	$redirect = 2;
+}
+if (!empty($redirect)) {
+	redirectTo("http" . (($redirect == 1) ? "s" : "") . "://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+}
+
+
 // get config
 require("./include/config.inc.php");
 $_base = $_SERVER['DOCUMENT_ROOT'] . "/";
@@ -101,6 +105,7 @@ $comps = array("templates", "database");
 foreach ($comps as $comp) {
 	loadComponent($comp);
 }
+
 
 // start session
 ini_set("session.use_only_cookies", 1);
