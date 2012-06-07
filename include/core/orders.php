@@ -2,18 +2,28 @@
 
 class OrderManager {
 	
-	static $dates = array(1 => "1345222800", 2 => "1345309200", 3 => "1345381200", 4 => "1345827600", 5 => "1346432400", 6 => "1346518800");
-	static $prices = array("kids" => 6, "adults" => 12);
-	static $title = "Das Haus in Montevideo";
-	static $company = array(
-		"name" => "Freilichtbühne am schiefen Turm",
-		"email" => "info@theater-kaisersesch.de",
-		"noreply" => "noreply@theater-kaisersesch.de"
-	);
+	static $instance = null;
+	static $theater, $company;
+	
+	private function __construct() {
+		self::$theater = getData("theater_montevideo");
+		self::$company = getData("company");
+	}
+	
+	static function init() {
+		self::$instance = new OrderManager();
+	}
+	
+	static function getInstance() {
+		if (!self::$instance) self::init();
+		
+		return self::$instance;
+	}
 	
 	static function getStringForDate($date) {
 		return strftime("%A, den %d. %B um %H Uhr", $date);
 	}
+	
 }
 
 class Order {
@@ -43,13 +53,13 @@ class Order {
 	
 	private function checkInfo($orderInfo) {
 		// check date
-		if (empty(OrderManager::$dates[$orderInfo['date']])) {
+		if (empty(OrderManager::$theater['dates'][$orderInfo['date']])) {
 			return false;
 		}
 
 		// check numbers and total
 		$total = 0;
-		foreach (OrderManager::$prices as $type => $price) {
+		foreach (OrderManager::$theater['prices'] as $type => $price) {
 			$total += $orderInfo['number'][$type]*$price;
 		}
 		if ($total == 0 || $total != $orderInfo['total']) {
@@ -114,7 +124,7 @@ class Order {
 	
 	private function createTickets($numbers, $date) {
 		$t = 0;
-		foreach (OrderManager::$prices as $type => $val) {
+		foreach (OrderManager::$theater['prices'] as $type => $val) {
 			for ($i = 0; $i < $numbers[$type]; $i++) {
 				$this->tickets[] = new Ticket($t, $date, $this);
 			}
@@ -127,7 +137,7 @@ class Order {
 		require('/usr/share/php/fpdf/fpdf.php');
 
 		$pdf = new FPDF();
-		$pdf->SetTitle("Eintrittskarten - " . OrderManager::$title, true);
+		$pdf->SetTitle("Eintrittskarten - " . OrderManager::$theater['title'], true);
 		$pdf->SetAuthor(OrderManager::$company['name'], true);
 		
 		$pdf->AddFont("Qlassik", "", "Qlassik_TB.php");
@@ -183,7 +193,7 @@ class Order {
 				$pdf->SetXY($pdf->GetX(), $pdf->GetY() + 2);
 				$pdf->SetFont("Helvetica", "", "11");
 				$pdf->Cell(22, 6, utf8_decode("Aufführung:"), 0, 0);
-				$pdf->Cell(28, 6, utf8_decode(OrderManager::$title), 0, 2);
+				$pdf->Cell(28, 6, utf8_decode(OrderManager::$theater['title']), 0, 2);
 				$pdf->Cell(28, 6, utf8_decode($ticket->getDateString()), 0, 2);
 				$pdf->SetFont("Helvetica", "", "18");
 				$pdf->SetXY($orX + 8, $pdf->GetY() + 3);
@@ -278,11 +288,11 @@ class Ticket {
 	}
 
 	public function getDateString() {
-		return OrderManager::getStringForDate(OrderManager::$dates[$this->date]);
+		return OrderManager::getStringForDate(OrderManager::$theater['dates'][$this->date]);
 	}
 	
 	public function getPrice() {
-		return OrderManager::$prices[($this->type) ? "adults" : "kids"];
+		return OrderManager::$theater['prices'][($this->type) ? "adults" : "kids"];
 	}
 }
 

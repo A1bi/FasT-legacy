@@ -32,6 +32,10 @@ function loadComponent($component) {
 	}
 }
 
+function getData($name) {
+	return json_decode(file_get_contents("./include/data/" . $name . ".json"), true);
+}
+
 /**
  * creates a random id with the given amount of digits
  *

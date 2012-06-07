@@ -6,6 +6,7 @@ loadComponent("orders");
 
 if ($_GET['ajax']) {
 	$response = array();
+	OrderManager::init();
 	
 	switch ($_POST['action']) {
 		
@@ -14,10 +15,10 @@ if ($_GET['ajax']) {
 			
 			$response['info'] = array(
 				"dates" => array(),
-				"prices" => OrderManager::$prices
+				"prices" => OrderManager::$theater['prices']
 			);
 			
-			foreach (OrderManager::$dates as $key => $date) {
+			foreach (OrderManager::$theater['dates'] as $key => $date) {
 				$response['info']['dates'][$key] = OrderManager::getStringForDate($date);
 			}
 
