@@ -5,4 +5,6 @@ RewriteRule ^theater/([a-z]+)$ /index.php?page=theater_$1
 RewriteRule ^gallery(/([0-9a-zA-Z]+)(/([0-9]+))?)?$ /gallery.php?id=$2&pic=$4
 RewriteRule ^tickets$ /index.php?page=order_front
 RewriteRule ^tickets/bestellen /order.php
+RewriteRule ^mitglieder/(.+) /members/$1.php
+RewriteRule ^mitglieder /members/index.php
 RewriteRule ^([a-z]+)$ /index.php?page=$1

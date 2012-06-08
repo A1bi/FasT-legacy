@@ -1,0 +1,36 @@
+.hl.members {
+	margin-bottom: 10px;
+}
+.hl.section {
+	font-size: 30px;
+	margin-top: 0px;
+	margin-bottom: 30px;
+}
+.login .msg {
+	color: red;
+}
+.sections {
+	text-align: center;
+}
+.sections .trenner {
+	margin-top: 1px;
+	margin-bottom: 3px;
+}
+.sections a, .hl.members {
+	color: #d72c2c;
+}
+.sections a {
+	padding: 0px 10px;
+}
+.sections .main a {
+	font-size: 18px;
+}
+.sections a {
+	text-decoration: none;
+}
+.sections a:hover {
+	text-decoration: underline;
+}
+.sections .sub a {
+	font-size: 14px;
+}

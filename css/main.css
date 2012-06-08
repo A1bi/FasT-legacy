@@ -209,6 +209,15 @@ h3 {
 	height: 6px;
 	margin: 30px auto;
 }
+.inner {
+	width: 60%;
+	margin: 20px auto;
+}
+input.btn {
+	font-size: 15px;
+	width: 120px;
+	height: 30px;
+}
 
 /* box */
 .box {

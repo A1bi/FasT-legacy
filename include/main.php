@@ -75,20 +75,16 @@ function createId($digits, $table = "", $column = "", $numbers = false) {
 function limitAccess($groups) {
 	global $_user;
 	
-	foreach ($_user['groups'] as $group) {
-		if (in_array($group, $groups)) {
-			return;
-		}
+	if (!in_array($_user['group'], $groups)) {
+		redirectTo("/mitglieder/login");
 	}
-	
-	redirectTo("/");
 }
 
 
 // check if SSL required
 $sslRequired = array("order");
 
-if (in_array(substr($_SERVER['PHP_SELF'], 1, -4), $sslRequired)) {
+if ($_vars['sslRequired'] || in_array(substr($_SERVER['PHP_SELF'], 1, -4), $sslRequired)) {
 	if (!$_SERVER['HTTPS']) {
 		$redirect = 1;
 	}
@@ -111,30 +107,40 @@ foreach ($comps as $comp) {
 }
 
 
+// user management
+$_user = array("group" => 0);
+
 // start session
-ini_set("session.use_only_cookies", 1);
-session_name("FasT_sess");
-session_set_cookie_params(0, "/");
-session_start();
+// only through HTTPS
+if ($_SERVER['HTTPS']) {
 
-$_user = array("groups" => array());
-
-// check if logged in
-if (is_array($_SESSION['user'])) {
-	// look in database for given user
-	//$result = $_db->query('SELECT id, name, credit, email FROM users WHERE id = ? AND pass = ?', array($_SESSION['user']['id'], $_SESSION['user']['pass']));
-
-	// found ?
-	if (!empty($user['id'])) {
-		array_merge($_user, $user);
-		// check groups
-		
-	} else {
-		// not correct -> delete session
-		unset($_SESSION['user']);
+	ini_set("session.use_only_cookies", 1);
+	session_name("FasT_sess");
+	session_set_cookie_params(1800, "/", $_SERVER['SERVER_NAME'], true);
+	session_start();
+	
+	$_db = new database();
+	
+	// check if logged in
+	if (is_array($_SESSION['user'])) {
+		// look in database for given user
+		$result = $_db->query('SELECT id, name, `group`, realname, email FROM users WHERE id = ? AND pass = ?', array($_SESSION['user']['id'], $_SESSION['user']['pass']));
+		$user = $result->fetch();
+	
+		// found ?
+		if (!empty($user['id'])) {
+			$keys = array("id", "name", "group", "realname", "email");
+			foreach ($keys as $key) {
+				$_user[$key] = $user[$key];
+			}
+			
+		} else {
+			// not correct -> delete session
+			unset($_SESSION['user']);
+		}
 	}
+	
+	$_tpl->assign("_user", $_user);
 }
-
-$_tpl->assign("_user", $_user);
 	
 ?>
