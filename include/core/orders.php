@@ -224,6 +224,18 @@ class Order {
 		$this->id = $_db->id();
 	}
 	
+	public function cancel($reason) {
+		global $_db;
+		
+		// cancel order in db
+		$_db->query('UPDATE orders SET cancelled = 1, cancelReason = ? WHERE id = ?', array($reason, $this->id));
+		
+		// cancel each ticket
+		foreach ($this->tickets as $ticket) {
+			$ticket->cancel($reason);
+		}
+	}
+	
 	public function getDate() {
 		return $this->date;
 	}
@@ -268,6 +280,12 @@ class Ticket {
 		$this->sId = createId(6, "orders_tickets", "sId", true);
 		$_db->query('INSERT INTO orders_tickets VALUES (null, ?, ?, ?, ?, 0, "", 0)', array($this->sId, $this->order->getId(), $this->date, $this->type));
 		$this->id = $_db->id();
+	}
+	
+	public function cancel($reason) {
+		global $_db;
+		
+		$_db->query('UPDATE orders_tickets SET cancelled = 1, cancelReason = ? WHERE id = ?', array($reason, $this->id));
 	}
 	
 	public function getId() {

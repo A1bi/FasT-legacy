@@ -34,3 +34,25 @@
 .sections .sub a {
 	font-size: 14px;
 }
+
+.tickets table {
+	border-collapse: collapse;
+}
+.tickets table td {
+	padding: 2px;
+	font-size: 13px;
+}
+.tickets table .title td {
+	border-bottom: 1px solid #cccccc;
+	padding-bottom: 2px;
+	font-size: 15px;
+}
+.tickets .box {
+	margin-bottom: 30px;
+}
+.tickets .stats td {
+	text-align: center;
+}
+.tickets .stats td.left {
+	text-align: left;
+}
