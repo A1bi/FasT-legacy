@@ -15,14 +15,15 @@ if (!empty($_GET['order'])) {
 	$result = $_db->query('SELECT date, type, COUNT(*) as number FROM orders_tickets WHERE cancelled = 0 GROUP BY date, type WITH ROLLUP');
 	$ticketData = $result->fetchAll();
 	
-	$stats = array();
+	$stats = array("total" => array());
 	foreach ($ticketData as $ticket) {
 		if ($ticket['date'] == "") {
-			$arr = &$stats['sum'];
+			$arr = &$stats['total']['sum'];
 		} else {
 			$dateArr = &$stats['dates'][$ticket['date']];
 			if ($ticket['type'] != "") {
 				$arr = &$dateArr['types'][$ticket['type']];
+				$stats['total']['types'][$ticket['type']] += $ticket['number'];
 			} else {
 				$arr = &$dateArr['sum'];
 			}
@@ -32,14 +33,13 @@ if (!empty($_GET['order'])) {
 	}
 	
 	// calculate revenue
-	$total = 0;
 	foreach ($stats['dates'] as $key => $date) {
 		$sum = 0;
 		foreach (OrderManager::$theater['prices'] as $key2 => $price) {
 			$sum += $price * $date['types'][(($key2 == "kids") ? 0 : 1)];
 		}
 		$stats['dates'][$key]['revenue'] = $sum;
-		$total += $sum;
+		$stats['total']['revenue'] += $sum;
 	}
 	
 	$_tpl->assign("stats", $stats);

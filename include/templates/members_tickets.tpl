@@ -24,6 +24,13 @@
 					<td>{$stats['dates'][$date@key]['revenue']|default:0} €</td>
 				</tr>
 				{/foreach}
+				<tr class="total">
+					<td class="left">Gesamt</td>
+					<td>{$stats['total']['types'][0]|default:0}</td>
+					<td>{$stats['total']['types'][1]|default:0}</td>
+					<td>{$stats['total']['sum']|default:0}</td>
+					<td>{$stats['total']['revenue']|default:0} €</td>
+				</tr>
 			</table>
 		</div>
 	</div>
