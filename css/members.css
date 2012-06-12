@@ -68,6 +68,11 @@ table .title td {
 	font-size: 14px;
 	font-weight: bold;
 }
+
+.orderDetails .back {
+	font-size: 13px;
+	margin-left: 20px;
+}
 .orderDetails .topRow {
 	overflow: auto;
 	padding: 0px 5px;

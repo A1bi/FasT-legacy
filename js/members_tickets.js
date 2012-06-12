@@ -1,5 +1,6 @@
 $(function () {
-	$("#cancelBtn").click(function () {
-		$(".actions.cancel").slideDown();
+	$("#cancelBtn").click(function (event) {
+		$(".actions.cancel").slideToggle();
+		event.preventDefault();
 	});
 });

@@ -4,10 +4,12 @@
 {$tickets=$order->getTickets()}
 {$types=["Ermäßigt", "Erwachsener"]}
 {$payMethods=["charge" => "Lastschrift", "transfer" => "Überweisung"]}
-{$statuses=["Bestellung aufgenommen", "Warte auf Freischaltung..", "Warte auf Zahlung..", "Überprüft", "<span class=\"finished\">Abgeschlossen</span>", "<span class=\"cancelled\">Storniert</span>"]}
+{$statuses=["Bestellung aufgenommen", "Warte auf Freischaltung..", "Warte auf Zahlung..", "Überprüft, Lastschrift ausstehend..", "<span class=\"finished\">Abgeschlossen</span>", "<span class=\"cancelled\">Storniert</span>"]}
 <div class="hl section">Bestellungsdetails</div>
 
 <div class="orderDetails">
+
+<div class="back"><a href="?">Zurück zur Übersicht</a></div>
 
 <div class="topRow">
 	<div class="box overview">
@@ -27,6 +29,10 @@
 				<tr>
 					<td>Gesamtbetrag:</td>
 					<td><b>{$order->getTotal()} €</b></td>
+				</tr>
+				<tr>
+					<td>Datum:</td>
+					<td>{$order->getTime()|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
 				</tr>
 				<tr>
 					<td>Status:</td>
