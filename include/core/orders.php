@@ -4,6 +4,7 @@ class OrderManager {
 	
 	static $instance = null;
 	static $theater, $company;
+	private $orders = array();
 	
 	private function __construct() {
 		self::$theater = getData("theater_montevideo");
@@ -24,16 +25,53 @@ class OrderManager {
 		return strftime("%A, den %d. %B um %H Uhr", $date);
 	}
 	
+	public function getOrderById($id) {
+		global $_db;
+		
+		if (!$this->tickets[$id]) {
+			// get info for order from db
+			$result = $_db->query('SELECT * FROM orders WHERE id = ?', array($id));
+			$orderInfo = $result->fetch();
+			if ($orderInfo['id']) {
+				// get tickets from db
+				$result = $_db->query('SELECT * FROM orders_tickets WHERE `order` = ?', array($id));
+				$orderInfo['tickets'] = $result->fetchAll();
+				
+				// create order instance
+				$order = new Order($orderInfo, false);
+				$this->tickets[$order->getId()] = $order;
+				return $order;
+			}
+			
+			return null;
+			
+		} else {
+			return $this->tickets[$id];
+		}
+	}
 }
 
 class Order {
 	
-	private $id, $sId, $total, $hash,
+	private $id, $sId, $total, $hash, $time, $status = 0, $paid = false,
 			$address = array("firstname" => "", "lastname" => "", "fon" => "", "email" => ""),
 			$payment = array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
+			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = array();
 
-	public function __construct($orderInfo) {
+	public function __construct($orderInfo, $new = true) {
+		if ($new && $this->create($orderInfo)) {
+			return null;
+		} else {
+			$this->init($orderInfo);
+		}
+		
+		$this->hash = md5($this->sId);
+		
+		return $this;
+	}
+	
+	private function create($orderInfo) {
 		// check if given info is ok
 		if ($this->checkInfo($orderInfo)) {
 			// set info
@@ -41,14 +79,41 @@ class Order {
 			$this->payment = $orderInfo['payment'];
 			$this->total = $orderInfo['total'];
 			$this->sId = createId(6, "orders", "sId", true);
-			$this->hash = md5($this->sId);
 			
 			$this->save();
 			
 			$this->createTickets($orderInfo['number'], $orderInfo['date']);
 		} else {
-			return null;
+			return false;
 		}
+		
+		return true;
+	}
+	
+	private function init($orderInfo) {
+		// set info from db
+		$this->id = $orderInfo['id'];
+		$this->sId = $orderInfo['sId'];
+		$this->time = $orderInfo['time'];
+		$this->total = $orderInfo['total'];
+		$this->status = $orderInfo['status'];
+		$this->paid = $orderInfo['paid'];
+		
+		// address
+		$this->address = array();
+		$addressFields = array("firstname", "lastname", "fon", "email");
+		foreach ($addressFields as $field) {
+			$this->address[$field] = $orderInfo[$field];
+		}
+		
+		// payment
+		$this->payment = array("method" => $orderInfo['payMethod'], "name" => $orderInfo['kName'], "number" => $orderInfo['kNo'], "blz" => $orderInfo['blz'], "bank" => $orderInfo['bank']);
+		
+		// cancelled
+		$this->cancelled = array("cancelled" => $orderInfo['cancelled'], "reason" => $orderInfo['cancelReason']);
+		
+		// tickets
+		$this->initTickets($orderInfo['tickets']);
 	}
 	
 	private function checkInfo($orderInfo) {
@@ -129,6 +194,12 @@ class Order {
 				$this->tickets[] = new Ticket($t, $date, $this);
 			}
 			$t++;
+		}
+	}
+	
+	private function initTickets($tickets) {
+		foreach ($tickets as $ticket) {
+			$this->tickets[] = new Ticket(0, 0, $this, $ticket);
 		}
 	}
 	
@@ -227,8 +298,12 @@ class Order {
 	public function cancel($reason) {
 		global $_db;
 		
+		$this->cancelled['cancelled'] = true;
+		$this->cancelled['reason'] = $reason;
+		$this->status = 5;
+		
 		// cancel order in db
-		$_db->query('UPDATE orders SET cancelled = 1, cancelReason = ? WHERE id = ?', array($reason, $this->id));
+		$_db->query('UPDATE orders SET cancelled = 1, status = 5, cancelReason = ? WHERE id = ?', array($reason, $this->id));
 		
 		// cancel each ticket
 		foreach ($this->tickets as $ticket) {
@@ -259,6 +334,46 @@ class Order {
 	public function getPayment() {
 		return $this->payment;
 	}
+	
+	public function getTickets() {
+		return $this->tickets;
+	}
+	
+	public function isCancelled() {
+		return $this->cancelled['cancelled'];
+	}
+	
+	public function getCancelReason() {
+		return $this->cancelled['reason'];
+	}
+	
+	public function getStatus() {
+		return $this->status;
+	}
+	
+	public function isPaid() {
+		return $this->paid;
+	}
+	
+	private function setStatus($status) {
+		global $_db;
+		
+		$this->status = $status;
+		$_db->query('UPDATE orders SET status = ? WHERE id = ?', array($status, $this->id));
+	}
+	
+	public function approve() {
+		$this->setStatus(3);
+	}
+	
+	public function markPaid() {
+		global $_db;
+		
+		$this->paid = true;
+		$_db->query('UPDATE orders SET paid = 1 WHERE id = ?', array($this->id));
+		
+		$this->setStatus(4);
+	}
 
 }
 
@@ -266,12 +381,28 @@ class Ticket {
 	
 	private $id, $sId, $date, $type, $order;
 	
-	public function __construct($type, $date, &$order) {
+	public function __construct($type, $date, &$order, $info = null) {
+		if ($info) {
+			$this->init($info);
+		} else {
+			$this->create($type, $date);
+		}
+		
+		$this->order = $order;
+	}
+	
+	private function create($type, $date) {
 		$this->type = $type;
 		$this->date = $date;
-		$this->order = $order;
-		
+			
 		$this->save();
+	}
+	
+	private function init($info) {
+		$this->id = $info['id'];
+		$this->sId = $info['sId'];
+		$this->date = $info['date'];
+		$this->type = $info['type'];
 	}
 	
 	private function save() {

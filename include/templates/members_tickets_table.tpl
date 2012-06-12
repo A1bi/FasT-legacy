@@ -20,7 +20,7 @@
 				<td>{$order['firstname']} {$order['lastname']}</td>
 				<td>{$order['tickets']}</td>
 				<td>{$order['total']} €</td>
-				<td>Details</td>
+				<td><a href="/mitglieder/tickets?order={$order['id']}&action=showDetails">Details</a></td>
 			</tr>
 			{/foreach}
 		</table>

@@ -7,6 +7,33 @@ loadComponent("orders");
 OrderManager::init();
 
 if (!empty($_GET['order'])) {
+	$order = OrderManager::getInstance()->getOrderById($_GET['order']);
+	// not found ?
+	if (!$order->getId()) {
+		redirectTo("/mitglieder/tickets");
+	}
+	
+	if ($_GET['action'] == "showDetails") {
+		$_tpl->assign("order", $order);
+		$_tpl->display("members_tickets_details.tpl");
+			
+	} else {
+		switch ($_GET['action']) {
+			case "markPaid":
+				$order->markPaid();
+				break;
+				
+			case "cancel":
+				$order->cancel($_POST['reason']);
+				break;
+				
+			case "approve":
+				$order->approve();
+				break;
+		}
+		
+		redirectTo("/mitglieder/tickets?action=showDetails&order=".$order->getId());
+	}
 	
 	
 // nothing chosen -> show overview

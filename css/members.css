@@ -35,18 +35,20 @@
 	font-size: 14px;
 }
 
-.tickets table {
+table {
 	border-collapse: collapse;
 }
-.tickets table td {
-	padding: 2px;
+table td {
+	padding: 3px;
 	font-size: 13px;
+	vertical-align: top;
 }
-.tickets table .title td {
+table .title td {
 	border-bottom: 1px solid #cccccc;
 	padding-bottom: 2px;
 	font-size: 15px;
 }
+
 .tickets .box {
 	margin-bottom: 30px;
 }
@@ -61,4 +63,56 @@
 	padding-top: 5px;
 	font-size: 14px;
 	font-weight: bold;
+}
+.orderDetails .topRow {
+	overflow: auto;
+	padding: 0px 5px;
+	width: 100%;
+}
+.orderDetails .overview {
+	width: 60%;
+	float: left;
+}
+.orderDetails .overview .newSection td {
+	padding-top: 5px;
+	border-top: 1px solid #cccccc;
+}
+.orderDetails .overview td.left {
+	width: 40%;
+}
+.orderDetails .overview td.right {
+	width: 60%;
+}
+.orderDetails .actions {
+	width: 35%;
+	float: left;
+	margin-left: 20px;
+	font-size: 14px;
+}
+.orderDetails .actions ul {
+	margin: 0px 10px;
+	padding: 0px;
+}
+.orderDetails .actions ul li {
+	list-style: none;
+	margin: 5px 0px;
+}
+.orderDetails .cancel {
+	display: none;
+}
+.orderDetails .cancel input[name=reason] {
+	width: 97%;
+	margin-top: 10px;
+}
+.orderDetails .cancel .hcen {
+	margin-top: 10px;
+}
+.orderDetails .cancelled, .orderDetails .finished {
+	font-weight: bold;
+}
+.orderDetails .cancelled {
+	color: red;
+}
+.orderDetails .finished {
+	color: green;
 }
