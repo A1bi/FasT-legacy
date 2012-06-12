@@ -35,9 +35,9 @@
 		</div>
 	</div>
 	
-	{include file="members_tickets_table.tpl" title="Zu überprüfende Bestellungen" orders=$ordersCheck}
+	{include file="members_tickets_table.tpl" title="Zu überprüfende Bestellungen" orders=$ordersCheck important=true}
 	
-	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" orders=$ordersPay}
+	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" orders=$ordersPay important=true}
 	
 	{include file="members_tickets_table.tpl" title="Vergangene Bestellungen" orders=$ordersFinished}
 </div>

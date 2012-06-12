@@ -6,6 +6,15 @@ limitAccess(array(2));
 loadComponent("orders");
 OrderManager::init();
 
+function getOrdersFromInfo($orders) {
+	$tmpOrders = array();
+	foreach ($orders as $order) {
+		$tmpOrders[] = new Order($order, false);
+	}
+	
+	return $tmpOrders;
+}
+
 if (!empty($_GET['order'])) {
 	$order = OrderManager::getInstance()->getOrderById($_GET['order']);
 	// not found ?
@@ -82,12 +91,12 @@ if (!empty($_GET['order'])) {
 										COUNT(t.id) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
-							WHERE		o.payMethod = "charge"
-							AND			o.status < 1
+							WHERE		o.status = 1
 							AND			t.order = o.id
 							GROUP BY	o.id
+							ORDER BY	o.id DESC
 							');
-	$_tpl->assign("ordersCheck", $result->fetchAll());
+	$_tpl->assign("ordersCheck", getOrdersFromInfo($result->fetchAll()));
 	
 	
 	// orders to pay
@@ -100,13 +109,12 @@ if (!empty($_GET['order'])) {
 										COUNT(t.id) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
-							WHERE		o.payMethod = "transfer"
-							AND			o.paid = 0
-							AND			o.status < 2
+							WHERE		o.status = 2
 							AND			t.order = o.id
 							GROUP BY	o.id
+							ORDER BY	o.id DESC
 							');
-	$_tpl->assign("ordersPay", $result->fetchAll());
+	$_tpl->assign("ordersPay", getOrdersFromInfo($result->fetchAll()));
 	
 	
 	// finished or closed orders
@@ -119,11 +127,12 @@ if (!empty($_GET['order'])) {
 										COUNT(*) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
-							WHERE		o.status = 2
+							WHERE		o.status > 2
 							AND			t.order = o.id
 							GROUP BY	o.id
+							ORDER BY	o.id DESC
 							');
-	$_tpl->assign("ordersFinished", $result->fetchAll());
+	$_tpl->assign("ordersFinished", getOrdersFromInfo($result->fetchAll()));
 	
 	$_tpl->display("members_tickets.tpl");
 }

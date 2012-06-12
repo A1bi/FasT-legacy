@@ -1,9 +1,9 @@
-<div class="box">
+<div class="box{if $important && $orders|@count} important{/if}">
 	<div class="top">
 		{$title}
 	</div>
 	<div class="con">
-		{if $orders|@count > 0}
+		{if $orders|@count}
 		<table>
 			<tr class="title">
 				<td>ON</td>
@@ -14,13 +14,14 @@
 				<td></td>
 			</tr>
 			{foreach $orders as $order}
+			{$address=$order->getAddress()}
 			<tr>
-				<td>{$order['sId']}</td>
-				<td>{$order['time']|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
-				<td>{$order['firstname']} {$order['lastname']}</td>
-				<td>{$order['tickets']}</td>
-				<td>{$order['total']} €</td>
-				<td><a href="/mitglieder/tickets?order={$order['id']}&action=showDetails">Details</a></td>
+				<td>{$order->getSId()}</td>
+				<td>{$order->getTime()|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+				<td>{$address['firstname']} {$address['lastname']}</td>
+				<td>{$order->getTickets()|@count}</td>
+				<td>{$order->getTotal()} €</td>
+				<td><a href="/mitglieder/tickets?order={$order->getId()}&action=showDetails">Details</a></td>
 			</tr>
 			{/foreach}
 		</table>

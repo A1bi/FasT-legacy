@@ -52,6 +52,10 @@ table .title td {
 .tickets .box {
 	margin-bottom: 30px;
 }
+.tickets .box.important .top {
+	text-shadow: 1px 1px 3px white;
+	color: red;
+}
 .tickets .stats td {
 	text-align: center;
 }

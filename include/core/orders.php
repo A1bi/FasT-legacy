@@ -198,8 +198,16 @@ class Order {
 	}
 	
 	private function initTickets($tickets) {
-		foreach ($tickets as $ticket) {
-			$this->tickets[] = new Ticket(0, 0, $this, $ticket);
+		if (is_numeric($tickets)) {
+			// only number of tickets is given (for perfomance reasons) so we have to fake an array of tickets
+			for ($i = 0; $i < $tickets; $i++) {
+				$this->tickets[] = null;
+			}
+		
+		} else if (is_array($tickets)) {
+			foreach ($tickets as $ticket) {
+				$this->tickets[] = new Ticket(0, 0, $this, $ticket);
+			}
 		}
 	}
 	
@@ -311,8 +319,8 @@ class Order {
 		}
 	}
 	
-	public function getDate() {
-		return $this->date;
+	public function getTime() {
+		return $this->time;
 	}
 	
 	public function getId() {
