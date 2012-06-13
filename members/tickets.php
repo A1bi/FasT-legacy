@@ -29,7 +29,13 @@ if (!empty($_GET['order'])) {
 	} else {
 		switch ($_GET['action']) {
 			case "markPaid":
-				$order->markPaid();
+				if ($order->markPaid()) {
+					$payment = $order->getPayment();
+					if ($payment['method'] == "transfer") {
+						$order->createPdf();
+						$order->mailTickets();
+					}
+				}
 				break;
 				
 			case "cancel":

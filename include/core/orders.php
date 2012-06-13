@@ -326,6 +326,8 @@ class Order {
 		foreach ($this->tickets as $ticket) {
 			$ticket->cancel($reason);
 		}
+		
+		return true;
 	}
 	
 	public function getTime() {
@@ -383,6 +385,8 @@ class Order {
 		if ($this->status == 3) return;
 		
 		$this->setStatus(3);
+		
+		return true;
 	}
 	
 	public function markPaid($charge = 0) {
@@ -394,6 +398,8 @@ class Order {
 		$_db->query('UPDATE orders SET paid = 1, charge = ? WHERE id = ?', array($charge, $this->id));
 		
 		$this->setStatus(4);
+		
+		return true;
 	}
 
 }
