@@ -23,8 +23,6 @@ function redirectTo($url = "") {
  * @param string $core
  */
 function loadComponent($component) {
-	global $_base;
-
 	$component = "./include/core/" . $component . ".php";
 	// component exists?
 	if (file_exists($component)) {
@@ -98,7 +96,6 @@ if (!empty($redirect)) {
 
 // get config
 require("./include/config.inc.php");
-$_base = $_SERVER['DOCUMENT_ROOT'] . "/";
 
 // components to load
 $comps = array("templates", "database");
