@@ -66,8 +66,6 @@ class Order {
 			$this->init($orderInfo);
 		}
 		
-		$this->hash = md5($this->sId);
-		
 		return $this;
 	}
 	
@@ -79,8 +77,16 @@ class Order {
 			$this->payment = $orderInfo['payment'];
 			$this->total = $orderInfo['total'];
 			$this->sId = createId(6, "orders", "sId", true);
+			$this->hash = md5($this->sId);
 			
 			$this->save();
+			
+			if ($orderInfo['payment']['method'] == "charge") {
+				$status = 1;
+			} else {
+				$status = 2;
+			}
+			$this->setStatus($status);
 			
 			$this->createTickets($orderInfo['number'], $orderInfo['date']);
 		} else {
@@ -98,6 +104,7 @@ class Order {
 		$this->total = $orderInfo['total'];
 		$this->status = $orderInfo['status'];
 		$this->paid = $orderInfo['paid'];
+		$this->hash = md5($this->sId);
 		
 		// address
 		$this->address = array();
@@ -297,7 +304,7 @@ class Order {
 	private function save() {
 		global $_db;
 		
-		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, "")',
+		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, "")',
 				array($this->getSId(), $this->address['firstname'], $this->address['lastname'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR']));
 		
 		$this->id = $_db->id();
@@ -305,6 +312,8 @@ class Order {
 	
 	public function cancel($reason) {
 		global $_db;
+		
+		if ($this->isCancelled()) return;
 		
 		$this->cancelled['cancelled'] = true;
 		$this->cancelled['reason'] = $reason;
@@ -371,14 +380,18 @@ class Order {
 	}
 	
 	public function approve() {
+		if ($this->status == 3) return;
+		
 		$this->setStatus(3);
 	}
 	
-	public function markPaid() {
+	public function markPaid($charge = 0) {
 		global $_db;
 		
+		if ($this->paid) return;
+		
 		$this->paid = true;
-		$_db->query('UPDATE orders SET paid = 1 WHERE id = ?', array($this->id));
+		$_db->query('UPDATE orders SET paid = 1, charge = ? WHERE id = ?', array($charge, $this->id));
 		
 		$this->setStatus(4);
 	}
@@ -390,13 +403,13 @@ class Ticket {
 	private $id, $sId, $date, $type, $order;
 	
 	public function __construct($type, $date, &$order, $info = null) {
+		$this->order = $order;
+	
 		if ($info) {
 			$this->init($info);
 		} else {
 			$this->create($type, $date);
 		}
-		
-		$this->order = $order;
 	}
 	
 	private function create($type, $date) {

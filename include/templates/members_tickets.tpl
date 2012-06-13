@@ -37,7 +37,40 @@
 	<div class="trenner"></div>
 	{include file="members_tickets_table.tpl" title="Zu überprüfende Bestellungen" orders=$ordersCheck important=true}
 	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" orders=$ordersPay important=true unpaid=true}
+	<div class="box{if $charges} important{/if}">
+		<div class="top">
+			Ausstehende Lastschriften
+		</div>
+		<div class="con">
+			{($charges > 0) ? $charges : "Keine"} Lastschrift{if $charges != 1}en{/if} ausstehend.{if $charges} <a href="?action=charge">Jetzt einreichen.</a>{/if}
+		</div>
+	</div>
 	<div class="trenner"></div>
 	{include file="members_tickets_table.tpl" title="Vergangene Bestellungen" orders=$ordersFinished}
+	<div class="box stats">
+		<div class="top">
+			Vergangene Einreichungen von Lastschriften
+		</div>
+		<div class="con">
+			{if $oldCharges|@count}
+			<table>
+				<tr class="title">
+					<td>Datum</td>
+					<td>Enthaltene Lastschriften</td>
+					<td>Gesamtbetrag</td>
+				</tr>
+				{foreach $oldCharges as $charge}
+				<tr>
+					<td class="left">{$charge['date']|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+					<td>{$charge['orders']}</td>
+					<td>{$charge['total']} €</td>
+				</tr>
+				{/foreach}
+			</table>
+			{else}
+			Es wurden noch keine Lastschriften eingereicht.
+			{/if}
+		</div>
+	</div>
 </div>
 {include file="foot.tpl"}

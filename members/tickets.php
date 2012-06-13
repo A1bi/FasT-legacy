@@ -44,7 +44,38 @@ if (!empty($_GET['order'])) {
 		redirectTo("/mitglieder/tickets" . (($_GET['goto'] != "overview") ? "?action=showDetails&order=".$order->getId() : ""));
 	}
 	
+
+} elseif ($_GET['action'] == "charge") {
+	loadComponent("dtaus");
 	
+	$result = $_db->query('SELECT id, total, kName, kNo, blz, bank FROM orders WHERE status = 3');
+	$charges = $result->fetchAll();
+	
+	if (count($charges)) {
+		$chargeInfo = getData("charge");
+	
+		$_db->query('INSERT INTO orders_charges VALUES(null, ?)', array(time()));
+		$chargeId = $_db->id();
+		
+		$dta = new DTAUS("LK", $chargeInfo['sender'], $chargeId);
+		
+		foreach ($charges as $charge) {
+			$order = new Order($charge, false);
+			$payment = $order->getPayment();
+			$paymentDetails = array("name" => $payment['name'], "account" => $payment['number'], "blz" => $payment['blz'], "bank" => $payment['bank']);
+	
+			$transaction = new Transaction("charge", $order->getTotal(), $paymentDetails, $chargeInfo['references']);
+			$dta->addTransaction($transaction);
+			
+			$order->markPaid($chargeId);
+		}
+		
+		//echo $dta->getData();
+	}
+	
+	redirectTo("/mitglieder/tickets");
+
+
 // nothing chosen -> show overview
 } else {
 	// statistics
@@ -133,6 +164,21 @@ if (!empty($_GET['order'])) {
 							ORDER BY	o.id DESC
 							');
 	$_tpl->assign("ordersFinished", getOrdersFromInfo($result->fetchAll()));
+	
+	// charges
+	$result = $_db->query('SELECT COUNT(*) as number FROM orders WHERE status = 3');
+	$charges = $result->fetch();
+	$_tpl->assign("charges", $charges['number']);
+	
+	$result = $_db->query('	SELECT		COUNT(o.id) AS orders,
+										SUM(o.total) AS total,
+										c.date
+							FROM		orders_charges AS c,
+										orders AS o
+							WHERE		o.charge = c.id
+							GROUP BY	c.id
+							');
+	$_tpl->assign("oldCharges", $result->fetchAll());
 	
 	$_tpl->display("members_tickets.tpl");
 }

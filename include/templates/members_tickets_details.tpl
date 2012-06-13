@@ -92,9 +92,9 @@
 		<div class="con">
 			<ul>
 				{if !$order->isCancelled()}
-				{if $order->getStatus() == 1}<li><a href="?order={$order->getId()}&action=approve">freischalten</a></li>{/if}
-				{if $order->getStatus() == 2}<li><a href="?order={$order->getId()}&action=markPaid">als bezahlt markieren</a></li>{/if}
-				<li><a href="#" id="cancelBtn">stornieren</a></li>
+				{if $order->getStatus() == 1}<li><a href="?order={$order->getId()}&action=approve">Für Lastschrift freischalten</a></li>{/if}
+				{if $order->getStatus() == 2}<li><a href="?order={$order->getId()}&action=markPaid">Als bezahlt markieren</a></li>{/if}
+				<li><a href="#" id="cancelBtn">Stornieren</a></li>
 				{else}
 				Keine Aktionen möglich, da Bestellung storniert.
 				{/if}
