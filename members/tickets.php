@@ -41,7 +41,7 @@ if (!empty($_GET['order'])) {
 				break;
 		}
 		
-		redirectTo("/mitglieder/tickets?action=showDetails&order=".$order->getId());
+		redirectTo("/mitglieder/tickets" . (($_GET['goto'] != "overview") ? "?action=showDetails&order=".$order->getId() : ""));
 	}
 	
 	
@@ -112,7 +112,7 @@ if (!empty($_GET['order'])) {
 							WHERE		o.status = 2
 							AND			t.order = o.id
 							GROUP BY	o.id
-							ORDER BY	o.id DESC
+							ORDER BY	o.sId ASC
 							');
 	$_tpl->assign("ordersPay", getOrdersFromInfo($result->fetchAll()));
 	

@@ -34,11 +34,10 @@
 			</table>
 		</div>
 	</div>
-	
+	<div class="trenner"></div>
 	{include file="members_tickets_table.tpl" title="Zu überprüfende Bestellungen" orders=$ordersCheck important=true}
-	
-	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" orders=$ordersPay important=true}
-	
+	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" orders=$ordersPay important=true unpaid=true}
+	<div class="trenner"></div>
 	{include file="members_tickets_table.tpl" title="Vergangene Bestellungen" orders=$ordersFinished}
 </div>
 {include file="foot.tpl"}

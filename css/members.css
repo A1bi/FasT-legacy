@@ -68,6 +68,16 @@ table .title td {
 	font-size: 14px;
 	font-weight: bold;
 }
+.tickets td.actions {
+	width: 10%;
+	text-align: right;
+}
+.tickets td.actions img {
+	vertical-align: top;
+}
+.tickets td.sId {
+	font-weight: bold;
+}
 
 .orderDetails .back {
 	font-size: 13px;
