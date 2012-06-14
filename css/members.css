@@ -4,35 +4,42 @@
 .hl.section {
 	font-size: 30px;
 	margin-top: 0px;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 .login .msg {
 	color: red;
 }
 .sections {
 	text-align: center;
+	padding: 3px;
+	width: 80%;
+	margin: auto;
+	margin-bottom: 20px;
 }
-.sections .trenner {
-	margin-top: 1px;
-	margin-bottom: 3px;
-}
-.sections a, .hl.members {
+.sections, .sections a, .hl.members {
 	color: #d72c2c;
 }
-.sections a {
-	padding: 0px 10px;
+.sections {
+	font-weight: bold;
 }
-.sections .main a {
-	font-size: 18px;
+.sections .main {
+	border-bottom: 1px solid #cccccc;
+	padding-bottom: 3px;
+	margin-bottom: 3px;
+	font-size: 16px;
 }
 .sections a {
 	text-decoration: none;
+	font-weight: normal;
+}
+.sections a, .sections span {
+	padding: 0px 10px;
 }
 .sections a:hover {
 	text-decoration: underline;
 }
-.sections .sub a {
-	font-size: 14px;
+.sections .sub {
+	font-size: 13px;
 }
 
 table {
