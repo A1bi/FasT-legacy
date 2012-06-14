@@ -41,16 +41,22 @@ if ($_GET['ajax']) {
 			$order = new Order($_POST['order']);
 			
 			if ($order != null) {
+			
+				loadComponent("queue");
+				$queue = new Queue();
+				$queue->beginNewBatch();
 				
 				// mail info to customer
-				$order->mailConfirmation();
+				$queue->addJob("mailConfirmation", $order->getId());
 				
 				$payment = $order->getPayment();
 				if ($payment['method'] == "charge") {
 					// create pdf containing tickets and send it
-					$order->createPdf();
-					$order->mailTickets();
+					$queue->addJob("createPdf", $order->getId());
+					$queue->addJob("mailTickets", $order->getId());
 				}
+				
+				$queue->exec("./include/queue");
 				
 				$response['order'] = array("sId" => $order->getSId());
 				$response['status'] = "ok";

@@ -298,7 +298,9 @@ class Order {
 
 		}
 
-		$pdf->Output("./media/tickets/".$this->hash.".pdf");
+		$file = "./media/tickets/".$this->hash.".pdf";
+		$pdf->Output($file);
+		chmod($file, 0777);
 	}
 
 	private function save() {

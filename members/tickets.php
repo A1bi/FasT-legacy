@@ -27,13 +27,18 @@ if (!empty($_GET['order'])) {
 		$_tpl->display("members_tickets_details.tpl");
 			
 	} else {
+		loadComponent("queue");
+		$queue = new Queue();
+		
 		switch ($_GET['action']) {
 			case "markPaid":
 				if ($order->markPaid()) {
 					$payment = $order->getPayment();
 					if ($payment['method'] == "transfer") {
-						$order->createPdf();
-						$order->mailTickets();
+						$queue->beginNewBatch();
+						$queue->addJob("createPdf", $order->getId());
+						$queue->addJob("mailTickets", $order->getId());
+						$queue->exec("./include/queue");
 					}
 				}
 				break;
