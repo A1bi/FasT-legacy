@@ -171,27 +171,26 @@ class Order {
 	}
 	
 	public function mailConfirmation() {
-		global $_tpl;
-		
-		$_tpl->assign("order", $this);
-		$_tpl->assign("address", $this->address);
-		$_tpl->assign("tickets", $this->tickets);
-		$_tpl->assign("payment", $this->payment);
-
-		$body = $_tpl->fetch("order_mail_confirmation.tpl");
-
-		@mail($this->address['email'], "Ihre Bestellung", $body, $this->getMailHeaders());
+		$this->mail("Ihre Bestellung", "confirmation");
 	}
 	
 	public function mailTickets() {
 		global $_tpl;
 		
-		$_tpl->assign("address", $this->address);
-		$_tpl->assign("hash", $this->hash);
+		$_tpl->assign("gotPaid", $this->payment['method'] == "transfer" && $this->paid);
 		
-		$body = $_tpl->fetch("order_mail_tickets.tpl");
-
-		@mail($this->address['email'], "Ihre Karten", $body, $this->getMailHeaders());
+		$this->mail("Ihre Karten", "tickets");
+	}
+	
+	public function mail($subject, $tpl) {
+		global $_tpl;
+		
+		$_tpl->assign("order", $this);
+		$_tpl->assign("address", $this->address);
+		
+		$body = $_tpl->fetch("order_mail_" . $tpl . ".tpl");
+		
+		@mail($this->address['email'], $subject, $body, $this->getMailHeaders());
 	}
 	
 	private function createTickets($numbers, $date) {
@@ -370,6 +369,10 @@ class Order {
 	
 	public function getStatus() {
 		return $this->status;
+	}
+	
+	public function getHash() {
+		return $this->hash;
 	}
 	
 	public function isPaid() {

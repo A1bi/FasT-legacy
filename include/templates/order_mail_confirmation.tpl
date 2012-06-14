@@ -1,3 +1,5 @@
+{$tickets=$order->getTickets()}
+{$payment=$order->getPayment()}
 Vielen Dank für Ihre Bestellung, {$address['firstname']} {$address['lastname']}!
 
 Folgende Karten haben Sie für die Aufführung am {$tickets[0]->getDateString()} bestellt:
