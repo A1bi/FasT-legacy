@@ -58,9 +58,30 @@ class DTAUS {
 			$senderName = $this->splitName($this->sender['name'], 27, 1);
 			$rcpName = $this->splitName($transaction->recipient['name'], 27, 1);
 			
-			$referencesNumber = count($transaction->references)-1;
-			// only allow one addition for names
-			$additionalSections = $referencesNumber + $senderName['add'] + $rcpName['add'];
+			
+			// gather additions
+			$additions = array();
+			
+			// recipient name
+			for ($i = 1; $i <= $rcpName['add']; $i++) {
+				$additions[] = array("type" => 1, "string" => $rcpName['strings'][$i]);
+			}
+			
+			// references
+			// skip the first reference because it is added outside the additions
+			$tmpReferences = $transaction->references;
+			unset($tmpReferences[0]);
+			
+			foreach ($tmpReferences as $reference) {
+				$additions[] = array("type" => 2, "string" => $reference);
+			}
+			
+			// sender name
+			for ($i = 1; $i <= $senderName['add']; $i++) {
+				$additions[] = array("type" => 3, "string" => $senderName['strings'][$i]);
+			}
+			
+			$additionalSections = count($additions);
 			
 		
 			$this->addPartIntro("C", 187 + $additionalSections * 29);
@@ -105,16 +126,43 @@ class DTAUS {
 			// number of additions
 			$this->fillWithZeros(2, $additionalSections);
 			
-			// names
-			$this->addAddition(1, $rcpName['strings'], $rcpName['add']);
-			$this->addAddition(3, $senderName['strings'], $senderName['add']);
-			
-			// references
-			$this->addAddition(2, $transaction->references, $referencesNumber);
-			
-			$this->fillWithSpaces(11);
-			// fix
-			$this->fillWithSpaces(29);
+			// additions
+			$pos = 0;
+			// start with set 2 of 6
+			for ($i = 2; $i <= 6; $i++) {
+				// how many spaces to add after set
+				$spaces = 12;
+				if ($i == 2) {
+					// max 2 additions in set 2
+					$max = 2;
+					$spaces = 11;
+				} else if ($i < 6) {
+					// max 4 additions in sets 3-5
+					$max = 4;
+				} else {
+					// max 1 addition in set 6
+					$max = 1;
+				}
+				
+				for ($n = 0; $n < $max; $n++) {
+					// no more additions ?
+					if ($pos >= $additionalSections) {
+						// fill up the remaining additions in this set with spaces
+						$this->fillWithSpaces(29);
+						continue;
+					}
+					
+					// add the actual addition
+					$this->addAddition($additions[$pos]);
+					$pos++;
+				}
+				
+				// spaces which conclude the set
+				$this->fillWithSpaces($spaces);
+				
+				// no more additions - no more sets
+				if ($pos >= $additionalSections) break;
+			}
 		}
 	}
 	
@@ -134,11 +182,9 @@ class DTAUS {
 		$this->fillWithSpaces(51);
 	}
 	
-	private function addAddition($type, $objects, $number) {
-		for ($i = 1; $i <= $number; $i++) {
-			$this->addData("0".$type);
-			$this->fillWithSpaces(27, $objects[$i]);
-		}
+	private function addAddition($addition) {
+		$this->addData("0".$addition['type']);
+		$this->fillWithSpaces(27, $addition['string']);
 	}
 	
 	private function splitName($name, $chars, $maxAdd) {
@@ -146,6 +192,20 @@ class DTAUS {
 		$var['add'] = min(count($var['strings'])-1, $maxAdd);
 		
 		return $var;
+	}
+	
+	private function prepareText($text) {
+		$text = strtoupper($text);
+		
+		// replace umlaute
+		$chars = array("Ä", "Ö", "Ü", "ß");
+		$replacements = array("AE", "OE", "UE", "SS");
+		$text = str_replace($chars, $replacements, $text);
+		$chars = array("ä", "ö", "ü");
+		$text = str_replace($chars, $replacements, $text);
+		
+		// remove other unsopprted characters
+		return preg_replace("#[^A-Z0-9.,&-/+*$% ]#", "", $text);
 	}
 	
 	private function addPartIntro($part, $length) {
@@ -168,16 +228,23 @@ class DTAUS {
 	
 	private function fillWithZeros($length, $data = "") {
 		$this->fillDataWithCharacter("0", $length, $data);
-		$this->addData($data);
+		$this->addDataWithMaxLength($length, $data);
 	}
 	
 	private function fillWithSpaces($length, $data = "") {
-		$this->addData($data);
+		if (!empty($data)) {
+			$data = $this->prepareText($data);
+		}
+		$this->addDataWithMaxLength($length, $data);
 		$this->fillDataWithCharacter(" ", $length, $data);
 	}
 	
 	private function addData($data) {
-		$this->data .= strtoupper($data);
+		$this->data .= $data;
+	}
+	
+	private function addDataWithMaxLength($length, $data) {
+		$this->addData(substr($data, 0, $length));
 	}
 
 	public function addTransaction($transaction) {

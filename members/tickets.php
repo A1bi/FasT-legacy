@@ -61,7 +61,7 @@ if (!empty($_GET['order'])) {
 } elseif ($_GET['action'] == "charge") {
 	loadComponent("dtaus");
 	
-	$result = $_db->query('SELECT id, total, kName, kNo, blz, bank FROM orders WHERE status = 3');
+	$result = $_db->query('SELECT id, sId, total, kName, kNo, blz, bank FROM orders WHERE status = 3');
 	$charges = $result->fetchAll();
 	
 	if (count($charges)) {
@@ -78,7 +78,9 @@ if (!empty($_GET['order'])) {
 			$payment = $order->getPayment();
 			$paymentDetails = array("name" => $payment['name'], "account" => $payment['number'], "blz" => $payment['blz'], "bank" => $payment['bank']);
 	
-			$transaction = new Transaction("charge", $order->getTotal(), $paymentDetails, $chargeInfo['references']);
+			$references = $chargeInfo['references'];
+			$references[] = "ON".$order->getSId();
+			$transaction = new Transaction("charge", $order->getTotal(), $paymentDetails, $references);
 			$dta->addTransaction($transaction);
 			
 			$order->markPaid($chargeId);
