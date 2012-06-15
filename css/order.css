@@ -66,6 +66,61 @@
 .btn.next {
 	right: 0px;
 }
+.btns .msg {
+	position: absolute;
+	top: 16px;
+	right: 105px;
+	margin: auto;
+	color: red;
+	opacity: 0;
+}
+.btns.finish .msg {
+	right: 135px;
+}
+.btns .msg.alert {
+	opacity: 1;
+	-moz-transition: opacity .2s;
+	-webkit-transition: opacity .2s;
+	-o-transition: opacity .2s;
+}
+.btns .msg.highlighted {
+	-moz-animation-name: alert;
+	-moz-animation-duration: .3s;
+	-moz-animation-iteration-count: 2;
+	-webkit-animation-name: alert;
+	-webkit-animation-duration: .3s;
+	-webkit-animation-iteration-count: 2;
+	-o-animation-name: alert;
+	-o-animation-duration: .3s;
+	-o-animation-iteration-count: 2;
+}
+@-moz-keyframes alert {
+	from {
+	}
+	50% {
+		text-shadow: 0px 0px 7px red;
+	}
+	to {
+	}
+}
+@-webkit-keyframes alert {  
+	from {
+	}
+	50% {
+		text-shadow: 0px 0px 7px red;
+	}
+	to {
+	}
+}
+@-o-keyframes alert {  
+	from {
+	}
+	50% {
+		text-shadow: 0px 0px 7px red;
+	}
+	to {
+	}
+}
 .rTable {
 	border-spacing: 0px;
 	border-radius: 10px;
@@ -224,10 +279,6 @@ table td {
 }
 .stepCon.date tr.total td, .stepCon.confirm tr.total td {
 	border-top: 1px solid #cccccc;
-}
-.stepCon.address .error {
-	color: #ff0000;
-	display: none;
 }
 .stepCon.address td {
 	padding: 5px;

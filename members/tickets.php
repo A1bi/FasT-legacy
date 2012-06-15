@@ -8,8 +8,10 @@ OrderManager::init();
 
 function getOrdersFromInfo($orders) {
 	$tmpOrders = array();
-	foreach ($orders as $order) {
-		$tmpOrders[] = new Order($order, false);
+	foreach ($orders as $orderInfo) {
+		$order = new Order();
+		$order->init($orderInfo);
+		$tmpOrders[] = $order;
 	}
 	
 	return $tmpOrders;
@@ -71,7 +73,8 @@ if (!empty($_GET['order'])) {
 		$dta = new DTAUS("LK", $chargeInfo['sender'], $chargeId);
 		
 		foreach ($charges as $charge) {
-			$order = new Order($charge, false);
+			$order = new Order();
+			$order->init($charge);
 			$payment = $order->getPayment();
 			$paymentDetails = array("name" => $payment['name'], "account" => $payment['number'], "blz" => $payment['blz'], "bank" => $payment['bank']);
 	

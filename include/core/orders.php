@@ -38,7 +38,8 @@ class OrderManager {
 				$orderInfo['tickets'] = $result->fetchAll();
 				
 				// create order instance
-				$order = new Order($orderInfo, false);
+				$order = new Order();
+				$order->init($orderInfo);
 				$this->tickets[$order->getId()] = $order;
 				return $order;
 			}
@@ -58,18 +59,8 @@ class Order {
 			$payment = array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = array();
-
-	public function __construct($orderInfo, $new = true) {
-		if ($new && $this->create($orderInfo)) {
-			return null;
-		} else {
-			$this->init($orderInfo);
-		}
-		
-		return $this;
-	}
 	
-	private function create($orderInfo) {
+	public function create($orderInfo) {
 		// check if given info is ok
 		if ($this->checkInfo($orderInfo)) {
 			// set info
@@ -96,7 +87,7 @@ class Order {
 		return true;
 	}
 	
-	private function init($orderInfo) {
+	public function init($orderInfo) {
 		// set info from db
 		$this->id = $orderInfo['id'];
 		$this->sId = $orderInfo['sId'];
@@ -140,7 +131,7 @@ class Order {
 
 		// check address
 		foreach ($this->address as $key => $value) {
-			if (empty($orderInfo['address'][$key]) || ($key == "email" && !preg_match("#^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z]){2,9}$#", $orderInfo['address'][$key]))) {
+			if (empty($orderInfo['address'][$key]) || ($key == "email" && !preg_match("#^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$#i", $orderInfo['address'][$key]))) {
 				return false;
 			}
 		}
@@ -152,6 +143,9 @@ class Order {
 					return false;
 				}
 			}
+			
+			if (!$this->isInt($orderInfo['payment']['number'])) return false;
+			if (!$this->isInt($orderInfo['payment']['blz']) || strlen($orderInfo['payment']['blz']) < 8) return false;
 		}
 
 		// check if accepted TOS
@@ -160,6 +154,10 @@ class Order {
 		}
 		
 		return true;
+	}
+	
+	private function isInt($val) {
+		return (ctype_digit((string)$val) && is_int(intval($val)));
 	}
 	
 	private function getMailHeaders() {
@@ -197,7 +195,10 @@ class Order {
 		$t = 0;
 		foreach (OrderManager::$theater['prices'] as $type => $val) {
 			for ($i = 0; $i < $numbers[$type]; $i++) {
-				$this->tickets[] = new Ticket($t, $date, $this);
+				$ticket = new Ticket();
+				$ticket->setOrder($this);
+				$ticket->create($t, $date);
+				$this->tickets[] = $ticket;
 			}
 			$t++;
 		}
@@ -211,8 +212,11 @@ class Order {
 			}
 		
 		} else if (is_array($tickets)) {
-			foreach ($tickets as $ticket) {
-				$this->tickets[] = new Ticket(0, 0, $this, $ticket);
+			foreach ($tickets as $ticketInfo) {
+				$ticket = new Ticket();
+				$ticket->setOrder($this);
+				$ticket->init($ticketInfo);
+				$this->tickets[] = $ticket;
 			}
 		}
 	}
@@ -413,24 +417,14 @@ class Ticket {
 	
 	private $id, $sId, $date, $type, $order;
 	
-	public function __construct($type, $date, &$order, $info = null) {
-		$this->order = $order;
-	
-		if ($info) {
-			$this->init($info);
-		} else {
-			$this->create($type, $date);
-		}
-	}
-	
-	private function create($type, $date) {
+	public function create($type, $date) {
 		$this->type = $type;
 		$this->date = $date;
 			
 		$this->save();
 	}
 	
-	private function init($info) {
+	public function init($info) {
 		$this->id = $info['id'];
 		$this->sId = $info['sId'];
 		$this->date = $info['date'];
@@ -449,6 +443,10 @@ class Ticket {
 		global $_db;
 		
 		$_db->query('UPDATE orders_tickets SET cancelled = 1, cancelReason = ? WHERE id = ?', array($reason, $this->id));
+	}
+	
+	public function setOrder(&$order) {
+		$this->order = $order;
 	}
 	
 	public function getId() {

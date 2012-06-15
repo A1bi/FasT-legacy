@@ -57,7 +57,6 @@
 			<td>
 				<input type="text" name="email" value="" class="field" />
 				<div class="small">Bitte achten Sie auf die Richtigkeit Ihrer e-mail-Adresse, da an sie später Ihre Karten geschickt werden!</div>
-				<div class="error">e-mail-Adresse nicht korrekt.</div>
 			</td>
 		</tr>
 	</table>
@@ -94,11 +93,11 @@
 			</tr>
 			<tr>
 				<td>Kontonummer:</td>
-				<td><input type="text" name="number" value="" class="field" /></td>
+				<td><input type="text" name="number" value="" class="field" maxlength="10" /></td>
 			</tr>
 			<tr>
 				<td>BLZ:</td>
-				<td><input type="text" name="blz" value="" class="field" /></td>
+				<td><input type="text" name="blz" value="" class="field" maxlength="8" /></td>
 			</tr>
 			<tr>
 				<td>Name der Bank:</td>
@@ -218,6 +217,7 @@
 </div>
 <div class="btns">
 	<div class="btn prev disabled">zurück</div>
+	<div class="msg"></div>
 	<div class="btn next disabled">
 		<span class="action">weiter</span>
 		<span class="spinner"><img src="/gfx/order/loading.gif" alt="Bitte warten" /></span>

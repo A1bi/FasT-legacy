@@ -3,10 +3,18 @@ var order = new function () {
 	var info, order;
 	
 	var goNext = function () {
+		if ($(this).is(".disabled")) return;
+		
 		if ($(this).is(".prev")) {
+			showAlert("", false);
 			goPrev();
 			
 		} else {
+			// check all info
+			var check = checkStep();
+			showAlert(check.error, !check.ok);
+			if (!check.ok) return;
+		
 			if (order.step == 3) {
 				order.step++;
 				updateBtns();
@@ -29,6 +37,12 @@ var order = new function () {
 	var showPrev = function () {
 		updateProgress(-1);
 		updateStep();
+	}
+	
+	var keyUp = function (event) {
+		if (event.which == 13) {
+			goNext();
+		}
 	}
 	
 	var updateStep = function () {
@@ -59,64 +73,101 @@ var order = new function () {
 		
 		} else {
 			var action = "weiter";
-			if (order.step == 3) {
+			var finish = order.step == 3;
+			if (finish) {
 				action = "bestätigen";
 			}
 			btnBox.find(".action").html(action);
+			$(".btns").toggleClass("finish", finish);
 		}
 	}
 	
 	var toggleBtn = function (btn, toggle) {
-		var btnBox = $(".btn."+btn);
-		btnBox.toggleClass("disabled", !toggle).unbind();
-		
-		if (toggle) {
-			btnBox.click(goNext);
-		}
+		$(".btn."+btn).toggleClass("disabled", !toggle);
 	}
 	
 	var updateBtns = function () {
-		var ok = false;
+		toggleBtn("prev", order.step > 0 && order.step < steps.length-1);
+		updateBtnAction("next");
+	}
+	
+	var isInt = function (val) {
+		return (val.indexOf(".") == -1 && !isNaN(val));
+	}
+	
+	var checkFields = function (fields) {
+		var ok = true;
+		$.each(fields, function (key, val) {
+			if (val == "" && val !== false) {
+				ok = false;
+				return;
+			}
+		});
 		
+		return ok;
+	}
+	
+	var checkStep = function () {
+		var ok = true;
+		var error;
+	
 		switch (order.step) {
 			case 0:
-				ok = order.total > 0;
+				if (!order.date) {
+					ok = false;
+					error = "Bitte wählen Sie einen Termin.";
+				} else if (order.total <= 0) {
+					ok = false;
+					error = "Bitte wählen Sie mindestens eine Karte.";
+				}
 				break;
 				
 			case 1:
-				ok = true;
-				
-				$.each(order.address, function (key, val) {
-					if (val == "") {
-						ok = false;
-						return;
-					}
-				});
+				ok = checkFields(order.address);
+				if (!ok) {
+					error = "Bitte füllen Sie alle Felder aus.";
+				} else if (!/^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$/i.test(order.address['email'])) {
+					ok = false;
+					error = "Die angegebene e-mail-Adresse ist nicht korrekt.";
+				}
 				break;
 				
 			case 2:
-				if (order.payment.method == "transfer") {
-					ok = true;
-				
-				} else {
-					ok = true;
-					$.each(order.payment, function (key, val) {
-						if (val == "" || val === false) {
-							ok = false;
-							return;
-						}
-					});
+				if (order.payment.method == "") {
+					ok = false;
+					error = "Bitte wählen Sie eine Zahlungsmethode.";
+				} else if (order.payment.method == "charge") {
+					ok = checkFields(order.payment);
+					if (!ok) {
+						error = "Bitte füllen Sie alle Felder aus.";
+					} else if (!isInt(order.payment['number'])) {
+						ok = false;
+						error = "Die angegebene Kontonummer ist nicht korrekt.";
+					} else if (!isInt(order.payment['blz']) || order.payment['blz'].length < 8) {
+						ok = false;
+						error = "Die angegebene Bankleitzahl ist nicht korrekt.";
+					} else if (!order.payment.accepted) {
+						ok = false;
+						error = "Bitte akzeptieren Sie die Abbuchung von Ihrem Konto.";
+					}
 				}
 				break;
 				
 			case 3:
 				ok = order.accepted;
+				error = "Bitte akzeptieren Sie unsere AGB.";
 				break;
 		}
 		
-		toggleBtn("next", ok);
-		toggleBtn("prev", order.step > 0 && order.step < steps.length-1);
-		updateBtnAction("next");
+		return {"ok": ok, "error": error};
+	}
+	
+	var showAlert = function (text, toggle) {
+		$(".btns .msg").html(text).toggleClass("alert highlighted", toggle);
+	}
+	
+	var altertHighlightEnded = function () {
+		$(this).removeClass("highlighted");
 	}
 	
 	var makeRequest = function (data, action, callback) {
@@ -182,26 +233,14 @@ var order = new function () {
 		
 		tables.find("tr.total .total span").html(order.total);
 		$(".stepCon.finish span.total").html(order.total);
-		
-		updateBtns();
 	}
 	
 	var updateAddress = function () {
 		var field = $(this).attr("name");
 		var val = $(this).val();
-		if (field == "email") {
-			var ok = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z]){2,9}$/.test(val);
-			if (!ok) {
-				val = "";
-			}
-			
-			$(".stepCon.address .error").toggle(!ok);
-		}
 		order.address[field] = val;
 		
 		$(".stepCon.confirm tr ."+field).html(val);
-			
-		updateBtns();
 	}
 	
 	var chosePayment = function () {
@@ -217,8 +256,6 @@ var order = new function () {
 		var confirmBox = $(".stepCon.confirm .payment, .stepCon.finish .payment");
 		confirmBox.find(".charge").toggle(charge);
 		confirmBox.find(".transfer").toggle(!charge);
-		
-		updateBtns();
 	}
 	
 	var updatePayment = function () {
@@ -230,14 +267,10 @@ var order = new function () {
 			$(".stepCon.confirm .payment .charge ."+field).html(val);
 		}
 		order.payment[field] = val;
-		
-		updateBtns();
 	}
 	
 	var accepted = function () {
 		order.accepted = $(this).is(":checked");
-		
-		updateBtns();
 	}
 	
 	var placeOrder = function () {
@@ -254,6 +287,9 @@ var order = new function () {
 	}
 	
 	var registerEvents = function () {
+		$(".btn").click(goNext);
+		$(".btns .msg").bind("animationend webkitAnimationEnd", altertHighlightEnded);
+	
 		$(".stepCon.date li .string").click(choseDate);
 		$(".stepCon.date select").change(choseNumber);
 		
@@ -263,6 +299,8 @@ var order = new function () {
 		$(".stepCon.payment").find("input.field, input[name=accepted]").keyup(updatePayment).focusout(updatePayment).click(updatePayment);
 		
 		$(".stepCon.confirm input").click(accepted);
+		
+		$(".stepCon").keyup(keyUp);
 	}
 	
 	var init = function () {
@@ -272,6 +310,8 @@ var order = new function () {
 			
 			updateInfo();
 			updateOrder();
+			
+			toggleBtn("next", true);
 		});
 	}
 	

@@ -30,7 +30,8 @@ if ($_GET['ajax']) {
 					"number" => array("kids" => 0, "adults" => 0),
 					"address" => array("firstname" => "", "lastname" => "", "fon" => "", "email" => ""),
 					"payment" => array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
-					"accepted" => false
+					"accepted" => false,
+					"total" => 0
 				);
 			}
 			$response['order'] = $_SESSION['order'];
@@ -38,9 +39,9 @@ if ($_GET['ajax']) {
 			break;
 			
 		case "placeOrder":
-			$order = new Order($_POST['order']);
+			$order = new Order();
 			
-			if ($order != null) {
+			if ($order->create($_POST['order'])) {
 			
 				loadComponent("queue");
 				$queue = new Queue();
