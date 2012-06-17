@@ -43,3 +43,25 @@
 	font-size: 26px;
 	font-weight: bold;
 }
+.info .cast {
+	margin: 20px 0px;
+	font-size: 16px;
+}
+.info .cast td {
+	width: 50%;
+	padding: 4px 10px;
+	vertical-align: top;
+}
+.info .cast p {
+	margin: 10px 0px;
+}
+.info .cast .role {
+	text-align: right;
+}
+.info .cast .actor {
+	font-weight: bold;
+	text-align: left;
+}
+.info .cast .newSection td {
+	padding-top: 20px;
+}
