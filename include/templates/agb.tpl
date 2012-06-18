@@ -16,9 +16,9 @@
 			</div>
 		</div>
 		<div class="parag">
-			3. Ermä&szlig;igungen
+			3. Ermäßigungen
 			<div class="nrs">
-				Kartenpreisermäßigungen gelten für Schüler und Studenten mit gültigem Nachweis.
+				Kartenpreisermäßigungen gelten für Jugendliche bis 16 Jahre.
 			</div>
 		</div>
 		<div class="parag">
@@ -31,8 +31,8 @@
 		<div class="parag">
 			5. Sonstiges
 			<div class="nrs">
-				Einlass: Zuschauer, die nach Beginn der Aufführung kommen, haben keinen Anspruch auf Einlass.
-				<br />Speisen und Getränke: Das Mitbringen von Speisen und Getränken in den Zuschauerraum ist nicht gestattet.
+				Einlass: Einlass ist jeweils eine Stunde vor Vorstellungsbeginn. Zuschauer, die nach Beginn der Aufführung kommen, haben keinen Anspruch auf Einlass.
+				<br />Speisen und Getränke: Das Mitbringen von Speisen und Getränken in den Zuschauerraum ist nicht gestattet. Der Verkauf von Speisen und Getränken findet nicht während der Vorstellungen statt.
 				<br />Fotografieren und Mobiltelefon: Während der Vorstellung ist das Fotografieren sowie das Aufzeichnen von Bild und Ton verboten. Bei Zuwiderhandlungen können Besucher aus der Spielstätte verwiesen werden. Außerdem müssen die Mobiltelefone ausgeschaltet sein.
 				<br />Hunde sind während der Vorstellung im Bereich der Freilichtbühne und im Zuschauerbereich nicht gestattet.
 			</div>
@@ -47,7 +47,7 @@
 		<div class="parag">
 			7. Inkrafttreten
 			<div class="nrs">
-				Diese allgemeinen Geschäftsbedingungen treten am 01. Juni 2012 in Kraft.
+				Diese allgemeinen Geschäftsbedingungen treten am 15. Juni 2012 in Kraft.
 			</div>
 		</div>
 		<p>Mit dem Erwerb der Eintrittskarte werden die allgemeinen Geschäftsbedingungen anerkannt.</p>
