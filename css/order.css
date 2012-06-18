@@ -241,6 +241,10 @@ table td {
 .stepCon .accept {
 	margin: 20px 10px;
 }
+.stepCon tr.newSection td {
+	border-top: 1px solid #cccccc;
+	padding-top: 20px;
+}
 
 .stepCon.date ul {
 	list-style-type: none;
@@ -280,6 +284,12 @@ table td {
 .stepCon.date tr.total td, .stepCon.confirm tr.total td {
 	border-top: 1px solid #cccccc;
 }
+.stepCon.address table {
+	border-collapse: collapse;
+}
+.stepCon.address tr td:first-child {
+	width: 30%;
+}
 .stepCon.address td {
 	padding: 5px;
 }
@@ -287,11 +297,18 @@ table td {
 	margin-top: 5px;
 	color: #000000;
 }
+.stepCon.address .inner.newSection {
+	border-top: 1px solid #cccccc;
+	width: 70%;
+}
 .stepCon.payment td {
 	padding-top: 10px;
 }
 .stepCon.payment td .small {
 	color: #000000;
+}
+.stepCon.payment .radio {
+	width: 10%;
 }
 .stepCon.payment .charge {
 	margin-top: 30px;

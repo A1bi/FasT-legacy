@@ -53,6 +53,10 @@
 					<td>{$address['firstname']} {$address['lastname']}</td>
 				</tr>
 				<tr>
+					<td>PLZ:</td>
+					<td>{$address['plz']}</td>
+				</tr>
+				<tr>
 					<td>Telefon:</td>
 					<td>{$address['fon']}</td>
 				</tr>

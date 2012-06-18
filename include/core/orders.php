@@ -55,7 +55,7 @@ class OrderManager {
 class Order {
 	
 	private $id, $sId, $total, $hash, $time, $status = 0, $paid = false,
-			$address = array("firstname" => "", "lastname" => "", "fon" => "", "email" => ""),
+			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = array();
@@ -99,7 +99,7 @@ class Order {
 		
 		// address
 		$this->address = array();
-		$addressFields = array("firstname", "lastname", "fon", "email");
+		$addressFields = array("gender", "firstname", "lastname", "plz", "fon", "email");
 		foreach ($addressFields as $field) {
 			$this->address[$field] = $orderInfo[$field];
 		}
@@ -131,10 +131,15 @@ class Order {
 
 		// check address
 		foreach ($this->address as $key => $value) {
-			if (empty($orderInfo['address'][$key]) || ($key == "email" && !preg_match("#^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$#i", $orderInfo['address'][$key]))) {
+			if (empty($orderInfo['address'][$key])) {
 				return false;
 			}
 		}
+		$this->address['gender'] = ($orderInfo['gender'] == 2) ? 2 : 1;
+		
+		if (!$this->isInt($orderInfo['address']['plz']) || strlen($orderInfo['address']['plz']) < 5) return false;
+		if (!preg_match("#^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$#i", $orderInfo['address']['email'])) return false;
+		
 
 		// check payment
 		if ($orderInfo['payment']['method'] != "transfer") {
@@ -309,8 +314,8 @@ class Order {
 	private function save() {
 		global $_db;
 		
-		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, "")',
-				array($this->getSId(), $this->address['firstname'], $this->address['lastname'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR']));
+		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, "")',
+				array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR']));
 		
 		$this->id = $_db->id();
 	}

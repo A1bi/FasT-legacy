@@ -1,6 +1,6 @@
-Hallo {$address['firstname']} {$address['lastname']}!
+Sehr geehrte{if $address['gender'] == 1} Frau{else}r Herr{/if} {$address['lastname']},
 
-{if $gotPaid}Vielen Dank für Ihre Zahlung!{/if}
+{if $gotPaid}vielen Dank für Ihre Zahlung!{/if}
 
 Ihre Karten stehen nun zum Download als PDF-Dokument bereit unter:
 https://{$smarty.server.SERVER_NAME}/media/tickets/{$order->getHash()}.pdf

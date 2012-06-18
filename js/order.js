@@ -126,6 +126,9 @@ var order = new function () {
 				ok = checkFields(order.address);
 				if (!ok) {
 					error = "Bitte füllen Sie alle Felder aus.";
+				} else if (!isInt(order.address['plz']) || order.address['plz'].length < 5) {
+					ok = false;
+					error = "Die angegebene Postleitzahl ist nicht korrekt.";
 				} else if (!/^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$/i.test(order.address['email'])) {
 					ok = false;
 					error = "Die angegebene e-mail-Adresse ist nicht korrekt.";
@@ -293,7 +296,7 @@ var order = new function () {
 		$(".stepCon.date li .string").click(choseDate);
 		$(".stepCon.date select").change(choseNumber);
 		
-		$(".stepCon.address input").keyup(updateAddress).focusout(updateAddress);
+		$(".stepCon.address").find("select, input").keyup(updateAddress).change(updateAddress);
 		
 		$(".stepCon.payment input[name=method]").click(chosePayment);
 		$(".stepCon.payment").find("input.field, input[name=accepted]").keyup(updatePayment).focusout(updatePayment).click(updatePayment);

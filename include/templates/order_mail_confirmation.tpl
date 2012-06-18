@@ -1,6 +1,8 @@
 {$tickets=$order->getTickets()}
 {$payment=$order->getPayment()}
-Vielen Dank für Ihre Bestellung, {$address['firstname']} {$address['lastname']}!
+Sehr geehrte{if $address['gender'] == 1} Frau{else}r Herr{/if} {$address['lastname']},
+
+vielen Dank für Ihre Bestellung!
 
 Folgende Karten haben Sie für die Aufführung am {$tickets[0]->getDateString()} bestellt:
 

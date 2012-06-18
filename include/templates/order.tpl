@@ -41,17 +41,31 @@
 	Bitte füllen Sie die folgenden Felder entsprechend aus:
 	<table class="inner">
 		<tr>
+			<td>Anrede:</td>
+			<td><select name="gender"><option value="1">Frau</option><option value="2">Herr</option></select></td>
+		</tr>
+		<tr>
 			<td>Vorname:</td>
-			<td style="width: 70%;"><input type="text" name="firstname" value="" class="field" /></td>
+			<td><input type="text" name="firstname" value="" class="field" /></td>
 		</tr>
 		<tr>
 			<td>Nachname:</td>
 			<td><input type="text" name="lastname" value="" class="field" /></td>
 		</tr>
+	</table>
+	<div class="inner newSection"></div>
+	<table class="inner">
+		<tr>
+			<td>PLZ:</td>
+			<td><input type="text" name="plz" value="" class="field" maxlength="5" /></td>
+		</tr>
 		<tr>
 			<td>Telefon:</td>
 			<td><input type="text" name="fon" value="" class="field" /></td>
 		</tr>
+	</table>
+	<div class="inner newSection"></div>
+	<table class="inner">
 		<tr>
 			<td>e-mail-Adresse:</td>
 			<td>
@@ -68,14 +82,14 @@
 	Bitte wählen Sie eine der folgenden Zahlungsmethoden aus:
 	<table class="inner">
 		<tr>
-			<td><input type="radio" name="method" value="charge" /></td>
-			<td style="width: 90%;">
+			<td class="radio"><input type="radio" name="method" value="charge" /></td>
+			<td>
 				<b>Lastschrift</b>
 				<div class="small">Schnell und bequem, Sie erhalten Ihre Karten sofort nach der Bestellung!</div>
 			</td>
 		</tr>
 		<tr>
-			<td><input type="radio" name="method" value="transfer" /></td>
+			<td class="radio"><input type="radio" name="method" value="transfer" /></td>
 			<td>
 				<b>Vorkasse per Überweisung</b>
 				<div class="small">Sie erhalten Ihre Karten nach Zahlungseingang.</div>

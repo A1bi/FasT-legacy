@@ -28,7 +28,7 @@ if ($_GET['ajax']) {
 					"lastUpdate" => time(),
 					"date" => 0,
 					"number" => array("kids" => 0, "adults" => 0),
-					"address" => array("firstname" => "", "lastname" => "", "fon" => "", "email" => ""),
+					"address" => array("gender" => 1, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 					"payment" => array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 					"accepted" => false,
 					"total" => 0
