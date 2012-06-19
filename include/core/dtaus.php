@@ -1,8 +1,8 @@
 <?php
 
 class DTAUS {
-	private $transactionType, $sender, $reference, $data,
-			$totalSum, $accountSum, $blzSum,
+	private $transactionType, $sender, $reference, $data = "",
+			$sums = array(),
 			$transactions = array();
 			
 	public function __construct($transactionType, $sender, $reference) {
@@ -11,8 +11,10 @@ class DTAUS {
 		$this->reference = $reference;
 	}
 	
-	private function generateData() {
+	public function generateData() {
+		// reset data and sums
 		$this->data = "";
+		$sums = array("blz" => 0, "account" => 0, "total" => 0);
 		
 		$this->generatePartA();
 		$this->generatePartC();
@@ -20,9 +22,11 @@ class DTAUS {
 	}
 	
 	public function getData() {
-		$this->generateData();
-		
 		return $this->data;
+	}
+	
+	public function getSums() {
+		return $this->sums;
 	}
 	
 	private function generatePartA() {
@@ -88,9 +92,9 @@ class DTAUS {
 			
 			// recipient info
 			$this->fillWithZeros(8, $this->sender['blz']);
-			$this->blzSum += $transaction->recipient['blz'];
+			$this->addToSum($transaction->recipient['blz'], "blz");
 			$this->fillWithZeros(8, $transaction->recipient['blz']);
-			$this->accountSum += $transaction->recipient['account'];
+			$this->addToSum($transaction->recipient['account'], "account");
 			$this->fillWithZeros(10, $transaction->recipient['account']);
 			$this->fillWithZeros(13);
 			
@@ -105,7 +109,7 @@ class DTAUS {
 			
 			// total
 			$total = $transaction->total * 100;
-			$this->totalSum += $total;
+			$this->addToSum($total, "total");
 			$this->fillWithZeros(11, $total);
 			$this->fillWithSpaces(3);
 			
@@ -175,9 +179,9 @@ class DTAUS {
 		
 		// sums
 		$this->fillWithZeros(13);
-		$this->fillWithZeros(17, $this->accountSum);
-		$this->fillWithZeros(17, $this->blzSum);
-		$this->fillWithZeros(13, $this->totalSum);
+		$this->fillWithZeros(17, $this->sums['account']);
+		$this->fillWithZeros(17, $this->sums['blz']);
+		$this->fillWithZeros(13, $this->sums['total']);
 		
 		$this->fillWithSpaces(51);
 	}
@@ -245,6 +249,10 @@ class DTAUS {
 	
 	private function addDataWithMaxLength($length, $data) {
 		$this->addData(substr($data, 0, $length));
+	}
+	
+	private function addToSum($number, $type) {
+		$this->sums[$type] += $number;
 	}
 
 	public function addTransaction($transaction) {

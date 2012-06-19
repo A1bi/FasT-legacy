@@ -1,12 +1,15 @@
 {
 	"sender": {
-		"name": "Freilichtbuehne am schiefen Turm",
-		"shortname": "Freilichtbuehne a. s. Turm",
+		"name": "Freilichtbühne am schiefen Turm",
+		"shortname": "Freilichtbühne a. s. Turm",
+		"location": "Kaisersesch",
 		"account": "178167",
-		"blz": "57069144"
+		"blz": "57069144",
+		"bank": "Raiffeisenbank Kaisersesch"
 	},
 	"references": [
-		"Vielen Dank fuer Ihre",
+		"Vielen Dank für Ihre",
 		"Bestellung!"
-	]
+	],
+	"bankEmail": "buchhaltung@rbkaisersesch.de"
 }

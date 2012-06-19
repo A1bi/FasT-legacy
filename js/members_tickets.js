@@ -3,4 +3,8 @@ $(function () {
 		$(".actions.cancel").slideToggle();
 		event.preventDefault();
 	});
+	
+	$(".charges a").click(function (event) {
+		$(this).hide().parent().append("<b>bitte warten...</b>");
+	});
 });
