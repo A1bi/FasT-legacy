@@ -165,14 +165,6 @@ class Order {
 		return (ctype_digit((string)$val) && is_int(intval($val)));
 	}
 	
-	private function getMailHeaders() {
-		$headers = sprintf("From:%s<%s>\n", mb_encode_mimeheader(OrderManager::$company['name'], "UTF-8", "Q"), OrderManager::$company['noreply']);
-		$headers .= sprintf("Reply-To:%s\n", OrderManager::$company['email']);
-		$headers .= "Mime-Version: 1.0 Content-Type: text/plain; charset=utf-8 Content-Transfer-Encoding: quoted-printable";
-		
-		return $headers;
-	}
-	
 	public function mailConfirmation() {
 		$this->mail("Ihre Bestellung", "confirmation");
 	}
@@ -187,13 +179,23 @@ class Order {
 	
 	public function mail($subject, $tpl) {
 		global $_tpl;
+		require_once("/usr/share/php/libphp-phpmailer/class.phpmailer.php");
 		
 		$_tpl->assign("order", $this);
 		$_tpl->assign("address", $this->address);
 		
-		$body = $_tpl->fetch("order_mail_" . $tpl . ".tpl");
+		$mail = new PHPMailer();
+		$mail->CharSet = 'utf-8';
 		
-		@mail($this->address['email'], $subject, $body, $this->getMailHeaders());
+		$mail->SetFrom(OrderManager::$company['noreply'], OrderManager::$company['name']);
+		$mail->ClearReplyTos();
+		$mail->AddReplyTo(OrderManager::$company['email'], OrderManager::$company['name']);
+		$mail->AddAddress($this->address['email']);
+		
+		$mail->Subject = $subject;
+		$mail->Body = $_tpl->fetch("order_mail_" . $tpl . ".tpl");
+		
+		$mail->Send();
 	}
 	
 	private function createTickets($numbers, $date) {
@@ -228,7 +230,7 @@ class Order {
 	
 	public function createPdf() {
 		global $_tpl;
-		require('/usr/share/php/fpdf/fpdf.php');
+		require_once('/usr/share/php/fpdf/fpdf.php');
 
 		$pdf = new FPDF();
 		$pdf->SetTitle("Eintrittskarten - " . OrderManager::$theater['title'], true);
