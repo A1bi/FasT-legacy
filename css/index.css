@@ -2,37 +2,33 @@
 	margin-top: 30px;
 	font-size: 20px;
 }
-.fb {
-	width: 100%;
-}
-.fb iframe {
-	border: none;
-	overflow: hidden;
-	width: 400px;
-	height: 62px;
-}
 .teaser {
-	overflow: auto;
+	position: relative;
+	width: 610px;
+	height: 500px;
+	margin: auto;
+	margin-top: 30px;
+	background: url(/gfx/theater/montevideo/index_bg.png) no-repeat bottom;
+	
 }
-.teaser .left {
-	float: left;
-	width: 50%;
-	margin-top: 10px;
-}
-.teaser .right {
-	float: left;
-	width: 50%;
-	margin-top: 20px;
-}
-.teaser .right .hl {
-	color: #000000;
-	font-size: 34px;
-	display: block;
-}
-.teaser .title {
-	font-size: 19px;
-	margin-top: 10px;
+.teaser, .teaser a, .teaser .hl {
+	text-shadow: 1px 1px 6px black;
+	color: white;
 }
 .teaser .hl {
-	color: #0090da;
+	padding-top: 20px;
+}
+.teaser .title {
+	position: absolute;
+	top: 95px;
+	left: 420px;
+	font-size: 20px;
+	width: 170px;
+}
+.teaser .bottom {
+	position: absolute;
+	bottom: 10px;
+	left: 29px;
+	font-family: "Qlassik", "Arial";
+	font-size: 28px;
 }
