@@ -70,6 +70,28 @@ function createId($digits, $table = "", $column = "", $numbers = false) {
 	return $id;
 }
 
+define("SALT_LENGTH", 24);
+
+function getHash($string, $salt = "") {
+	return hash("sha256", $salt . $string);
+}
+
+function getHashFromPassword($pass) {
+	$salt = substr(uniqid(mt_rand(), true), 0, SALT_LENGTH);
+	
+	$hash = getHash($pass, $salt);
+	
+	return $salt . $hash;
+}
+
+function validatePassword($pass, $hash) {
+	$salt = substr($hash, 0, SALT_LENGTH);
+	
+	$validHash = substr($hash, SALT_LENGTH);
+	
+	return getHash($pass, $salt) == $validHash;
+}
+
 function limitAccess($groups) {
 	global $_user;
 	

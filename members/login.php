@@ -17,17 +17,19 @@ if ($_user['id']) {
 	}
 	
 } else if ($_POST['login'] && !empty($_POST['name']) && !empty($_POST['pass'])) {
-	$hash = md5($_POST['pass']);
-	$result = $_db->query('SELECT id, `group` FROM users WHERE name = ? AND pass = ?', array($_POST['name'], $hash));
+	$result = $_db->query('SELECT id, `group`, pass FROM users WHERE name = ?', array($_POST['name']));
 	$user = $result->fetch();
 	
-	if ($user['id']) {
+	if ($user['id'] && validatePassword($_POST['pass'], $user['pass'])) {
 		$_db->query('UPDATE users SET lastLogin = ? WHERE id = ?', array(time(), $user['id']));
-		$_SESSION['user'] = array("id" => $user['id'], "pass" => $hash);
+		$_SESSION['user'] = array("id" => $user['id'], "pass" => $user['pass']);
 		$_user = $user;
 		
 		redirectToMembers();
 	}
+	
+	// just for safety
+	unset($user);
 	
 	$_tpl->assign("msg", "Zugangsdaten stimmen nicht!");
 
