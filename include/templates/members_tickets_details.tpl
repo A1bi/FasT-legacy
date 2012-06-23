@@ -41,7 +41,7 @@
 				{if $order->isCancelled()}
 				<tr>
 					<td>Stornierungsgrund:</td>
-					<td>{$order->getCancelReason()}</td>
+					<td>{$order->getCancelReason()|escape}</td>
 				</tr>
 				{/if}
 				<tr>
@@ -50,15 +50,15 @@
 				</tr>
 				<tr class="newSection">
 					<td>Käufer:</td>
-					<td>{$address['firstname']} {$address['lastname']}</td>
+					<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
 				</tr>
 				<tr>
 					<td>PLZ:</td>
-					<td>{$address['plz']}</td>
+					<td>{$address['plz']|default:"<em>unbekannt</em>"}</td>
 				</tr>
 				<tr>
 					<td>Telefon:</td>
-					<td>{$address['fon']}</td>
+					<td>{$address['fon']|escape}</td>
 				</tr>
 				<tr>
 					<td>e-mail:</td>
@@ -71,7 +71,7 @@
 				{if $payment['method'] == "charge"}
 				<tr>
 					<td>Kontoinhaber:</td>
-					<td>{$payment['name']}</td>
+					<td>{$payment['name']|escape}</td>
 				</tr>
 				<tr>
 					<td>Kontonummer:</td>
@@ -83,7 +83,7 @@
 				</tr>
 				<tr>
 					<td>Bankname:</td>
-					<td>{$payment['bank']}</td>
+					<td>{$payment['bank']|escape}</td>
 				</tr>
 				{/if}
 			</table>
@@ -96,8 +96,9 @@
 		<div class="con">
 			<ul>
 				{if !$order->isCancelled()}
-				{if $order->getStatus() == 1}<li><a href="?order={$order->getId()}&action=approve">Für Lastschrift freischalten</a></li>{/if}
-				{if $order->getStatus() == 2}<li><a href="?order={$order->getId()}&action=markPaid">Als bezahlt markieren</a></li>{/if}
+				{if $order->getStatus() == 1}<li><a href="?order={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>{/if}
+				{if $order->getStatus() == 2}<li><a href="?order={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>{/if}
+				{if $order->getStatus() == 3}<li><a href="?order={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>{/if}
 				<li><a href="#" id="cancelBtn">Stornieren</a></li>
 				{else}
 				Keine Aktionen möglich, da Bestellung storniert.
@@ -110,7 +111,7 @@
 			Bestellung stornieren
 		</div>
 		<div class="con">
-			<form action="?order={$order->getId()}&action=cancel" method="post">
+			<form action="?order={$order->getId()}&amp;action=cancel" method="post">
 			Grund:<br />
 			<input type="text" name="reason" />
 			<div class="hcen">
@@ -127,7 +128,6 @@
 	</div>
 	<div class="con">
 		<table>
-			<table>
 			<tr class="title">
 				<td>Typ</td>
 				<td>Aufführung</td>
@@ -138,7 +138,6 @@
 				<td>{$ticket->getDateString()}</td>
 			</tr>
 			{/foreach}
-		</table>
 		</table>
 	</div>
 </div>

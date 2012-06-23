@@ -397,10 +397,11 @@ class Order {
 		$_db->query('UPDATE orders SET status = ? WHERE id = ?', array($status, $this->id));
 	}
 	
-	public function approve() {
-		if ($this->status == 3) return;
+	public function approve($toggle = true) {
+		$status = ($toggle) ? 3 : 1;
+		if ($this->status == $status) return;
 		
-		$this->setStatus(3);
+		$this->setStatus($status);
 		
 		return true;
 	}

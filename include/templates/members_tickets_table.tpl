@@ -22,8 +22,8 @@
 				<td>{$order->getTickets()|@count}</td>
 				<td>{$order->getTotal()} €</td>
 				<td class="actions">
-					{if $unpaid}<a href="/mitglieder/tickets?order={$order->getId()}&action=markPaid&goto=overview"><img src="/gfx/members/unpaid.png" alt="markieren als bezahlt" title="markieren als bezahlt" /></a> &nbsp;{/if}
-					<a href="/mitglieder/tickets?order={$order->getId()}&action=showDetails&goto=overview"><img src="/gfx/members/details.png" alt="Details anzeigen" title="Details anzeigen" /></a>
+					{if $unpaid}<a href="/mitglieder/tickets?order={$order->getId()}&amp;action=markPaid&amp;goto=overview" class="markPaid"><img src="/gfx/members/unpaid.png" alt="markieren als bezahlt" title="markieren als bezahlt" /></a> &nbsp;{/if}
+					<a href="/mitglieder/tickets?order={$order->getId()}&amp;action=showDetails"><img src="/gfx/members/details.png" alt="Details anzeigen" title="Details anzeigen" /></a>
 				</td>
 			</tr>
 			{/foreach}

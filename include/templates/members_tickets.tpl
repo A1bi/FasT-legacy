@@ -65,7 +65,7 @@
 					<td>{$charge['date']|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
 					<td>{$charge['orders']}</td>
 					<td>{$charge['total']} €</td>
-					<td><a href="?action=getChargesSheet&id={$charge['id']}">download</a></td>
+					<td><a href="?action=getChargesSheet&amp;id={$charge['id']}">download</a></td>
 				</tr>
 				{/foreach}
 			</table>

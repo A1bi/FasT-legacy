@@ -50,7 +50,7 @@ if (!empty($_GET['order'])) {
 				break;
 				
 			case "approve":
-				$order->approve();
+				$order->approve($_GET['undo'] ? false : true);
 				break;
 		}
 		
