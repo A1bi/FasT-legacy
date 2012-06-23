@@ -140,6 +140,10 @@ if ($_SERVER['HTTPS']) {
 	
 	$_db = new database();
 	
+	if (!is_array($_SESSION['user']) && $_COOKIE['FasT_userid']) {
+		$_SESSION['user'] = array("id" => $_COOKIE['FasT_userid'], "pass" => $_COOKIE['FasT_userpass']);
+	}
+	
 	// check if logged in
 	if (is_array($_SESSION['user'])) {
 		// look in database for given user
@@ -156,7 +160,11 @@ if ($_SERVER['HTTPS']) {
 		} else {
 			// not correct -> delete session
 			unset($_SESSION['user']);
+			setcookie("FasT_userid", "", 0, "/", $_SERVER['SERVER_NAME'], true);
+			setcookie("FasT_userpass", "", 0, "/", $_SERVER['SERVER_NAME'], true);
 		}
+		
+		unset($user);
 	}
 	
 	$_tpl->assign("_user", $_user);

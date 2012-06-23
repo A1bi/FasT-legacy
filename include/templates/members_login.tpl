@@ -12,6 +12,10 @@
 		<td>Passwort:</td>
 		<td><input type="password" name="pass" /></td>
 	</tr>
+	<tr>
+		<td></td>
+		<td><label><input type="checkbox" name="stay" /> eingeloggt bleiben</label></td>
+	</tr>
 </table>
 <div class="hcen">
 	<input type="submit" name="login" value="login" class="btn" />

@@ -10,6 +10,8 @@ function redirectToMembers() {
 if ($_user['id']) {
 	if ($_GET['action'] == "logout") {
 		unset($_SESSION['user']);
+		setcookie("FasT_userid", "", 0, "/", $_SERVER['SERVER_NAME'], true);
+		setcookie("FasT_userpass", "", 0, "/", $_SERVER['SERVER_NAME'], true);
 		
 		redirectTo("/");
 	} else {
@@ -23,6 +25,12 @@ if ($_user['id']) {
 	if ($user['id'] && validatePassword($_POST['pass'], $user['pass'])) {
 		$_db->query('UPDATE users SET lastLogin = ? WHERE id = ?', array(time(), $user['id']));
 		$_SESSION['user'] = array("id" => $user['id'], "pass" => $user['pass']);
+		
+		if (!empty($_POST['stay'])) {
+			setcookie("FasT_userid", $user['id'], time() + 604800, "/", $_SERVER['SERVER_NAME'], true);
+			setcookie("FasT_userpass", $user['pass'], time() + 604800, "/", $_SERVER['SERVER_NAME'], true);
+		}
+		
 		$_user = $user;
 		
 		redirectToMembers();
