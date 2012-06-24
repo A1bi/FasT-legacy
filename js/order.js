@@ -20,23 +20,23 @@ var order = new function () {
 				updateBtns();
 				placeOrder();
 			} else {
+				updateProgress(1);
 				showNext();
 			}
 		}
 	}
 	
 	var goPrev = function () {
+		updateProgress(-1);
 		showPrev();
 	}
 	
 	var showNext = function () {
-		updateProgress(1);
-		updateStep();
+		updateStep(-1);
 	}
 	
 	var showPrev = function () {
-		updateProgress(-1);
-		updateStep();
+		updateStep(1);
 	}
 	
 	var keyUp = function (event) {
@@ -45,12 +45,38 @@ var order = new function () {
 		}
 	}
 	
-	var updateStep = function () {
-		$(".stepCon:visible").slideUp();
-		$(".stepCon."+steps[order.step]).slideDown();
+	var slideToggle = function (obj, toggle) {
+		var stepBox = $(".stepBox");
+		var stepCon = $(".stepCon."+steps[order.step]);
+		
+		var props = {
+			step: function () {
+				stepBox.css({height: stepCon.outerHeight(true)});
+			}
+		};
+		
+		if (toggle) {
+			obj.slideDown(props);
+		} else {
+			obj.slideUp(props);
+		}
+	}
+	
+	var updateStep = function (moveLeft) {
+		// move old step away
+		$(".stepCon:visible").animate({left: 100 * moveLeft + "%"}, function () {
+			$(this).hide();
+		});
+		
+		// move in new stuff
+		var current = $(".stepCon."+steps[order.step]);
+		current.show().animate({left: "0%"});
+		
+		// update height of bounding box
+		$(".stepBox").animate({height: current.outerHeight(true)});
 		
 		if (steps[order.step] == "finish") {
-			$(".btns, .progress").slideUp();
+			$(".btns, .progress").fadeTo("default", 0);
 		} else {
 			updateBtns();
 		}
@@ -203,14 +229,14 @@ var order = new function () {
 	}
 	
 	var updateOrder = function () {
-		updateStep();
+		showNext();
 		updateProgress(0);
 	}
 	
 	var choseDate = function () {
 		$(this).parent().parent().find(".selected").removeClass("selected");
 		$(this).addClass("selected");
-		$(".date div.number").slideDown();
+		slideToggle($(".date div.number"), true);
 
 		order.date = $(this).parent().find(".id").html();
 		$(".stepCon.confirm .date").html($(this).html());
@@ -248,13 +274,8 @@ var order = new function () {
 	
 	var chosePayment = function () {
 		order.payment.method = $(this).val();
-		var chargeBox = $(".stepCon.payment .charge");
 		var charge = order.payment.method == "charge";
-		if (charge) {
-			chargeBox.slideDown();
-		} else {
-			chargeBox.slideUp();
-		}
+		slideToggle($(".stepCon.payment .charge"), charge);
 		
 		var confirmBox = $(".stepCon.confirm .payment, .stepCon.finish .payment");
 		confirmBox.find(".charge").toggle(charge);
@@ -282,7 +303,7 @@ var order = new function () {
 				$.extend(order, data.order);
 				
 				$(".stepCon.finish .sId").html(order.sId);
-				updateStep();
+				showNext();
 			} else {
 				alert("error: "+data.error);
 			}
