@@ -1,4 +1,4 @@
-{include file="head.tpl" title="Fotogalerie - {$gallery.title}" cssfile="gallery"}
+{include file="head.tpl" title="Fotogalerie - {$gallery.title}" cssfile="gallery" noSlides=true}
 		{if $smarty.get.pic != $pics}
 		<div class="nextpic">
 			<a href="/gallery/{$pic.gallery}/{$smarty.get.pic+1}#pic"><img src="/gfx/gallery/nextpic.jpg" alt="Nächstes Foto" /></a><br />

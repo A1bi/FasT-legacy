@@ -1,4 +1,4 @@
-{include file="head.tpl" title="Mitgliederbereich -  {$title}" cssfile="members"}
+{include file="head.tpl" title="Mitgliederbereich -  {$title}" cssfile="members" noSlides=true}
 <div class="hl members">Mitgliederbereich</div>
 {if $_user['id']}
 <div class="sections">

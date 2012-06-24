@@ -36,7 +36,11 @@ var slideshow = new function () {
 
 	}
 
-	$(next);
+	$(function () {
+		if (!$("body").is(".noSlides")) {
+			next();
+		}
+	});
 };
 
 function deobfuscate(text) {

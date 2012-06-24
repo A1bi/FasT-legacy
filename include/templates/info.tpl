@@ -1,4 +1,4 @@
-{include file="head.tpl" title="Informationen zu unseren Aufführungen" cssfile="info" globjsfile="http://openlayers.org/api/2.12-rc1/OpenLayers.js" jsfile="info"}
+{include file="head.tpl" title="Informationen zu unseren Aufführungen" cssfile="info" globjsfile="http://openlayers.org/api/2.12-rc1/OpenLayers.js" jsfile="info" noSlides=true}
 		<div class="hl">
 			Anfahrt
 		</div>

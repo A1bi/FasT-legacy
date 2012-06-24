@@ -31,7 +31,7 @@
 {/if}
 </head>
 
-<body>
+<body{if $noSlides} class="noSlides"{/if}>
 	<div id="sky"></div>
 	<div id="slides">
 		<div class="slide finished"></div>

@@ -1,4 +1,4 @@
-{include file="head.tpl" title="Karten bestellen" cssfile="order" jsfile="order"}
+{include file="head.tpl" title="Karten bestellen" cssfile="order" jsfile="order" noSlides=true}
 <div class="secure">
 	<span><img src="/gfx/order/secure.png" alt="" /> Ihre Bestellung wird über eine gesicherte Verbindung ausgeführt.</span>
 </div>	
