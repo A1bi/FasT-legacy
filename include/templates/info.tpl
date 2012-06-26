@@ -25,7 +25,7 @@
 				<div class="icon"></div>
 				<div class="data">
 					<h2><span class="temp"></span>° C</h2>
-					Heute Min: <span class="high"></span>° C | Max: <span class="low"></span>° C
+					Heute Min: <span class="low"></span>° C | Max: <span class="high"></span>° C
 					<br />Regenwahrscheinlichkeit: <span class="pop"></span> %
 				</div>
 				<div class="yahoo">
