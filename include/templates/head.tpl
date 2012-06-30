@@ -1,3 +1,4 @@
+{if $jsfile != ""}{$jsfiles = [[$jsfile], 0]}{/if}
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,29 +6,30 @@
 	<meta charset="utf-8" />
 	<meta name="keywords" content="Theater, Freilichtbühne, Verein, Kaisersesch{$meta_keys}" />
 	<link rel="shortcut icon" href="/gfx/favicon.ico" />
+	
 	<link rel="stylesheet" type="text/css" href="/css/main.css{fileVersion file="/css/main.css"}" />
 	<script src="/core/js/jquery.js"></script>
 	<script src="/gfx/cache/slides.js{fileVersion file="/gfx/cache/slides.js"}"></script>
 	<script src="/js/main.js{fileVersion file="/js/main.js"}"></script>
-{if $css != ""}
-	<style type="text/css">
-{include file=$css}
 
-	</style>
-	
-{/if}
 {if $cssfile != ""}
-	<link rel="stylesheet" type="text/css" href="/css/{$cssfile}.css{fileVersion file="/css/{$cssfile}.css"}" />	  
+	<link rel="stylesheet" type="text/css" href="/css/{$cssfile}.css{fileVersion file="/css/{$cssfile}.css"}" />
 {/if}
-{if $globjsfile != ""}
-	<script src="{$globjsfile}"></script>
+{foreach $jsfiles as $jsfile}
+{if $jsfile[1] == 0}
+{$file = "/js/{$jsfile[0]}.js"}
+{$file = "{$file}{fileVersion file=$file}"}
+{elseif $jsfile[1] == 1}
+{$file = "/core/js/{$jsfile[0]}.js"}
+{else}
+{$file = $jsfile[0]}
 {/if}
-{if $jsfile != ""}
-	<script src="/js/{$jsfile}.js{fileVersion file="/js/{$jsfile}.js"}"></script>
-{/if}
+	<script src="{$file}"></script>
+{/foreach}
 {if $head != ""}
+
 {include file=$head}
-	
+
 {/if}
 </head>
 
