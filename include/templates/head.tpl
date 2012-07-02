@@ -1,4 +1,4 @@
-{if $jsfile != ""}{$jsfiles = [[$jsfile], 0]}{/if}
+{if $jsfile != ""}{$jsfiles = [[$jsfile, 0]]}{/if}
 <!DOCTYPE html>
 <html>
 <head>
