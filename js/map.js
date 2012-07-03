@@ -5,7 +5,8 @@ function Map(id) {
 	var icons = [];
 	var locations = [];
 	var layers = {};
-	var map;
+	var _this = this;
+	this.map;
 	
 	this.registerIcons = function (icns) {
 		$.each(icns, function (key, value) {
@@ -50,8 +51,8 @@ function Map(id) {
     			popup.anchor = {'size': new OpenLayers.Size(0,0), 'offset': new OpenLayers.Pixel(-12, 3)};
     			
 				marker.events.register("mousedown", popup, function (event) {
-					if (map.popups[0] != this) {
-						map.addPopup(this, true);
+					if (_this.map.popups[0] != this) {
+						_this.map.addPopup(this, true);
 						this.show();
 					} else {
 						this.toggle();
@@ -65,16 +66,16 @@ function Map(id) {
 	}
 	
 	this.setCenter = function (loc, zoom) {
-		map.setCenter(locations[loc], zoom);
+		this.map.setCenter(locations[loc], zoom);
 	}
 	
 	var addLayer = function (layer, name) {
 		layers[name] = layer;
-		map.addLayer(layer);
+		_this.map.addLayer(layer);
 	}
 	
 	
-	map = new OpenLayers.Map(id, {
+	this.map = new OpenLayers.Map(id, {
 		controls: [
 			new OpenLayers.Control.Navigation({
 				mouseWheelOptions: {
