@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Freilichtbühne am schiefen Turm e.V.{if $title != ""} - {$title}{/if}</title>
 	<meta charset="utf-8" />
 	<meta name="keywords" content="Theater, Freilichtbühne, Verein, Kaisersesch{$meta_keys}" />
+	<title>Freilichtbühne am schiefen Turm e.V.{if $title != ""} - {$title}{/if}</title>
 	<link rel="shortcut icon" href="/gfx/favicon.ico" />
 	
 	<link rel="stylesheet" type="text/css" href="/css/main.css{fileVersion file="/css/main.css"}" />
