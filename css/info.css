@@ -14,15 +14,21 @@
 	padding: 4px;
 	border-top-left-radius: 6px;
 }
-.olMapViewport {
+#map .olMapViewport {
 	border-radius: 15px;
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
-.olTileImage {
+#map .olTileImage {
 	-webkit-transition: opacity 0.2s linear;
 	-moz-transition: opacity 0.2s linear;
 	-o-transition: opacity 0.2s linear;
 	transition: opacity 0.2s linear;
+}
+#map .olPopup {
+	padding: 5px;
+	border-radius: 10px;
+	border-top-right-radius: 0px;
+	box-shadow: 1px 1px 6px #cccccc;
 }
 
 .weather {
