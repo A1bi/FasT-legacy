@@ -28,25 +28,35 @@ function Map(id) {
 		$.each(markers, function (key, value) {
 			var loc = locations[value.loc];
 			
-			var marker = new OpenLayers.Marker(loc, icons[value.icon].clone());
+			var feature = new OpenLayers.Feature(layers.markers, loc, {
+				icon: icons[value.icon].clone(),
+				closeBox: true,
+				popupClass: OpenLayers.Class(OpenLayers.Popup.Anchored)
+			});
+			
+			var marker = feature.createMarker();
 			layers.markers.addMarker(marker);
 			
 			if (value.bubble) {
-				var feature = new OpenLayers.Feature(layers.markers, loc); 
-				feature.closeBox = true;
-				feature.popupClass = OpenLayers.Class(OpenLayers.Popup.AnchoredBubble, {'autoSize': true});
-				feature.data.popupContentHTML = "<b>" + value.title + "</b><br />" + value.desc;
-				feature.data.overflow = "auto";
-			
-				marker.feature = feature;
-				marker.events.register("mousedown", feature, function (event) {
-					if (this.popup == null) {
-						this.popup = this.createPopup(this.closeBox);
-						map.addPopup(this.popup);
-						this.popup.show();
+				var popup = feature.createPopup(feature.closeBox);
+				popup.autoSize = true;
+				popup.contentHTML = "<b>" + value.title + "</b><br />" + value.desc;
+				popup.panMapIfOutOfView = true;
+				popup.keepInMap = false;
+				popup.opacity = .9;
+				popup.calculateRelativePosition = function () {
+					return 'bl';
+    			}
+    			popup.anchor = {'size': new OpenLayers.Size(0,0), 'offset': new OpenLayers.Pixel(-12, 3)};
+    			
+				marker.events.register("mousedown", popup, function (event) {
+					if (map.popups[0] != this) {
+						map.addPopup(this, true);
+						this.show();
 					} else {
-						this.popup.toggle();
+						this.toggle();
 					}
+
 					OpenLayers.Event.stop(event);
 				});
 			}
