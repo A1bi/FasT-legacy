@@ -31,7 +31,7 @@ function Map(id) {
 			
 			var feature = new OpenLayers.Feature(layers.markers, loc, {
 				icon: icons[value.icon].clone(),
-				closeBox: true,
+				closeBox: false,
 				popupClass: OpenLayers.Class(OpenLayers.Popup.Anchored)
 			});
 			
@@ -84,7 +84,8 @@ function Map(id) {
 				}
 			}),
 			new OpenLayers.Control.Attribution()
-		]
+		],
+		theme: null
 	});
 
 	addLayer(new OpenLayers.Layer.OSM(), "osm");
