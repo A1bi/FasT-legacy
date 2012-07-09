@@ -137,11 +137,15 @@ table .title td {
 .orderDetails .cancel .hcen {
 	margin-top: 10px;
 }
-.orderDetails .cancelled, .orderDetails .finished {
+.orderDetails .overview .cancelled, .orderDetails .overview .finished {
 	font-weight: bold;
 }
-.orderDetails .cancelled {
+.orderDetails .overview .cancelled {
 	color: red;
+}
+.orderDetails .tickets .cancelled {
+	text-decoration: line-through;
+	color: #cccccc;
 }
 .orderDetails .finished {
 	color: green;

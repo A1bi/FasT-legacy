@@ -271,6 +271,8 @@ class Order {
 			
 			} else {
 				$ticket = $this->tickets[$i];
+				if ($ticket->isCancelled()) continue;
+				
 				$ticketsOnPage++;
 
 				// frame
@@ -370,6 +372,15 @@ class Order {
 		return $this->tickets;
 	}
 	
+	public function getNumberOfValidTickets() {
+		$number = 0;
+		foreach ($this->tickets as $ticket) {
+			if (!$ticket->isCancelled()) $number++;
+		}
+		
+		return $number;
+	}
+	
 	public function isCancelled() {
 		return $this->cancelled['cancelled'];
 	}
@@ -437,6 +448,7 @@ class Ticket {
 		$this->sId = $info['sId'];
 		$this->date = $info['date'];
 		$this->type = $info['type'];
+		$this->cancelled = array("cancelled" => $info['cancelled'], "reason" => $info['cancelReason']);
 	}
 	
 	private function save() {
@@ -480,6 +492,14 @@ class Ticket {
 	
 	public function getPrice() {
 		return OrderManager::$theater['prices'][($this->type) ? "adults" : "kids"];
+	}
+	
+	public function isCancelled() {
+		return $this->cancelled['cancelled'];
+	}
+	
+	public function getCancelReason() {
+		return $this->cancelled['reason'];
 	}
 }
 

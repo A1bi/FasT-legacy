@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<td>Tickets:</td>
-					<td><b>{$tickets|@count}</b></td>
+					<td><b>{$order->getNumberOfValidTickets()}</b></td>
 				</tr>
 				<tr>
 					<td>Gesamtbetrag:</td>
@@ -122,7 +122,7 @@
 	</div>
 </div>
 
-<div class="box">
+<div class="box tickets">
 	<div class="top">
 		Tickets in dieser Bestellung
 	</div>
@@ -133,7 +133,7 @@
 				<td>Aufführung</td>
 			</tr>
 			{foreach $tickets as $ticket}
-			<tr>
+			<tr{if $ticket->isCancelled()} class="cancelled"{/if}>
 				<td>{$types[$ticket->getType()]}</td>
 				<td>{$ticket->getDateString()}</td>
 			</tr>
