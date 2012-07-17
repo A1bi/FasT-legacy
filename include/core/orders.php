@@ -1,5 +1,9 @@
 <?php
 
+class OrderStatus {
+	const Placed = 0, WaitingForApproval = 1, WaitingForPayment = 2, Approved = 3, Finished = 4, Cancelled = 5;
+}
+
 class OrderManager {
 	
 	static $instance = null;
@@ -54,7 +58,7 @@ class OrderManager {
 
 class Order {
 	
-	private $id, $sId, $total, $hash, $time, $status = 0, $paid = false,
+	private $id, $sId, $total, $hash, $time, $status = OrderStatus::Placed, $paid = false,
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 			$cancelled = array("cancelled" => false, "reason" => ""),
@@ -73,9 +77,9 @@ class Order {
 			$this->save();
 			
 			if ($orderInfo['payment']['method'] == "charge") {
-				$status = 1;
+				$status = OrderStatus::WaitingForApproval;
 			} else {
-				$status = 2;
+				$status = OrderStatus::WaitingForPayment;
 			}
 			$this->setStatus($status);
 			
@@ -331,10 +335,10 @@ class Order {
 		
 		$this->cancelled['cancelled'] = true;
 		$this->cancelled['reason'] = $reason;
-		$this->status = 5;
+		$this->status = OrderStatus::Cancelled;
 		
 		// cancel order in db
-		$_db->query('UPDATE orders SET cancelled = 1, status = 5, cancelReason = ? WHERE id = ?', array($reason, $this->id));
+		$_db->query('UPDATE orders SET cancelled = 1, status = ?, cancelReason = ? WHERE id = ?', array($this->status, $reason, $this->id));
 		
 		// cancel each ticket
 		foreach ($this->tickets as $ticket) {
@@ -409,7 +413,7 @@ class Order {
 	}
 	
 	public function approve($toggle = true) {
-		$status = ($toggle) ? 3 : 1;
+		$status = ($toggle) ? OrderStatus::Approved : OrderStatus::WaitingForApproval;
 		if ($this->status == $status) return;
 		
 		$this->setStatus($status);
@@ -425,7 +429,7 @@ class Order {
 		$this->paid = true;
 		$_db->query('UPDATE orders SET paid = 1, charge = ? WHERE id = ?', array($charge, $this->id));
 		
-		$this->setStatus(4);
+		$this->setStatus(OrderStatus::Finished);
 		
 		return true;
 	}

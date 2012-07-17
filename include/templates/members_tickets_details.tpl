@@ -4,7 +4,12 @@
 {$tickets=$order->getTickets()}
 {$types=["Ermäßigt", "Erwachsener"]}
 {$payMethods=["charge" => "Lastschrift", "transfer" => "Überweisung"]}
-{$statuses=["Bestellung aufgenommen", "Warte auf Freischaltung..", "Warte auf Zahlung..", "Überprüft, Lastschrift ausstehend..", "<span class=\"finished\">Abgeschlossen</span>", "<span class=\"cancelled\">Storniert</span>"]}
+{$statuses[OrderStatus::Placed]="Bestellung aufgenommen"}
+{$statuses[OrderStatus::WaitingForApproval]="Warte auf Freischaltung.."}
+{$statuses[OrderStatus::WaitingForPayment]="Warte auf Zahlung.."}
+{$statuses[OrderStatus::Approved]="Überprüft, Lastschrift ausstehend.."}
+{$statuses[OrderStatus::Finished]="<span class=\"finished\">Abgeschlossen</span>"}
+{$statuses[OrderStatus::Cancelled]="<span class=\"cancelled\">Storniert</span>"}
 <div class="hl section">Bestellungsdetails</div>
 
 <div class="orderDetails">

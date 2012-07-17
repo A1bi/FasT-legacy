@@ -68,7 +68,7 @@ if (!empty($_GET['order'])) {
 
 } elseif ($_GET['action'] == "charge") {
 	
-	$result = $_db->query('SELECT id, sId, total, kName, kNo, blz, bank FROM orders WHERE status = 3');
+	$result = $_db->query('SELECT id, sId, total, kName, kNo, blz, bank FROM orders WHERE status = ?', array(OrderStatus::Approved));
 	$charges = $result->fetchAll();
 	$nCharges = count($charges);
 	
@@ -224,12 +224,12 @@ if (!empty($_GET['order'])) {
 										COUNT(t.id) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
-							WHERE		o.status = 1
+							WHERE		o.status = ?
 							AND			t.order = o.id
 							AND			t.cancelled = 0
 							GROUP BY	o.id
 							ORDER BY	o.sId ASC
-							');
+							', array(OrderStatus::WaitingForApproval));
 	$_tpl->assign("ordersCheck", getOrdersFromInfo($result->fetchAll()));
 	
 	
@@ -243,12 +243,12 @@ if (!empty($_GET['order'])) {
 										COUNT(t.id) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
-							WHERE		o.status = 2
+							WHERE		o.status = ?
 							AND			t.order = o.id
 							AND			t.cancelled = 0
 							GROUP BY	o.id
 							ORDER BY	o.sId ASC
-							');
+							', array(OrderStatus::WaitingForPayment));
 	$_tpl->assign("ordersPay", getOrdersFromInfo($result->fetchAll()));
 	
 	
@@ -262,16 +262,15 @@ if (!empty($_GET['order'])) {
 										COUNT(*) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
-							WHERE		o.status > 2
+							WHERE		o.status >= ?
 							AND			t.order = o.id
-							AND			t.cancelled = 0
 							GROUP BY	o.id
 							ORDER BY	o.id DESC
-							');
+							', array(OrderStatus::Approved));
 	$_tpl->assign("ordersFinished", getOrdersFromInfo($result->fetchAll()));
 	
 	// charges
-	$result = $_db->query('SELECT COUNT(*) as number FROM orders WHERE status = 3');
+	$result = $_db->query('SELECT COUNT(*) as number FROM orders WHERE status = ?', array(OrderStatus::Approved));
 	$charges = $result->fetch();
 	$_tpl->assign("charges", $charges['number']);
 	
