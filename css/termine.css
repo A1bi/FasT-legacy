@@ -1,7 +1,15 @@
+.prices {
+	font-size: 19px;
+	margin: 30px 0px 10px 0px;
+}
+.prices td {
+	padding-bottom: 10px;
+}
 .price {
 	text-align: right;
-	width: 45px;
 	vertical-align: top;
+	font-weight: bold;
+	padding: 0px 10px;
 }
 .spons {
 	position: absolute;

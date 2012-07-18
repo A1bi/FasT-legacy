@@ -24,24 +24,33 @@
 			</div>
 		</div>
 	</div>
-	<p>Zum ersten Mal bietet die Freilichtbühne am schiefen Turm auch eine <b>Nachmittagsvorstellung</b> am 19. August um 15 Uhr <b>für die ganze Familie</b> an.<br />
-	Alle anderen Aufführungen beginnen um <strong>19.00 Uhr</strong>.</p>
+	<p>Zum ersten Mal bietet die Freilichtbühne am schiefen Turm auch eine <b>Nachmittagsvorstellung am 19. August um 15 Uhr</b> für die ganze Familie an.<br />
+	Alle anderen Aufführungen <b>beginnen um 19.00 Uhr</b>.
+	<br /><b>Einlass</b> ist jeweils um <b>14</b> bzw. <b>18 Uhr</b>.</p>
 	<p>Erleben Sie einen unvergesslichen Abend in Kaisersesch!</p>
 	<div class="trenner"></div>
 	<div class="hl">
 		Kartenvorverkauf
 		<div class="small">vom 4. Juni bis 15. August 2012</div>
 	</div>
-	<div style="margin-top: 10px;">
-		<div style="font-size: 18px;">
+	<div>
+		<div class="prices">
 			<table>
 				<tr>
-					<td class="price"><strong>6 €</strong></td>
+					<td class="price">6 €</td>
 					<td>Jugendliche bis 16 Jahre</td>
 				</tr>
 				<tr>
-					<td class="price"><strong>12 €</strong></td>
+					<td class="price">12 €</td>
 					<td>Erwachsene</td>
+				</tr>
+				<tr>
+					<td class="price">10 €</td>
+					<td>Erwachsene in einer Gruppe ab 30 Personen</td>
+				</tr>
+				<tr>
+					<td class="price">Frei</td>
+					<td>Kleinkinder unter 3 Jahren, die keinen eigenen Sitzplatz benötigen</td>
 				</tr>
 			</table>
 		</div>
