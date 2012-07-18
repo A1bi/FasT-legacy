@@ -4,6 +4,10 @@ class OrderStatus {
 	const Placed = 0, WaitingForApproval = 1, WaitingForPayment = 2, Approved = 3, Finished = 4, Cancelled = 5;
 }
 
+class OrderEvent {
+	const Placed = 0, Approved = 1, Disapproved = 2, MarkedAsPaid = 3, Charged = 4, Cancelled = 5, CancelledTicket = 6, SentTickets = 7, SentPayReminder = 8;
+}
+
 class OrderManager {
 	
 	static $instance = null;
@@ -62,7 +66,8 @@ class Order {
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 			$cancelled = array("cancelled" => false, "reason" => ""),
-			$tickets = array();
+			$tickets = array(),
+			$events = NULL;
 	
 	public function create($orderInfo) {
 		// check if given info is ok
@@ -179,6 +184,8 @@ class Order {
 		$_tpl->assign("gotPaid", $this->payment['method'] == "transfer" && $this->paid);
 		
 		$this->mail("Ihre Karten", "tickets");
+		
+		$this->logEvent(OrderEvent::SentTickets);
 	}
 	
 	public function mail($subject, $tpl) {
@@ -326,6 +333,8 @@ class Order {
 				array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR']));
 		
 		$this->id = $_db->id();
+		
+		$this->logEvent(OrderEvent::Placed);
 	}
 	
 	public function cancel($reason) {
@@ -345,7 +354,15 @@ class Order {
 			$ticket->cancel($reason);
 		}
 		
+		$this->logEvent(OrderEvent::Cancelled);
+		
 		return true;
+	}
+	
+	private function logEvent($event, $info = "") {
+		global $_db, $_user;
+		
+		$_db->query('INSERT INTO orders_events VALUES (null, ?, ?, ?, ?, ?)', array($this->id, $event, $info, $_user['id'], time()));
 	}
 	
 	public function getTime() {
@@ -413,25 +430,43 @@ class Order {
 	}
 	
 	public function approve($toggle = true) {
-		$status = ($toggle) ? OrderStatus::Approved : OrderStatus::WaitingForApproval;
+		if ($toggle) {
+			$status = OrderStatus::Approved;
+			$event = OrderEvent::Approved;
+		} else {
+			$status = OrderStatus::WaitingForApproval;
+			$event = OrderEvent::Disapproved;
+		}
 		if ($this->status == $status) return;
 		
 		$this->setStatus($status);
 		
+		$this->logEvent($event);
+		
 		return true;
 	}
 	
-	public function markPaid($charge = 0) {
+	public function markPaid($log = true) {
 		global $_db;
 		
 		if ($this->paid) return;
 		
 		$this->paid = true;
-		$_db->query('UPDATE orders SET paid = 1, charge = ? WHERE id = ?', array($charge, $this->id));
-		
+		$_db->query('UPDATE orders SET paid = 1 WHERE id = ?', array($this->id));
 		$this->setStatus(OrderStatus::Finished);
 		
+		if ($log) $this->logEvent(OrderEvent::MarkedAsPaid);
+		
 		return true;
+	}
+	
+	public function charge($id) {
+		global $_db;
+		
+		$this->markPaid(false);
+		$_db->query('UPDATE orders SET charge = ? WHERE id = ?', array($id, $this->id));
+		
+		$this->logEvent(OrderEvent::Charged);
 	}
 
 }

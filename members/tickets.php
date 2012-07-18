@@ -92,7 +92,7 @@ if (!empty($_GET['order'])) {
 			$transaction = new Transaction("charge", $order->getTotal(), $paymentDetails, $references);
 			$dta->addTransaction($transaction);
 			
-			$order->markPaid($chargeId);
+			$order->charge($chargeId);
 		}
 		
 		// send mail to bank containing the dta file
