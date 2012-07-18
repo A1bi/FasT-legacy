@@ -5,7 +5,7 @@
 .prices td {
 	padding-bottom: 10px;
 }
-.price {
+.prices .price {
 	text-align: right;
 	vertical-align: top;
 	font-weight: bold;
@@ -71,15 +71,20 @@
 }
 .online {
 	display: block;
-	text-align: center;
 	padding: 10px;
-	font-size: 25px;
-	color: #0668ec;
+	font-size: 27px;
 }
 .hl .small {
 	color: #000000;
 	font-size: 22px;
 }
 .hotline {
-	font-size: 16px;
+	font-size: 19px;
+}
+.stores ul {
+	margin: 20px;
+	padding-left: 30px;
+}
+.stores li {
+	padding: 3px;
 }

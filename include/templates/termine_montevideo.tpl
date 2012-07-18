@@ -1,7 +1,7 @@
 {$theater = getData("theater_montevideo")}
 {include file="head.tpl" title="Termine - Das Haus in Montevideo" cssfile="termine"}
 {include file="termine_head.tpl"}
-	Unser <b>Sommernachtstheater 2012 „<a href="/theater/montevideo">Das Haus in Montevideo</a>“</b> von Curt Goetz wird auf der Freilichtbühne im Historischen Ortskern von Kaisersesch an folgenden Tagen aufgeführt:
+	Unser <b>Sommernachtstheater 2012 „<a href="/theater/montevideo" class="shadow">Das Haus in Montevideo</a>“</b> von Curt Goetz wird auf der Freilichtbühne im Historischen Ortskern von Kaisersesch an folgenden Tagen aufgeführt:
 	<div class="container">
 		<div class="title">
 			<a href="/theater/montevideo"><img src="/gfx/theater/montevideo/title.png" alt="Das Haus in Montevideo" /></a>
@@ -33,40 +33,39 @@
 		Kartenvorverkauf
 		<div class="small">vom 4. Juni bis 15. August 2012</div>
 	</div>
-	<div>
-		<div class="prices">
-			<table>
-				<tr>
-					<td class="price">6 €</td>
-					<td>Jugendliche bis 16 Jahre</td>
-				</tr>
-				<tr>
-					<td class="price">12 €</td>
-					<td>Erwachsene</td>
-				</tr>
-				<tr>
-					<td class="price">10 €</td>
-					<td>Erwachsene in einer Gruppe ab 30 Personen</td>
-				</tr>
-				<tr>
-					<td class="price">Frei</td>
-					<td>Kleinkinder unter 3 Jahren, die keinen eigenen Sitzplatz benötigen</td>
-				</tr>
-			</table>
-		</div>
-		<a href="/tickets" class="hl online">Karten jetzt online bestellen!</a>
-		<div style="font-size: 14px;">
-			<b>Oder auch an folgenden Vorverkaufsstellen:</b>
-			<div style="margin: 10px; margin-left: 20px;">
-				<img src="/gfx/point.png" alt="" class="vcen" /> Sportstudio Otto Krechel, Kaisersesch<br />
-				<img src="/gfx/point.png" alt="" class="vcen" /> Poststelle „Die Zwei“, Kaisersesch<br />
-				<img src="/gfx/point.png" alt="" class="vcen" /> Buchhandlung Walgenbach, Kaisersesch<br />
-				<img src="/gfx/point.png" alt="" class="vcen" /> Buchhandlung Layaa-Laulhé, Cochem<br />
-				<img src="/gfx/point.png" alt="" class="vcen" /> röhrig forum, Treis-Karden
-			</div>
-			<p class="hcen hotline">
-				Info-Hotline: <strong>(0 26 53) 28 27 09</strong> <em class="small" style="vertical-align: top;">(zum Ortstarif)</em>
-			</p>
-		</div>
+	<div class="prices">
+		<table>
+			<tr>
+				<td class="price">6 €</td>
+				<td>Jugendliche bis 16 Jahre</td>
+			</tr>
+			<tr>
+				<td class="price">12 €</td>
+				<td>Erwachsene</td>
+			</tr>
+			<tr>
+				<td class="price">10 €</td>
+				<td>Erwachsene in einer Gruppe ab 30 Personen</td>
+			</tr>
+			<tr>
+				<td class="price">Frei</td>
+				<td>Kleinkinder unter 3 Jahren, die keinen eigenen Sitzplatz benötigen</td>
+			</tr>
+		</table>
+	</div>
+	<a href="/tickets" class="hl online shadow">Karten jetzt online bestellen!</a>
+	<div class="stores">
+		<b>Oder auch an folgenden Vorverkaufsstellen:</b>
+		<ul>
+			<li>Sportstudio Otto Krechel, Kaisersesch</li>
+			<li>Poststelle „Die Zwei“, Kaisersesch</li>
+			<li>Buchhandlung Walgenbach, Kaisersesch</li>
+			<li>Buchhandlung Layaa-Laulhé, Cochem</li>
+			<li>röhrig forum, Treis-Karden</li>
+		</ul>
+	</div>
+	<div class="trenner"></div>
+	<div class="hcen hotline">
+		Info-Hotline: <strong>(0 26 53) 28 27 09</strong> <em class="small">(zum Ortstarif)</em>
 	</div>
 {include file="foot.tpl"}
