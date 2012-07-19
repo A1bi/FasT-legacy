@@ -18,7 +18,7 @@
 			<tr>
 				<td class="sId">{$order->getSId()}</td>
 				<td>{$order->getTime()|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
-				<td>{$address['firstname']} {$address['lastname']}</td>
+				<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
 				<td>{$order->getTickets()|@count}</td>
 				<td>{$order->getTotal()} €</td>
 				<td class="actions">
