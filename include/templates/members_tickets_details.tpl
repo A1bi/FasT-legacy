@@ -50,7 +50,10 @@
 				</tr>
 				<tr>
 					<td>Status:</td>
-					<td>{$statuses[$order->getStatus()]}</td>
+					<td>
+						{$statuses[$order->getStatus()]}
+						<br />{if $order->getStatus() == OrderStatus::WaitingForPayment}{$difference={$order->getTime()|time_difference}} (seit {$difference} Tag{if $difference != 1}en{/if}){/if}
+					</td>
 				</tr>
 				{if $order->isCancelled()}
 				<tr>

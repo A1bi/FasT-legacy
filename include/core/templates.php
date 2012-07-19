@@ -47,4 +47,10 @@ function smarty_modifier_date_format_x($string, $format = "%b %e, %Y", $dateForm
 	return smarty_modifier_date_format($string, $format, $default_date);
 }
 
+function smarty_modifier_time_difference($string, $unit = "days") {
+	$divisors = array("hours" => 3600, "days" => 86400);
+
+	return round((time() - $string) / $divisors[$unit]);
+}
+
 ?>
