@@ -52,6 +52,10 @@ if (!empty($_GET['order'])) {
 			case "approve":
 				$order->approve($_GET['undo'] ? false : true);
 				break;
+				
+			case "sendPayReminder":
+				$order->mailPayReminder();
+				break;
 		}
 		
 		redirectTo("/mitglieder/tickets" . (($_GET['goto'] != "overview") ? "?action=showDetails&order=".$order->getId() : ""));

@@ -115,8 +115,11 @@
 				{/if}
 				{if $order->getStatus() == OrderStatus::WaitingForPayment}
 				<li><a href="?order={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
+				<li><a href="?order={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
 				{/if}
-				{if $order->getStatus() == OrderStatus::Approved}<li><a href="?order={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>{/if}
+				{if $order->getStatus() == OrderStatus::Approved}
+				<li><a href="?order={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>
+				{/if}
 				<li><a href="#" id="cancelBtn">Stornieren</a></li>
 				{else}
 				Keine Aktionen möglich, da Bestellung storniert.
