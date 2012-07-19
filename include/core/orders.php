@@ -365,6 +365,24 @@ class Order {
 		$_db->query('INSERT INTO orders_events VALUES (null, ?, ?, ?, ?, ?)', array($this->id, $event, $info, $_user['id'], time()));
 	}
 	
+	public function getEvents() {
+		global $_db;
+	
+		if (!$this->events) {
+			$result = $_db->query('	SELECT		e.*,
+												u.realname
+									FROM		orders_events AS e
+									LEFT JOIN	users AS u
+									ON			u.id = e.user
+									WHERE		e.`order` = ?
+									ORDER BY	e.id DESC
+									', array($this->id));
+			$this->events = $result->fetchAll();
+		}
+		
+		return $this->events;
+	}
+	
 	public function getTime() {
 		return $this->time;
 	}
