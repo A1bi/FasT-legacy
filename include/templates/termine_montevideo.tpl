@@ -43,15 +43,11 @@
 				<td class="price">12 €</td>
 				<td>Erwachsene</td>
 			</tr>
-			<tr>
-				<td class="price">10 €</td>
-				<td>Erwachsene in einer Gruppe ab 30 Personen</td>
-			</tr>
-			<tr>
-				<td class="price">Frei</td>
-				<td>Kleinkinder unter 3 Jahren, die keinen eigenen Sitzplatz benötigen</td>
-			</tr>
 		</table>
+		<div>
+			Ab einer Gruppengröße von 30 Personen gewähren wir einen Rabatt von 2 € auf die Erwachsenenkarten.
+			<br />Kinder unter 3 Jahren sind frei, wenn sie noch keinen eigenen Sitzplatz benötigen.
+		</div>
 	</div>
 	<a href="/tickets" class="hl online shadow">Karten jetzt online bestellen!</a>
 	<div class="stores">
