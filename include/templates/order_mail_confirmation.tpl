@@ -19,11 +19,7 @@ Ihre Karten werden in wenigen Momenten auf dieser e-mail-Adresse eintreffen!
 {else}
 Bitte überweisen Sie den Betrag von {$order->GetTotal()} € auf folgendes Konto:
 
-Kontoinhaber: Freilichtbühne am schiefen Turm e.V.
-Kontonummer: 178167
-BLZ: 57069144
-Kreditinstitut: Raiffeisenbank Kaisersesch
-Verwendungszweck: ON{$order->getSId()}
+{include file="order_mail_bankdetails.tpl"}
 {/if}
 
 

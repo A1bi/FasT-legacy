@@ -188,6 +188,12 @@ class Order {
 		$this->logEvent(OrderEvent::SentTickets);
 	}
 	
+	public function mailPayReminder() {
+		$this->mail("Zahlungserinnerung", "payreminder");
+		
+		$this->logEvent(OrderEvent::SentPayReminder);
+	}
+	
 	public function mail($subject, $tpl) {
 		global $_tpl;
 		require_once("/usr/share/php/libphp-phpmailer/class.phpmailer.php");
