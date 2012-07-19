@@ -194,6 +194,14 @@ class Order {
 		$this->logEvent(OrderEvent::SentPayReminder);
 	}
 	
+	public function mailCancellation() {
+		global $_tpl;
+		
+		$_tpl->assign("reason", $this->cancelled['reason']);
+		
+		$this->mail("Stornierung", "cancellation");
+	}
+	
 	public function mail($subject, $tpl) {
 		global $_tpl;
 		require_once("/usr/share/php/libphp-phpmailer/class.phpmailer.php");
@@ -359,6 +367,8 @@ class Order {
 		foreach ($this->tickets as $ticket) {
 			$ticket->cancel($reason);
 		}
+		
+		$this->mailCancellation();
 		
 		$this->logEvent(OrderEvent::Cancelled);
 		
