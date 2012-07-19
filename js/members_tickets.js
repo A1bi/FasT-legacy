@@ -8,7 +8,20 @@ $(function () {
 		$(this).hide().parent().append("<b>bitte warten...</b>");
 	});
 	
-	$(".markPaid").click(function () {
-		return confirm("Möchten Sie diese Bestellung wirklich als bezahlt markieren? Der Käufer erhält sofort seine Karten.");
+	var confirmations = [
+		{
+			"className": "markPaid",
+			"text": "Möchten Sie diese Bestellung wirklich als bezahlt markieren? Der Käufer erhält sofort seine Karten."
+		},
+		{
+			"className": "sendPayReminder",
+			"text": "Möchten Sie dem Käufer wirklich eine Zahlungserinnerung senden?"
+		}
+	];
+	
+	$.each(confirmations, function (key, value) {
+		$("."+value.className).click(function () {
+			return confirm(value.text);
+		});
 	});
 });

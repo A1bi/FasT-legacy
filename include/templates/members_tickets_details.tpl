@@ -113,7 +113,7 @@
 				{if $order->getStatus() == 1}<li><a href="?order={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>{/if}
 				{if $order->getStatus() == 2}
 				<li><a href="?order={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
-				<li><a href="?order={$order->getId()}&amp;action=sendPayReminder">Zahlungserinnerung senden</a></li>
+				<li><a href="?order={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
 				{/if}
 				{if $order->getStatus() == 3}<li><a href="?order={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>{/if}
 				<li><a href="#" id="cancelBtn">Stornieren</a></li>
