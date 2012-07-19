@@ -45,8 +45,8 @@
 					<td><b>{$order->getTotal()} €</b></td>
 				</tr>
 				<tr>
-					<td>Datum:</td>
-					<td>{$order->getTime()|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+					<td>Zeitpunkt:</td>
+					<td>{$order->getTime()|date_format_x:"%@, %H.%M Uhr"}</td>
 				</tr>
 				<tr>
 					<td>Status:</td>
@@ -172,13 +172,13 @@
 		{if $log|@count}
 		<table>
 			<tr class="title">
-				<td>Datum</td>
+				<td>Zeitpunkt</td>
 				<td>Ereignis</td>
 				<td>ausgeführt von</td>
 			</tr>
 			{foreach $log as $event}
 			<tr>
-				<td>{$event['time']|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+				<td>{$event['time']|date_format_x:"%@, %H.%M Uhr"}</td>
 				<td>{$events[$event['event']]}</td>
 				<td>{$event['realname']|escape}</td>
 			</tr>

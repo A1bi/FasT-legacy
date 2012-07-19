@@ -55,14 +55,14 @@
 			{if $oldCharges|@count}
 			<table>
 				<tr class="title">
-					<td>Datum</td>
+					<td>Zeitpunkt</td>
 					<td>Enthaltene Lastschriften</td>
 					<td>Gesamtbetrag</td>
 					<td>Begleitzettel</td>
 				</tr>
 				{foreach $oldCharges as $charge}
 				<tr>
-					<td>{$charge['date']|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+					<td>{$charge['date']|date_format_x:"%@, %H.%M Uhr"}</td>
 					<td>{$charge['orders']}</td>
 					<td>{$charge['total']} €</td>
 					<td><a href="?action=getChargesSheet&amp;id={$charge['id']}">download</a></td>

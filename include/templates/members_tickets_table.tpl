@@ -7,7 +7,7 @@
 		<table>
 			<tr class="title">
 				<td>ON</td>
-				<td>Datum</td>
+				<td>Zeitpunkt</td>
 				<td>Name</td>
 				<td>Karten</td>
 				<td>Betrag</td>
@@ -17,7 +17,7 @@
 			{$address=$order->getAddress()}
 			<tr>
 				<td class="sId">{$order->getSId()}</td>
-				<td>{$order->getTime()|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+				<td>{$order->getTime()|date_format_x:"%@, %H.%M Uhr"}</td>
 				<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
 				<td>{$order->getTickets()|@count}</td>
 				<td>{$order->getTotal()} €</td>

@@ -27,4 +27,24 @@ function getFileTimestamp($params) {
 
 $_tpl->registerPlugin("function", "fileVersion", "getFileTimestamp");
 
+function smarty_modifier_date_format_x($string, $format = "%b %e, %Y", $dateFormat = "%d.%m.%y", $default_date = "") {
+	global $_tpl;
+	$_tpl->loadPlugin('smarty_modifier_date_format');
+
+	if (strpos($format, "%@") !== false) {
+		$oldDate = date("Ymd", $string);
+		if ($oldDate == date("Ymd")) {
+			$date = "Heute";
+		} elseif ($oldDate == date("Ymd", time()-86400)) {
+			$date = "Gestern";
+		} else {
+			$date = strftime($dateFormat, $string);
+		}
+		
+		$format = str_replace("%@", $date, $format);
+	}
+	
+	return smarty_modifier_date_format($string, $format, $default_date);
+}
+
 ?>
