@@ -10,6 +10,15 @@
 {$statuses[OrderStatus::Approved]="Überprüft, Lastschrift ausstehend.."}
 {$statuses[OrderStatus::Finished]="<span class=\"finished\">Abgeschlossen</span>"}
 {$statuses[OrderStatus::Cancelled]="<span class=\"cancelled\">Storniert</span>"}
+{$events[OrderEvent::Placed]="Bestellung aufgegeben"}
+{$events[OrderEvent::Approved]="Bestellung als geprüft markiert"}
+{$events[OrderEvent::Disapproved]="Überprüfung wieder aufgehoben"}
+{$events[OrderEvent::MarkedAsPaid]="Als bezahlt markiert"}
+{$events[OrderEvent::Charged]="Lastschrift eingereicht"}
+{$events[OrderEvent::Cancelled]="Bestellung storniert"}
+{$events[OrderEvent::CancelledTicket]="Einzelnes Ticket storniert"}
+{$events[OrderEvent::SentTickets]="Tickets an Käufer gesendet"}
+{$events[OrderEvent::SentPayReminder]="Zahlungserinnerung gesendet"}
 <div class="hl section">Bestellungsdetails</div>
 
 <div class="orderDetails">
@@ -144,6 +153,33 @@
 			</tr>
 			{/foreach}
 		</table>
+	</div>
+</div>
+
+{$log=$order->getEvents()}
+<div class="box tickets">
+	<div class="top">
+		Protokoll
+	</div>
+	<div class="con">
+		{if $log|@count}
+		<table>
+			<tr class="title">
+				<td>Datum</td>
+				<td>Ereignis</td>
+				<td>ausgeführt von</td>
+			</tr>
+			{foreach $log as $event}
+			<tr>
+				<td>{$event['time']|date_format:"%d.%m.%y, %H.%M Uhr"}</td>
+				<td>{$events[$event['event']]}</td>
+				<td>{$event['realname']|escape}</td>
+			</tr>
+			{/foreach}
+		</table>
+		{else}
+		<em>Für diese Bestellung liegt bisher kein Eintrag im Protokoll vor.</em>
+		{/if}
 	</div>
 </div>
 </div>
