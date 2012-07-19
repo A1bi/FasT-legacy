@@ -130,6 +130,7 @@
 					<p>Michaela Müller</p>
 					<p>Gottfried Hagen</p>
 					<p>Renate Schüller</p>
+					<p>Blanka Sauer</p>
 					Mitglieder der Blaskapelle und des Schützenvereins Kaisersesch
 				</td>
 			</tr>
