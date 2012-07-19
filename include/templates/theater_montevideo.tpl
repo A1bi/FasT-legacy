@@ -109,7 +109,7 @@
 					<p>Sarah-Céline Schubert</p>
 					<p>Marie Fuhrmann</p>
 					Kira Roscher
-			</td>
+				</td>
 			</tr>
 			<tr>
 				<td class="role">Taxifahrer</td>
@@ -131,6 +131,7 @@
 					<p>Gottfried Hagen</p>
 					<p>Renate Schüller</p>
 					<p>Blanka Sauer</p>
+					<p>Anja Fuhrmann</p>
 					Mitglieder der Blaskapelle und des Schützenvereins Kaisersesch
 				</td>
 			</tr>
