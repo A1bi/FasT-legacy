@@ -20,12 +20,10 @@ $_tpl->setCompileDir('./include/templates/compiled');
 $_tpl->setCacheDir('./include/templates/cache');
 $_tpl->setConfigDir('./include/templates/configs');
 
-// register custom functions
-function getFileTimestamp($params) {
-	return "?ver=" . @filemtime("." . $params['file']);
+// plugins
+function smarty_modifier_append_version($file, $append = "ver") {
+	return $file . "?" . $append . "=" . @filemtime("." . $file);
 }
-
-$_tpl->registerPlugin("function", "fileVersion", "getFileTimestamp");
 
 function smarty_modifier_date_format_x($string, $format = "%b %e, %Y", $dateFormat = "%d.%m.%y", $default_date = "") {
 	global $_tpl;

@@ -7,18 +7,17 @@
 	<title>Freilichtbühne am schiefen Turm e.V.{if $title != ""} - {$title}{/if}</title>
 	<link rel="shortcut icon" href="/gfx/favicon.ico" />
 	
-	<link rel="stylesheet" type="text/css" href="/css/main.css{fileVersion file="/css/main.css"}" />
+	<link rel="stylesheet" type="text/css" href="{"/css/main.css"|append_version}" />
 	<script src="/core/js/jquery.js"></script>
-	<script src="/gfx/cache/slides.js{fileVersion file="/gfx/cache/slides.js"}"></script>
-	<script src="/js/main.js{fileVersion file="/js/main.js"}"></script>
+	<script src="{"/gfx/cache/slides.js"|append_version}"></script>
+	<script src="{"/js/main.js"|append_version}"></script>
 
 {if $cssfile != ""}
-	<link rel="stylesheet" type="text/css" href="/css/{$cssfile}.css{fileVersion file="/css/{$cssfile}.css"}" />
+	<link rel="stylesheet" type="text/css" href="{"/css/{$cssfile}.css"|append_version}" />
 {/if}
 {foreach $jsfiles as $jsfile}
 {if $jsfile[1] == 0}
-{$file = "/js/{$jsfile[0]}.js"}
-{$file = "{$file}{fileVersion file=$file}"}
+{$file = {"/js/{$jsfile[0]}.js"|append_version}}
 {elseif $jsfile[1] == 1}
 {$file = "/core/js/{$jsfile[0]}.js"}
 {else}
