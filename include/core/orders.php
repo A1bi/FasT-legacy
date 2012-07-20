@@ -8,6 +8,10 @@ class OrderEvent {
 	const Placed = 0, Approved = 1, Disapproved = 2, MarkedAsPaid = 3, Charged = 4, Cancelled = 5, CancelledTicket = 6, SentTickets = 7, SentPayReminder = 8;
 }
 
+class OrderPayMethod {
+	const Charge = 1, Transfer = 2;
+}
+
 class OrderManager {
 	
 	static $instance = null;
@@ -64,7 +68,7 @@ class Order {
 	
 	private $id, $sId, $total, $hash, $time, $status = OrderStatus::Placed, $paid = false,
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
-			$payment = array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
+			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = array(),
 			$events = NULL;
@@ -81,7 +85,7 @@ class Order {
 			
 			$this->save();
 			
-			if ($orderInfo['payment']['method'] == "charge") {
+			if ($orderInfo['payment']['method'] == OrderPayMethod::Charge) {
 				$status = OrderStatus::WaitingForApproval;
 			} else {
 				$status = OrderStatus::WaitingForPayment;
@@ -151,7 +155,7 @@ class Order {
 		
 
 		// check payment
-		if ($orderInfo['payment']['method'] != "transfer") {
+		if ($orderInfo['payment']['method'] == OrderPayMethod::Charge) {
 			foreach ($this->payment as $key => $value) {
 				if (empty($orderInfo['payment'][$key])) {
 					return false;
@@ -160,6 +164,10 @@ class Order {
 			
 			if (!$this->isInt($orderInfo['payment']['number'])) return false;
 			if (!$this->isInt($orderInfo['payment']['blz']) || strlen($orderInfo['payment']['blz']) < 8) return false;
+			
+		} else if ($orderInfo['payment']['method'] != OrderPayMethod::Transfer) {
+			// none of the known pay methods given
+			return false;
 		}
 
 		// check if accepted TOS
@@ -181,7 +189,7 @@ class Order {
 	public function mailTickets() {
 		global $_tpl;
 		
-		$_tpl->assign("gotPaid", $this->payment['method'] == "transfer" && $this->paid);
+		$_tpl->assign("gotPaid", $this->payment['method'] == OrderPayMethod::Transfer && $this->paid);
 		
 		$this->mail("Ihre Karten", "tickets");
 		

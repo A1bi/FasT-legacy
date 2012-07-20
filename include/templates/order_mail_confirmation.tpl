@@ -12,7 +12,7 @@ Folgende Karten haben Sie für die Aufführung am {$tickets[0]->getDateString()}
 ----------------------------
 Gesamtbetrag: {$order->GetTotal()} €
 
-{if $payment['method'] == "charge"}
+{if $payment['method'] == OrderPayMethod::Charge}
 Der Betrag wird in den kommenden Tagen von dem von Ihnen angegebenen Konto abgebucht.
 
 Ihre Karten werden in wenigen Momenten auf dieser e-mail-Adresse eintreffen!

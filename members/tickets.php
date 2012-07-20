@@ -36,7 +36,7 @@ if (!empty($_GET['order'])) {
 			case "markPaid":
 				if ($order->markPaid()) {
 					$payment = $order->getPayment();
-					if ($payment['method'] == "transfer") {
+					if ($payment['method'] == OrderPayMethod::Transfer) {
 						$queue->beginNewBatch();
 						$queue->addJob("createPdf", $order->getId());
 						$queue->addJob("mailTickets", $order->getId());

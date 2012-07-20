@@ -3,7 +3,7 @@
 {$payment=$order->getPayment()}
 {$tickets=$order->getTickets()}
 {$types=["Ermäßigt", "Erwachsener"]}
-{$payMethods=["charge" => "Lastschrift", "transfer" => "Überweisung"]}
+{$payMethods=[OrderPayMethod::Charge => "Lastschrift", OrderPayMethod::Transfer => "Überweisung"]}
 {$statuses[OrderStatus::Placed]="Bestellung aufgenommen"}
 {$statuses[OrderStatus::WaitingForApproval]="Warte auf Freischaltung.."}
 {$statuses[OrderStatus::WaitingForPayment]="Warte auf Zahlung.."}
@@ -85,7 +85,7 @@
 					<td>Zahlungsmethode:</td>
 					<td><b>{$payMethods[$payment['method']]}</b></td>
 				</tr>
-				{if $payment['method'] == "charge"}
+				{if $payment['method'] == OrderPayMethod::Charge}
 				<tr>
 					<td>Kontoinhaber:</td>
 					<td>{$payment['name']|escape}</td>

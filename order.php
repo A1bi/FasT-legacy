@@ -41,6 +41,9 @@ if ($_GET['ajax']) {
 		case "placeOrder":
 			$order = new Order();
 			
+			$payMethods = array("charge" => OrderPayMethod::Charge, "transfer" => OrderPayMethod::Transfer);
+			$_POST['order']['payment']['method'] = $payMethods[$_POST['order']['payment']['method']];
+			
 			if ($order->create($_POST['order'])) {
 			
 				loadComponent("queue");
@@ -51,7 +54,7 @@ if ($_GET['ajax']) {
 				$queue->addJob("mailConfirmation", $order->getId());
 				
 				$payment = $order->getPayment();
-				if ($payment['method'] == "charge") {
+				if ($payment['method'] == OrderPayMethod::Charge) {
 					// create pdf containing tickets and send it
 					$queue->addJob("createPdf", $order->getId());
 					$queue->addJob("mailTickets", $order->getId());
