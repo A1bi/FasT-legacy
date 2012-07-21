@@ -66,38 +66,17 @@ class OrderManager {
 
 class Order {
 	
-	private $id, $sId, $total, $hash, $time, $status = OrderStatus::Placed, $paid = false,
+	private $id, $sId, $total = 0, $hash, $time, $status = OrderStatus::Placed, $paid = false,
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
-			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
+			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
 			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = array(),
 			$events = NULL;
 	
-	public function create($orderInfo) {
-		// check if given info is ok
-		if ($this->checkInfo($orderInfo)) {
-			// set info
-			$this->address = $orderInfo['address'];
-			$this->payment = $orderInfo['payment'];
-			$this->total = $orderInfo['total'];
-			$this->sId = createId(6, "orders", "sId", true);
-			$this->hash = md5($this->sId);
-			
-			$this->save();
-			
-			if ($orderInfo['payment']['method'] == OrderPayMethod::Charge) {
-				$status = OrderStatus::WaitingForApproval;
-			} else {
-				$status = OrderStatus::WaitingForPayment;
-			}
-			$this->setStatus($status);
-			
-			$this->createTickets($orderInfo['number'], $orderInfo['date']);
-		} else {
-			return false;
-		}
-		
-		return true;
+	public function create() {
+		// set info
+		$this->sId = createId(6, "orders", "sId", true);
+		$this->hash = md5($this->sId);
 	}
 	
 	public function init($orderInfo) {
@@ -125,57 +104,6 @@ class Order {
 		
 		// tickets
 		$this->initTickets($orderInfo['tickets']);
-	}
-	
-	private function checkInfo($orderInfo) {
-		// check date
-		if (empty(OrderManager::$theater['dates'][$orderInfo['date']])) {
-			return false;
-		}
-
-		// check numbers and total
-		$total = 0;
-		foreach (OrderManager::$theater['prices'] as $type => $price) {
-			$total += $orderInfo['number'][$type] * $price['price'];
-		}
-		if ($total == 0 || $total != $orderInfo['total']) {
-			return false;
-		}
-
-		// check address
-		foreach ($this->address as $key => $value) {
-			if (empty($orderInfo['address'][$key])) {
-				return false;
-			}
-		}
-		$this->address['gender'] = ($orderInfo['gender'] == 2) ? 2 : 1;
-		
-		if (!$this->isInt($orderInfo['address']['plz']) || strlen($orderInfo['address']['plz']) < 5) return false;
-		if (!preg_match("#^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$#i", $orderInfo['address']['email'])) return false;
-		
-
-		// check payment
-		if ($orderInfo['payment']['method'] == OrderPayMethod::Charge) {
-			foreach ($this->payment as $key => $value) {
-				if (empty($orderInfo['payment'][$key])) {
-					return false;
-				}
-			}
-			
-			if (!$this->isInt($orderInfo['payment']['number'])) return false;
-			if (!$this->isInt($orderInfo['payment']['blz']) || strlen($orderInfo['payment']['blz']) < 8) return false;
-			
-		} else if ($orderInfo['payment']['method'] != OrderPayMethod::Transfer) {
-			// none of the known pay methods given
-			return false;
-		}
-
-		// check if accepted TOS
-		if (!$orderInfo['accepted']) {
-			return false;
-		}
-		
-		return true;
 	}
 	
 	private function isInt($val) {
@@ -231,15 +159,16 @@ class Order {
 		$mail->Send();
 	}
 	
-	private function createTickets($numbers, $date) {
-		foreach (OrderManager::$theater['prices'] as $key => $price) {
-			for ($i = 0; $i < $numbers[$key]; $i++) {
-				$ticket = new Ticket();
-				$ticket->setOrder($this);
-				$ticket->create($key, $date);
-				$this->tickets[] = $ticket;
-			}
-		}
+	public function addTicket($type, $date) {
+		$ticket = new Ticket();
+		$ticket->create();
+		$ticket->setOrder($this);
+		if (!$ticket->setDate($date) || !$ticket->setType($type)) return false;
+		
+		$this->tickets[] = $ticket;
+		$this->updateTotal();
+		
+		return true;
 	}
 	
 	private function initTickets($tickets) {
@@ -346,15 +275,37 @@ class Order {
 		chmod($file, 0777);
 	}
 
-	private function save() {
+	public function save() {
 		global $_db;
 		
-		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, "")',
-				array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR']));
+		// initial status
+		if ($this->payment['method'] == OrderPayMethod::Charge) {
+			$status = OrderStatus::WaitingForApproval;
+		} else {
+			$status = OrderStatus::WaitingForPayment;
+		}
+		
+		// save everything to db
+		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, 0, "")',
+				array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR'], $status));
 		
 		$this->id = $_db->id();
 		
+		// save tickets too
+		foreach ($this->tickets as $ticket) {
+			$ticket->save();
+		}
+		
 		$this->logEvent(OrderEvent::Placed);
+	}
+	
+	private function updateTotal() {
+		$this->total = 0;
+	
+		$tickets = $this->getTickets();
+		foreach ($tickets as $ticket) {
+			$this->total += $ticket->getPrice();
+		}
 	}
 	
 	public function cancel($reason) {
@@ -421,8 +372,47 @@ class Order {
 		return $this->total;
 	}
 	
+	public function setAddress($address) {
+		// check address
+		foreach ($this->address as $key => $value) {
+			if (empty($address[$key])) {
+				return false;
+			}
+		}
+		
+		if (!$this->isInt($address['plz']) || strlen($address['plz']) != 5) return false;
+		if (!preg_match("#^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$#i", $address['email'])) return false;
+		
+		$this->address = $address;
+		$this->address['gender'] = ($address['gender'] == 2) ? 2 : 1;
+		
+		return true;
+	}
+	
 	public function getAddress() {
 		return $this->address;
+	}
+	
+	public function setPayment($payment) {
+		// check payment
+		if ($payment['method'] == OrderPayMethod::Charge) {
+			foreach ($this->payment as $key => $value) {
+				if (empty($payment[$key])) {
+					return false;
+				}
+			}
+			
+			if (!$this->isInt($payment['number'])) return false;
+			if (!$this->isInt($payment['blz']) || strlen($payment['blz']) != 8) return false;
+			
+		} else if ($payment['method'] != OrderPayMethod::Transfer) {
+			// none of the known pay methods given
+			return false;
+		}
+		
+		$this->payment = $payment;
+		
+		return true;
 	}
 	
 	public function getPayment() {
@@ -515,11 +505,8 @@ class Ticket {
 	
 	private $id, $sId, $date, $type, $order;
 	
-	public function create($type, $date) {
-		$this->type = $type;
-		$this->date = $date;
-			
-		$this->save();
+	public function create() {
+		$this->sId = createId(6, "orders_tickets", "sId", true);
 	}
 	
 	public function init($info) {
@@ -530,10 +517,9 @@ class Ticket {
 		$this->cancelled = array("cancelled" => $info['cancelled'], "reason" => $info['cancelReason']);
 	}
 	
-	private function save() {
+	public function save() {
 		global $_db;
 		
-		$this->sId = createId(6, "orders_tickets", "sId", true);
 		$_db->query('INSERT INTO orders_tickets VALUES (null, ?, ?, ?, ?, 0, "", 0)', array($this->sId, $this->order->getId(), $this->date, $this->type));
 		$this->id = $_db->id();
 	}
@@ -561,8 +547,24 @@ class Ticket {
 		return $this->sId;
 	}
 	
+	public function setType($type) {
+		if (!OrderManager::$theater['prices'][$type]) return false;
+		
+		$this->type = $type;
+		
+		return true;
+	}
+	
 	public function getType() {
 		return $this->type;
+	}
+	
+	public function setDate($date) {
+		if (!OrderManager::$theater['dates'][$date]) return false;
+		
+		$this->date = $date;
+		
+		return true;
 	}
 
 	public function getDateString() {

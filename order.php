@@ -39,12 +39,36 @@ if ($_GET['ajax']) {
 			break;
 			
 		case "placeOrder":
-			$order = new Order();
-			
 			$payMethods = array("charge" => OrderPayMethod::Charge, "transfer" => OrderPayMethod::Transfer);
 			$_POST['order']['payment']['method'] = $payMethods[$_POST['order']['payment']['method']];
 			
-			if ($order->create($_POST['order'])) {
+			$order = new Order();
+			$order->create();
+			
+			if (!$order->setAddress($_POST['order']['address'])) {
+				$error = "address";
+				
+			} elseif (!$order->setPayment($_POST['order']['payment']) || ($_POST['order']['payment']['method'] == OrderPayMethod::Charge && $_POST['order']['payment']['accepted'] != "true")) {
+				$error = "payment";
+				
+			} elseif ($_POST['order']['accepted'] != "true") {
+				$error = "accepted";
+				
+			} else {
+				foreach (OrderManager::$theater['prices'] as $type => $price) {
+					for ($i = 0; $i < $_POST['order']['number'][$type]; $i++) {
+						if (!$order->addTicket($type, $_POST['order']['date'])) {
+							$error = "ticket";
+							break;
+						}
+					}
+				}
+			
+				if (empty($error) && ($order->getTotal() != $_POST['order']['total'] || $order->getTotal() == 0)) $error = "total";
+			}
+			
+			if (empty($error)) {
+				$order->save();
 			
 				loadComponent("queue");
 				$queue = new Queue();
@@ -66,7 +90,7 @@ if ($_GET['ajax']) {
 				$response['status'] = "ok";
 			
 			} else {
-				$response['status'] = "error";
+				$response['status'] = "error " . $error;
 			}
 			
 			break;
