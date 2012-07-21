@@ -8,8 +8,16 @@
 		"5": "1346432400",
 		"6": "1346518800"
 	},
-	"prices": {
-		"kids": 6,
-		"adults": 12
-	}
+	"prices": [
+		{
+			"type": "kids",
+			"price": 6,
+			"desc": "Ermäßigt"
+		},
+		{
+			"type": "adults",
+			"price": 12,
+			"desc": "Erwachsene"
+		}
+	]
 }

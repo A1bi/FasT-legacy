@@ -136,7 +136,7 @@ class Order {
 		// check numbers and total
 		$total = 0;
 		foreach (OrderManager::$theater['prices'] as $type => $price) {
-			$total += $orderInfo['number'][$type]*$price;
+			$total += $orderInfo['number'][$type] * $price['price'];
 		}
 		if ($total == 0 || $total != $orderInfo['total']) {
 			return false;
@@ -232,15 +232,13 @@ class Order {
 	}
 	
 	private function createTickets($numbers, $date) {
-		$t = 0;
-		foreach (OrderManager::$theater['prices'] as $type => $val) {
-			for ($i = 0; $i < $numbers[$type]; $i++) {
+		foreach (OrderManager::$theater['prices'] as $key => $price) {
+			for ($i = 0; $i < $numbers[$key]; $i++) {
 				$ticket = new Ticket();
 				$ticket->setOrder($this);
-				$ticket->create($t, $date);
+				$ticket->create($key, $date);
 				$this->tickets[] = $ticket;
 			}
-			$t++;
 		}
 	}
 	
@@ -320,7 +318,7 @@ class Order {
 				$pdf->SetFont("Qlassik", "", "25");
 				$pdf->Cell(50, 10, "Eintrittskarte", 0, 2);
 				$pdf->SetFont("Qlassik", "", "18");
-				$pdf->Cell(50, 9, ($ticket->getType()) ? "Erwachsener" : utf8_decode("Ermäßigt"), 0, 2);
+				$pdf->Cell(50, 9, utf8_decode($ticket->getDesc()), 0, 2);
 				$pdf->SetXY($pdf->GetX(), $pdf->GetY() + 2);
 				$pdf->SetFont("Helvetica", "", "11");
 				$pdf->Cell(22, 6, utf8_decode("Aufführung:"), 0, 0);
@@ -572,7 +570,11 @@ class Ticket {
 	}
 	
 	public function getPrice() {
-		return OrderManager::$theater['prices'][($this->type) ? "adults" : "kids"];
+		return OrderManager::$theater['prices'][$this->type]['price'];
+	}
+	
+	public function getDesc() {
+		return OrderManager::$theater['prices'][$this->type]['desc'];
 	}
 	
 	public function isCancelled() {

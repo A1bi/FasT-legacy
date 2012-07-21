@@ -209,7 +209,7 @@ if (!empty($_GET['order'])) {
 	foreach ($stats['dates'] as $key => $date) {
 		$sum = 0;
 		foreach (OrderManager::$theater['prices'] as $key2 => $price) {
-			$sum += $price * $date['types'][(($key2 == "kids") ? 0 : 1)];
+			$sum += $price['price'] * $date['types'][$key2];
 		}
 		$stats['dates'][$key]['revenue'] = $sum;
 		$stats['total']['revenue'] += $sum;

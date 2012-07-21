@@ -222,7 +222,8 @@ var order = new function () {
 		
 		// prices
 		$.each(info.prices, function (key, price) {
-			$(".date, .confirm").find("."+key+" .single span").html(price);
+			order.number[key] = 0;
+			$(".date, .confirm").find("."+price.type+" .single span").html(price.price);
 		});
 		
 		registerEvents();
@@ -243,7 +244,14 @@ var order = new function () {
 	}
 	
 	var choseNumber = function () {
-		order.number[$(this).attr("name")] = $(this).val();
+		var type = $(this).attr("name");
+		var number = $(this).val();
+		
+		$.each(info.prices, function (key, price) {
+			if (price.type == type) {
+				order.number[key] = number;
+			}
+		});
 		updateNumbers();
 	}
 	
@@ -252,10 +260,11 @@ var order = new function () {
 		var tables = $(".date, .confirm");
 		
 		$.each(order.number, function (key, number) {
-			var total = info.prices[key] * number;
+			var price = info.prices[key];
+			var total = price.price * number;
 			order.total += total;
 			
-			var typeBox = tables.find("."+key);
+			var typeBox = tables.find("."+price.type);
 			typeBox.find(".total span").html(total);
 			typeBox.find(".number span, span.number").html(number);
 		});

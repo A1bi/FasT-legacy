@@ -2,7 +2,6 @@
 {$address=$order->getAddress()}
 {$payment=$order->getPayment()}
 {$tickets=$order->getTickets()}
-{$types=["Ermäßigt", "Erwachsener"]}
 {$payMethods=[OrderPayMethod::Charge => "Lastschrift", OrderPayMethod::Transfer => "Überweisung"]}
 {$statuses[OrderStatus::Placed]="Bestellung aufgenommen"}
 {$statuses[OrderStatus::WaitingForApproval]="Warte auf Freischaltung.."}
@@ -158,7 +157,7 @@
 			</tr>
 			{foreach $tickets as $ticket}
 			<tr{if $ticket->isCancelled()} class="cancelled"{/if}>
-				<td>{$types[$ticket->getType()]}</td>
+				<td>{$ticket->getDesc()}</td>
 				<td>{$ticket->getDateString()}</td>
 			</tr>
 			{/foreach}
