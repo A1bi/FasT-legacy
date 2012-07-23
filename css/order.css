@@ -285,10 +285,6 @@ table td {
 .stepCon .accept {
 	margin: 20px 10px;
 }
-.stepCon tr.newSection td {
-	border-top: 1px solid #cccccc;
-	padding-top: 20px;
-}
 
 .stepCon.date ul {
 	list-style-type: none;
@@ -340,10 +336,6 @@ table td {
 .stepCon.address td .small {
 	margin-top: 5px;
 	color: #000000;
-}
-.stepCon.address .inner.newSection {
-	border-top: 1px solid #cccccc;
-	width: 70%;
 }
 .stepCon.payment td {
 	padding-top: 10px;

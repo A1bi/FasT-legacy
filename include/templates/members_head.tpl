@@ -1,6 +1,6 @@
 {include file="head.tpl" title="Mitgliederbereich -  {$title}" cssfile="members" noSlides=true}
 {$sections['members'] = ["Mitglieder", [
-	["index", "", "Hauptseite"]
+	["index", "", "Hauptseite"], ["settings", "einstellungen", "Einstellungen"]
 ]]}
 {if $_user['group'] == 2}
 {$sections['board'] = ["Vorstand", [

@@ -224,6 +224,10 @@ h3 {
 	width: 60%;
 	margin: 20px auto;
 }
+.inner.newSection {
+	border-top: 1px solid #cccccc;
+	width: 70%;
+}
 input.btn {
 	font-size: 15px;
 	width: 120px;
