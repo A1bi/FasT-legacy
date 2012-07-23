@@ -1,1 +1,0 @@
-{include file="members_head.tpl" board=true subs=[["page" => "/mitglieder/tickets", "title" => "Ticketbestellungen"]]}

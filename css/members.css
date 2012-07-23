@@ -1,42 +1,55 @@
-.hl.members {
-	margin-bottom: 10px;
+.navbar .top {
+	position: relative;
 }
-.hl.section {
-	font-size: 30px;
-	margin-top: 0px;
-	margin-bottom: 20px;
+.navbar .hl {
+	text-align: left;
+	margin-bottom: 0px;
+	font-size: 35px;
 }
-.sections {
-	text-align: center;
-	padding: 3px;
-	width: 80%;
-	margin: auto;
-	margin-bottom: 20px;
+.navbar .userinfo {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	font-size: 14px;
 }
-.sections, .sections a, .hl.members {
-	color: #d72c2c;
+.navbar .hl, .navbar > .top a {
+	text-shadow: 0px 0px 3px #cccccc;
 }
-.sections {
-	font-weight: bold;
-}
-.sections .main {
-	border-bottom: 1px solid #cccccc;
-	padding-bottom: 3px;
-	margin-bottom: 3px;
-	font-size: 16px;
-}
-.sections a {
+.navbar .hl, .navbar a {
+	color: #fe2617;
 	text-decoration: none;
-	font-weight: normal;
 }
-.sections a, .sections span {
-	padding: 0px 10px;
-}
-.sections a:hover {
+.navbar a:hover {
 	text-decoration: underline;
 }
-.sections .sub {
-	font-size: 13px;
+.navbar .con {
+	padding: 0px;
+}
+.navbar .sections {
+	overflow: auto;
+}
+.navbar .sections:first-child {
+	border-bottom: 1px solid #ebebeb;
+}
+.navbar .sections .name {
+	font-weight: bold;
+	text-align: right;
+	width: 80px;
+}
+.navbar .sections div {
+	float: left;
+	padding: 5px 7px;
+}
+.navbar .sections .main {
+	margin-left: 10px;
+	font-weight: bold;
+}
+.navbar .sections .section {
+	border-left: 1px solid #ebebeb;
+}
+.navbar .sections a.current {
+	text-decoration: none;
+	font-weight: bold;
 }
 
 table {
@@ -51,6 +64,11 @@ table .title td {
 	border-bottom: 1px solid #cccccc;
 	padding-bottom: 2px;
 	font-size: 15px;
+}
+.hl.section {
+	font-size: 30px;
+	margin-top: 0px;
+	margin-bottom: 20px;
 }
 
 .login .msg {

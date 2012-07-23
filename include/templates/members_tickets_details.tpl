@@ -1,4 +1,4 @@
-{include file="members_head_board.tpl" title="Ticketbestellungen - Bestellungsdetails" jsfile="members_tickets"}
+{include file="members_head.tpl" title="Ticketbestellungen - Bestellungsdetails" jsfile="members_tickets"}
 {$address=$order->getAddress()}
 {$payment=$order->getPayment()}
 {$tickets=$order->getTickets()}

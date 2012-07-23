@@ -1,17 +1,33 @@
 {include file="head.tpl" title="Mitgliederbereich -  {$title}" cssfile="members" noSlides=true}
-<div class="hl members">Mitgliederbereich</div>
-{if $_user['id']}
-<div class="sections">
-	{if $_user['group'] == 2}
-	<div class="main">
-		{if $board}<a href="/mitglieder">{else}<span>{/if}Mitglieder{if $board}</a>{else}</span>{/if} | {if !$board}<a href="/mitglieder/tickets">{else}<span>{/if}Vorstand{if !$board}</a>{else}</span>{/if} | <a href="/mitglieder/login?action=logout">Logout</a>
-	</div>
-	{/if}
-	<div class="sub">
-		{foreach $subs as $sub}
-		{$current=$sub['page'] != $smarty.server.REQUEST_URI}
-		{if $current}<a href="{$sub['page']}">{/if}{$sub['title']}{if $current}</a>{/if}
-		{/foreach}
-	</div>
-</div>
+{$sections['members'] = ["Mitglieder", [
+	["index", "", "Hauptseite"]
+]]}
+{if $_user['group'] == 2}
+{$sections['board'] = ["Vorstand", [
+	["tickets", "tickets", "Ticketbestellungen"]
+]]}
 {/if}
+<div class="navbar box">
+	<div class="top">
+		<div class="hl">Mitgliederbereich</div>
+{if $_user['id']}
+		<div class="userinfo">
+			Hallo {$_user['realname']|escape}! | <a href="/mitglieder/login?action=logout">Logout</a>
+		</div>
+{/if}
+	</div>
+{if $_user['id']}
+	<div class="con">
+{foreach $sections as $section}
+		<div class="sections">
+			<div class="name">{$section[0]}</div>
+{foreach $section[1] as $page}
+			<div class="section">
+				<a href="/mitglieder/{$page[1]}"{if basename($smarty.server.SCRIPT_FILENAME, ".php") == $page[0]} class="current"{/if}>{$page[2]}</a>
+			</div>
+{/foreach}
+		</div>
+{/foreach}
+	</div>
+{/if}
+</div>

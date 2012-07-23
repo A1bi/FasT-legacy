@@ -1,4 +1,4 @@
-{include file="members_head_board.tpl" title="Ticketbestellungen" jsfile="members_tickets"}
+{include file="members_head.tpl" title="Ticketbestellungen" jsfile="members_tickets"}
 <div class="hl section">Ticketbestellungen</div>
 
 <div class="tickets">
