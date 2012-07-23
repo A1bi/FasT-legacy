@@ -1,1 +1,0 @@
-{include file="members_head.tpl" subs=[["page" => "/mitglieder", "title" => "Hauptseite"]]}

@@ -147,12 +147,12 @@ if ($_SERVER['HTTPS']) {
 	// check if logged in
 	if (is_array($_SESSION['user'])) {
 		// look in database for given user
-		$result = $_db->query('SELECT id, name, `group`, realname, email FROM users WHERE id = ? AND pass = ?', array($_SESSION['user']['id'], $_SESSION['user']['pass']));
+		$result = $_db->query('SELECT id, name, `group`, firstname, lastname, email FROM users WHERE id = ? AND pass = ?', array($_SESSION['user']['id'], $_SESSION['user']['pass']));
 		$user = $result->fetch();
 	
 		// found ?
 		if (!empty($user['id'])) {
-			$keys = array("id", "name", "group", "realname", "email");
+			$keys = array("id", "name", "group", "firstname", "lastname", "email");
 			foreach ($keys as $key) {
 				$_user[$key] = $user[$key];
 			}

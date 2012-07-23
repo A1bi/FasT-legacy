@@ -343,7 +343,7 @@ class Order {
 	
 		if (!$this->events) {
 			$result = $_db->query('	SELECT		e.*,
-												u.realname
+												u.firstname, u.lastname
 									FROM		orders_events AS e
 									LEFT JOIN	users AS u
 									ON			u.id = e.user

@@ -12,7 +12,7 @@
 		<div class="hl">Mitgliederbereich</div>
 {if $_user['id']}
 		<div class="userinfo">
-			Hallo {$_user['realname']|escape}! | <a href="/mitglieder/login?action=logout">Logout</a>
+			Hallo {$_user['firstname']|escape}! | <a href="/mitglieder/login?action=logout">Logout</a>
 		</div>
 {/if}
 	</div>

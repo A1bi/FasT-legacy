@@ -182,7 +182,7 @@
 			<tr>
 				<td>{$event['time']|date_format_x:"%@, %H.%M Uhr"}</td>
 				<td>{$events[$event['event']]}</td>
-				<td>{$event['realname']|escape}</td>
+				<td>{"{$event['firstname']} {$event['lastname']}"|escape}</td>
 			</tr>
 			{/foreach}
 		</table>
