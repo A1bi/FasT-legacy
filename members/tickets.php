@@ -268,6 +268,7 @@ if (!empty($_GET['order'])) {
 										orders_tickets AS t
 							WHERE		o.status >= ?
 							AND			t.order = o.id
+							AND			t.cancelled = 0
 							GROUP BY	o.id
 							ORDER BY	o.id DESC
 							', array(OrderStatus::Approved));
