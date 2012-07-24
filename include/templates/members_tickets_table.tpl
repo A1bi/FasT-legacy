@@ -20,7 +20,7 @@
 				<td class="sId">{$order->getSId()}</td>
 				<td>{$order->getTime()|date_format_x:"%@, %H.%M Uhr"}</td>
 				<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
-				<td>{$order->getTickets()|@count}</td>
+				<td>{$order->getNumberOfValidTickets()}</td>
 				<td>{$order->getTotal()} €</td>
 				{if $unpaid}{$difference={$order->getTime()|time_difference}}<td>seit {$difference} Tag{if $difference != 1}en{/if}</td>{/if}
 				<td class="actions">

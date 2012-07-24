@@ -16,7 +16,7 @@ class OrderManager {
 	
 	static $instance = null;
 	static $theater, $company;
-	private $orders = array();
+	static $orders = array();
 	
 	private function __construct() {
 		self::$theater = getData("theater_montevideo");
@@ -40,27 +40,22 @@ class OrderManager {
 	public function getOrderById($id) {
 		global $_db;
 		
-		if (!$this->tickets[$id]) {
+		if (!self::$orders[$id]) {
 			// get info for order from db
 			$result = $_db->query('SELECT *, UNIX_TIMESTAMP(time) AS time FROM orders WHERE id = ?', array($id));
 			$orderInfo = $result->fetch();
 			if ($orderInfo['id']) {
-				// get tickets from db
-				$result = $_db->query('SELECT * FROM orders_tickets WHERE `order` = ?', array($id));
-				$orderInfo['tickets'] = $result->fetchAll();
-				
 				// create order instance
 				$order = new Order();
 				$order->init($orderInfo);
-				$this->tickets[$order->getId()] = $order;
-				return $order;
+				self::$orders[$order->getId()] = $order;
+			
+			} else {
+				self::$orders[$order->getId()] = null;
 			}
-			
-			return null;
-			
-		} else {
-			return $this->tickets[$id];
 		}
+		
+		return self::$orders[$id];
 	}
 }
 
@@ -70,8 +65,7 @@ class Order {
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
 			$cancelled = array("cancelled" => false, "reason" => ""),
-			$tickets = array(),
-			$events = NULL;
+			$tickets = NULL, $events = NULL;
 	
 	public function create() {
 		// set info
@@ -101,9 +95,6 @@ class Order {
 		
 		// cancelled
 		$this->cancelled = array("cancelled" => $orderInfo['cancelled'], "reason" => $orderInfo['cancelReason']);
-		
-		// tickets
-		$this->initTickets($orderInfo['tickets']);
 	}
 	
 	private function isInt($val) {
@@ -165,27 +156,25 @@ class Order {
 		$ticket->setOrder($this);
 		if (!$ticket->setDate($date) || !$ticket->setType($type)) return false;
 		
+		if (!$this->tickets) $this->tickets = array();
 		$this->tickets[] = $ticket;
 		$this->updateTotal();
 		
 		return true;
 	}
 	
-	private function initTickets($tickets) {
-		if (is_numeric($tickets)) {
-			// only number of tickets is given (for perfomance reasons) so we have to fake an array of tickets
-			for ($i = 0; $i < $tickets; $i++) {
-				$this->tickets[] = null;
-			}
-		
-		} else if (is_array($tickets)) {
-			foreach ($tickets as $ticketInfo) {
-				$ticket = new Ticket();
-				$ticket->setOrder($this);
-				$ticket->init($ticketInfo);
-				$this->tickets[] = $ticket;
-			}
+	private function initTickets() {
+		global $_db;
+	
+		$this->tickets = array();
+		$result = $_db->query('SELECT * FROM orders_tickets WHERE `order` = ?', array($this->id));
+		while ($ticketInfo = $result->fetch()) {
+			$ticket = new Ticket();
+			$ticket->init($ticketInfo);
+			$this->tickets[] = $ticket;
 		}
+		
+		$this->updateTotal();
 	}
 	
 	public function createPdf() {
@@ -206,7 +195,8 @@ class Order {
 		$height = 60;
 		$ticketHeight = $height+1;
 
-		$nTickets = count($this->tickets);
+		$tickets = $this->getTickets();
+		$nTickets = count($tickets);
 		$ticketsOnPage = 0;
 		
 		for ($i = 0; $i <= $nTickets; $i++) {
@@ -230,7 +220,7 @@ class Order {
 				$pdf->MultiCell(0, 6, utf8_decode($_tpl->fetch("order_pdf_disclaimer.tpl")), 0, 2);
 			
 			} else {
-				$ticket = $this->tickets[$i];
+				$ticket = $tickets[$i];
 				if ($ticket->isCancelled()) continue;
 				
 				$ticketsOnPage++;
@@ -294,7 +284,8 @@ class Order {
 		$this->id = $_db->id();
 		
 		// save tickets too
-		foreach ($this->tickets as $ticket) {
+		$tickets = $this->getTickets();
+		foreach ($tickets as $ticket) {
 			$ticket->save();
 		}
 		
@@ -323,7 +314,8 @@ class Order {
 		$_db->query('UPDATE orders SET cancelled = 1, status = ?, cancelReason = ? WHERE id = ?', array($this->status, $reason, $this->id));
 		
 		// cancel each ticket
-		foreach ($this->tickets as $ticket) {
+		$tickets = $this->getTickets();
+		foreach ($tickets as $ticket) {
 			$ticket->cancel($reason);
 		}
 		
@@ -343,20 +335,22 @@ class Order {
 					', array($this->id, $event, $info, $_user['id']));
 	}
 	
-	public function getEvents() {
+	private function initEvents() {
 		global $_db;
+		
+		$result = $_db->query('	SELECT		e.*, UNIX_TIMESTAMP(e.time) AS time,
+											u.firstname, u.lastname
+								FROM		orders_events AS e
+								LEFT JOIN	users AS u
+								ON			u.id = e.user
+								WHERE		e.`order` = ?
+								ORDER BY	e.id DESC
+								', array($this->id));
+		$this->events = $result->fetchAll();
+	}
 	
-		if (!$this->events) {
-			$result = $_db->query('	SELECT		e.*, UNIX_TIMESTAMP(e.time) AS time,
-												u.firstname, u.lastname
-									FROM		orders_events AS e
-									LEFT JOIN	users AS u
-									ON			u.id = e.user
-									WHERE		e.`order` = ?
-									ORDER BY	e.id DESC
-									', array($this->id));
-			$this->events = $result->fetchAll();
-		}
+	public function getEvents() {
+		if (!$this->events) $this->initEvents();
 		
 		return $this->events;
 	}
@@ -425,12 +419,15 @@ class Order {
 	}
 	
 	public function getTickets() {
+		if (!$this->tickets) $this->initTickets();
+	
 		return $this->tickets;
 	}
 	
 	public function getNumberOfValidTickets() {
 		$number = 0;
-		foreach ($this->tickets as $ticket) {
+		$tickets = $this->getTickets();
+		foreach ($tickets as $ticket) {
 			if (!$ticket->isCancelled()) $number++;
 		}
 		

@@ -6,15 +6,20 @@ limitAccess(array(2));
 loadComponent("orders");
 OrderManager::init();
 
-function getOrdersFromInfo($orders) {
-	$tmpOrders = array();
-	foreach ($orders as $orderInfo) {
-		$order = new Order();
-		$order->init($orderInfo);
-		$tmpOrders[] = $order;
+function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
+	global $_db;
+	
+	$result = $_db->query('	SELECT		id
+							FROM		orders
+							WHERE		status '.$operator.' ?
+							ORDER BY	'.$orderBy, array($status));
+							
+	$orders = array();
+	while ($id = $result->fetch()) {
+		$orders[] = OrderManager::getOrderById($id['id']);
 	}
 	
-	return $tmpOrders;
+	return $orders;
 }
 
 if (!empty($_GET['order'])) {
@@ -72,7 +77,7 @@ if (!empty($_GET['order'])) {
 
 } elseif ($_GET['action'] == "charge") {
 	
-	$result = $_db->query('SELECT id, sId, total, kName, kNo, blz, bank FROM orders WHERE status = ?', array(OrderStatus::Approved));
+	$result = $_db->query('SELECT id FROM orders WHERE status = ?', array(OrderStatus::Approved));
 	$charges = $result->fetchAll();
 	$nCharges = count($charges);
 	
@@ -86,8 +91,7 @@ if (!empty($_GET['order'])) {
 		$dta = new DTAUS("LK", $chargeInfo['sender'], $chargeId);
 		
 		foreach ($charges as $charge) {
-			$order = new Order();
-			$order->init($charge);
+			$order = OrderManager::getOrderById($charge['id']);
 			$payment = $order->getPayment();
 			$paymentDetails = array("name" => $payment['name'], "account" => $payment['number'], "blz" => $payment['blz'], "bank" => $payment['bank']);
 	
@@ -188,7 +192,7 @@ if (!empty($_GET['order'])) {
 	$result = $_db->query('SELECT date, type, COUNT(*) as number FROM orders_tickets WHERE cancelled = 0 GROUP BY date, type WITH ROLLUP');
 	$ticketData = $result->fetchAll();
 	
-	$stats = array("total" => array());
+	$stats = array("total" => array(), "dates" => array());
 	foreach ($ticketData as $ticket) {
 		if ($ticket['date'] == "") {
 			$arr = &$stats['total']['sum'];
@@ -219,60 +223,15 @@ if (!empty($_GET['order'])) {
 	
 	
 	// orders to check
-	$result = $_db->query('	SELECT		o.id,
-										o.sId,
-										o.firstname,
-										o.lastname,
-										o.total,
-										UNIX_TIMESTAMP(o.time) AS time,
-										COUNT(t.id) AS tickets
-							FROM		orders AS o,
-										orders_tickets AS t
-							WHERE		o.status = ?
-							AND			t.order = o.id
-							AND			t.cancelled = 0
-							GROUP BY	o.id
-							ORDER BY	o.sId ASC
-							', array(OrderStatus::WaitingForApproval));
-	$_tpl->assign("ordersCheck", getOrdersFromInfo($result->fetchAll()));
+	$_tpl->assign("ordersCheck", getOrdersByStatus(OrderStatus::WaitingForApproval));
 	
 	
 	// orders to pay
-	$result = $_db->query('	SELECT		o.id,
-										o.sId,
-										o.firstname,
-										o.lastname,
-										o.total,
-										UNIX_TIMESTAMP(o.time) AS time,
-										COUNT(t.id) AS tickets
-							FROM		orders AS o,
-										orders_tickets AS t
-							WHERE		o.status = ?
-							AND			t.order = o.id
-							AND			t.cancelled = 0
-							GROUP BY	o.id
-							ORDER BY	o.sId ASC
-							', array(OrderStatus::WaitingForPayment));
-	$_tpl->assign("ordersPay", getOrdersFromInfo($result->fetchAll()));
+	$_tpl->assign("ordersPay", getOrdersByStatus(OrderStatus::WaitingForPayment));
 	
 	
 	// finished or closed orders
-	$result = $_db->query('	SELECT		o.id,
-										o.sId,
-										o.firstname,
-										o.lastname,
-										o.total,
-										UNIX_TIMESTAMP(o.time) AS time,
-										COUNT(*) AS tickets
-							FROM		orders AS o,
-										orders_tickets AS t
-							WHERE		o.status >= ?
-							AND			t.order = o.id
-							AND			t.cancelled = 0
-							GROUP BY	o.id
-							ORDER BY	o.id DESC
-							', array(OrderStatus::Approved));
-	$_tpl->assign("ordersFinished", getOrdersFromInfo($result->fetchAll()));
+	$_tpl->assign("ordersFinished", getOrdersByStatus(OrderStatus::Approved, "id DESC", ">="));
 	
 	// charges
 	$result = $_db->query('SELECT COUNT(*) as number FROM orders WHERE status = ?', array(OrderStatus::Approved));
