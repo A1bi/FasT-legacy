@@ -13,7 +13,7 @@ if ($_GET['action'] == "new") {
 		if (empty($_POST['code']) || $_POST['code'] != $codes[$_POST['codenr']]) {
 			$_tpl->assign("msg", "Der eingegebene Code stimmt nicht mit der Grafik überein!");
 		} else {
-			$_db->query('INSERT INTO gbook VALUES (null, ?, ?, ?)', array($_POST['name'], $_POST['text'], time()));
+			$_db->query('INSERT INTO gbook (name, text) VALUES (?, ?)', array($_POST['name'], $_POST['text']));
 			mail("albi@albisigns.de", "Neuer Eintrag FasT", "guck halt nach!");
 			redirectTo("/gbook");
 		}
@@ -49,8 +49,7 @@ if ($_GET['action'] == "new") {
 	$_tpl->assign("navi", $navi);
 
 	$start = ($_GET['page']-1) * $limit;
-	$result = $_db->query('SELECT * FROM gbook ORDER BY id DESC LIMIT '.$start.', '.$limit);
-
+	$result = $_db->query('SELECT *, UNIX_TIMESTAMP(time) AS time FROM gbook ORDER BY id DESC LIMIT '.$start.', '.$limit);
 	$_tpl->assign("entries", $_db->fetchAll($result));
 	$_tpl->display("gbook.tpl");
 }

@@ -42,7 +42,7 @@ class OrderManager {
 		
 		if (!$this->tickets[$id]) {
 			// get info for order from db
-			$result = $_db->query('SELECT * FROM orders WHERE id = ?', array($id));
+			$result = $_db->query('SELECT *, UNIX_TIMESTAMP(time) AS time FROM orders WHERE id = ?', array($id));
 			$orderInfo = $result->fetch();
 			if ($orderInfo['id']) {
 				// get tickets from db
@@ -286,8 +286,10 @@ class Order {
 		}
 		
 		// save everything to db
-		$_db->query('INSERT INTO orders VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, 0, "")',
-				array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), time(), $_SERVER['REMOTE_ADDR'], $status));
+		$_db->query('	INSERT INTO	orders
+									(sId, gender, firstname, lastname, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
+						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+					', array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
 		
 		$this->id = $_db->id();
 		
@@ -335,14 +337,17 @@ class Order {
 	private function logEvent($event, $info = "") {
 		global $_db, $_user;
 		
-		$_db->query('INSERT INTO orders_events VALUES (null, ?, ?, ?, ?, ?)', array($this->id, $event, $info, $_user['id'], time()));
+		$_db->query('	INSERT INTO	orders_events
+									(`order`, event, info, user)
+						VALUES		(?, ?, ?, ?)
+					', array($this->id, $event, $info, $_user['id']));
 	}
 	
 	public function getEvents() {
 		global $_db;
 	
 		if (!$this->events) {
-			$result = $_db->query('	SELECT		e.*,
+			$result = $_db->query('	SELECT		e.*, UNIX_TIMESTAMP(e.time) AS time,
 												u.firstname, u.lastname
 									FROM		orders_events AS e
 									LEFT JOIN	users AS u

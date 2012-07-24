@@ -23,7 +23,7 @@ if ($_user['id']) {
 	$user = $result->fetch();
 	
 	if ($user['id'] && validatePassword($_POST['pass'], $user['pass'])) {
-		$_db->query('UPDATE users SET lastLogin = ? WHERE id = ?', array(time(), $user['id']));
+		$_db->query('UPDATE users SET lastLogin = NOW() WHERE id = ?', array($user['id']));
 		$_SESSION['user'] = array("id" => $user['id'], "pass" => $user['pass']);
 		
 		if (!empty($_POST['stay'])) {

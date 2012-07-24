@@ -79,7 +79,7 @@ if (!empty($_GET['order'])) {
 	if ($nCharges) {
 		$chargeInfo = getData("charge");
 	
-		$_db->query('INSERT INTO orders_charges VALUES(null, ?)', array(time()));
+		$_db->query('INSERT INTO orders_charges VALUES()');
 		$chargeId = $_db->id();
 		
 		loadComponent("dtaus");
@@ -224,7 +224,7 @@ if (!empty($_GET['order'])) {
 										o.firstname,
 										o.lastname,
 										o.total,
-										o.time,
+										UNIX_TIMESTAMP(o.time) AS time,
 										COUNT(t.id) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
@@ -243,7 +243,7 @@ if (!empty($_GET['order'])) {
 										o.firstname,
 										o.lastname,
 										o.total,
-										o.time,
+										UNIX_TIMESTAMP(o.time) AS time,
 										COUNT(t.id) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
@@ -262,7 +262,7 @@ if (!empty($_GET['order'])) {
 										o.firstname,
 										o.lastname,
 										o.total,
-										o.time,
+										UNIX_TIMESTAMP(o.time) AS time,
 										COUNT(*) AS tickets
 							FROM		orders AS o,
 										orders_tickets AS t
@@ -282,7 +282,7 @@ if (!empty($_GET['order'])) {
 	$result = $_db->query('	SELECT		c.id,
 										COUNT(o.id) AS orders,
 										SUM(o.total) AS total,
-										c.date
+										UNIX_TIMESTAMP(c.time) AS time
 							FROM		orders_charges AS c,
 										orders AS o
 							WHERE		o.charge = c.id
