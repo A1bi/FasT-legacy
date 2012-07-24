@@ -16,7 +16,7 @@
 				</div>
 				<div class="con">
 					<div style="text-align: right; font-size: 12px;">
-						am {$entry.time|date_format:"%d.%m.%Y"} um {$entry.time|date_format:"%H:%I"} Uhr
+						am {$entry.time|date_format:"%d.%m.%Y"} um {$entry.time|date_format:"%H:%M"} Uhr
 					</div>
 					{$entry.text|escape|nl2br}
 				</div>
