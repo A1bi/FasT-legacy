@@ -284,8 +284,7 @@ class Order {
 		$this->id = $_db->id();
 		
 		// save tickets too
-		$tickets = $this->getTickets();
-		foreach ($tickets as $ticket) {
+		foreach ($this->getTickets() as $ticket) {
 			$ticket->save();
 		}
 		
@@ -295,8 +294,7 @@ class Order {
 	private function updateTotal() {
 		$this->total = 0;
 	
-		$tickets = $this->getTickets();
-		foreach ($tickets as $ticket) {
+		foreach ($this->getTickets() as $ticket) {
 			$this->total += $ticket->getPrice();
 		}
 	}
@@ -314,8 +312,7 @@ class Order {
 		$_db->query('UPDATE orders SET cancelled = 1, status = ?, cancelReason = ? WHERE id = ?', array($this->status, $reason, $this->id));
 		
 		// cancel each ticket
-		$tickets = $this->getTickets();
-		foreach ($tickets as $ticket) {
+		foreach ($this->getTickets() as $ticket) {
 			$ticket->cancel($reason);
 		}
 		
@@ -426,8 +423,7 @@ class Order {
 	
 	public function getNumberOfValidTickets() {
 		$number = 0;
-		$tickets = $this->getTickets();
-		foreach ($tickets as $ticket) {
+		foreach ($this->getTickets() as $ticket) {
 			if (!$ticket->isCancelled()) $number++;
 		}
 		
