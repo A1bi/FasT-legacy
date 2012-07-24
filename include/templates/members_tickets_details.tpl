@@ -152,11 +152,13 @@
 	<div class="con">
 		<table>
 			<tr class="title">
+				<td>TN</td>
 				<td>Typ</td>
 				<td>Aufführung</td>
 			</tr>
 			{foreach $tickets as $ticket}
 			<tr{if $ticket->isCancelled()} class="cancelled"{/if}>
+				<td class="sId">{$ticket->getSid()}</td>
 				<td>{$ticket->getDesc()}</td>
 				<td>{$ticket->getDateString()}</td>
 			</tr>
