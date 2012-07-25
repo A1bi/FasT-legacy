@@ -173,8 +173,6 @@ class Order {
 			$ticket->init($ticketInfo);
 			$this->tickets[] = $ticket;
 		}
-		
-		$this->updateTotal();
 	}
 	
 	public function createPdf() {
@@ -295,6 +293,7 @@ class Order {
 		$this->total = 0;
 	
 		foreach ($this->getTickets() as $ticket) {
+			if ($ticket->isCancelled()) continue;
 			$this->total += $ticket->getPrice();
 		}
 	}
