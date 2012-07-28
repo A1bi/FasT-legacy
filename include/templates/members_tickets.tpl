@@ -23,7 +23,7 @@
 					<td>{$stats['dates'][$date@key]['types'][$price@key]|default:0}</td>
 {/foreach}
 					<td>{$stats['dates'][$date@key]['sum']|default:0}</td>
-					<td>{$stats['dates'][$date@key]['revenue']|default:0} €</td>
+					<td>{"%!.0n"|money_format:$stats['dates'][$date@key]['revenue']} €</td>
 				</tr>
 				{/foreach}
 				<tr class="total">
@@ -32,7 +32,7 @@
 					<td>{$stats['total']['types'][$price@key]|default:0}</td>
 {/foreach}
 					<td>{$stats['total']['sum']|default:0}</td>
-					<td>{$stats['total']['revenue']|default:0} €</td>
+					<td>{"%!.0n"|money_format:$stats['total']['revenue']} €</td>
 				</tr>
 			</table>
 		</div>
