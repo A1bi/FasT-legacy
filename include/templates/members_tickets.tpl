@@ -38,8 +38,8 @@
 		</div>
 	</div>
 	<div class="trenner"></div>
-	{include file="members_tickets_table.tpl" title="Zu überprüfende Bestellungen" orders=$ordersCheck important=true}
-	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" orders=$ordersPay important=true unpaid=true}
+	{include file="members_tickets_table.tpl" title="Zu überprüfende Bestellungen" aName="waitingForApproval" orders=$ordersCheck important=true}
+	{include file="members_tickets_table.tpl" title="Unbezahlte Bestellungen" aName="unpaid" orders=$ordersPay important=true unpaid=true}
 	<div class="box charges{if $charges} important{/if}">
 		<div class="top">
 			Ausstehende Lastschriften
@@ -49,7 +49,7 @@
 		</div>
 	</div>
 	<div class="trenner"></div>
-	{include file="members_tickets_table.tpl" title="Vergangene Bestellungen" orders=$ordersFinished}
+	{include file="members_tickets_table.tpl" title="Vergangene Bestellungen" aName="finished" orders=$ordersFinished}
 	<div class="box">
 		<div class="top">
 			Vergangene Einreichungen von Lastschriften

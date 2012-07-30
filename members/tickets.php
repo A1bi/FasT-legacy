@@ -9,17 +9,33 @@ OrderManager::init();
 function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
 	global $_db;
 	
-	$result = $_db->query('	SELECT		id
-							FROM		orders
-							WHERE		status '.$operator.' ?
-							ORDER BY	'.$orderBy, array($status));
-							
+	$maxEntries = 10;
+	
+	// construct query
+	$cond = ' FROM orders WHERE	status '.$operator.' ?';
+	$order = ' ORDER BY	'.$orderBy;
+	if (!$_GET['showAll']) {
+		$limit .= ' LIMIT 0, '.$maxEntries;
+	
+		// get number of entries
+		$query = 'SELECT COUNT(*) AS number' . $cond;
+		$result = $_db->query($query, array($status));
+		$count = $result->fetch();
+	}
+
+	// get entries
+	$query = 'SELECT id' . $cond . $order . $limit;
+	$result = $_db->query($query, array($status));
+	
 	$orders = array();
 	while ($id = $result->fetch()) {
 		$orders[] = OrderManager::getOrderById($id['id']);
 	}
 	
-	return $orders;
+	return array(
+		"more" => count($orders) < $count['number'],
+		"orders" => $orders
+	);
 }
 
 if (!empty($_GET['order'])) {

@@ -1,9 +1,10 @@
-<div class="box{if $important && $orders|@count} important{/if}">
+<div class="box{if $important && $orders['orders']|@count} important{/if}">
 	<div class="top">
 		{$title}
 	</div>
 	<div class="con">
-		{if $orders|@count}
+		<a name="{$aName}"></a>
+		{if $orders['orders']|@count}
 		<table>
 			<tr class="title">
 				<td>ON</td>
@@ -14,7 +15,7 @@
 				{if $unpaid}<td>ausstehend</td>{/if}
 				<td></td>
 			</tr>
-			{foreach $orders as $order}
+			{foreach $orders['orders'] as $order}
 			{$address=$order->getAddress()}
 			<tr>
 				<td class="sId">{$order->getSId()}</td>
@@ -30,6 +31,12 @@
 			</tr>
 			{/foreach}
 		</table>
+		{if $orders['more']}
+		<div class="hcen more">
+			<div>...</div>
+			<a href="?showAll=1#{$aName}">Alle Bestellungen anzeigen</a>
+		</div>
+		{/if}
 		{else}
 		Keine Bestellungen vorhanden.
 		{/if}

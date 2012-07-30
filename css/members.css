@@ -128,6 +128,14 @@ table .title td {
 .tickets td.sId {
 	font-weight: bold;
 }
+.tickets .more div {
+	letter-spacing: 5px;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+.tickets .more a {
+	font-size: 14px;
+}
 
 
 /* -- order details -- */
