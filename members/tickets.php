@@ -3,7 +3,7 @@ include('../include/members.php');
 
 limitAccess(array(2));
 
-loadComponent("orders");
+loadComponent("orderManager");
 OrderManager::init();
 
 function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {

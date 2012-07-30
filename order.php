@@ -2,7 +2,7 @@
 include('./include/main.php');
 
 $_db = new database;
-loadComponent("orders");
+loadComponent("orderManager");
 
 if ($_GET['ajax']) {
 	$response = array();

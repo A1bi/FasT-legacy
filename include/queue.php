@@ -6,7 +6,7 @@ $_SERVER['SERVER_NAME'] = $args['domain'];
 
 $_db = new database();
 loadComponent("queue");
-loadComponent("orders");
+loadComponent("orderManager");
 $orderManager = OrderManager::getInstance();
 
 $queue = new Queue();
