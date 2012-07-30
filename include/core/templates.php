@@ -15,7 +15,7 @@ unset($config['db']);
 $_tpl->assign("_config", $config);
 
 // configure
-$_tpl->setTemplateDir('./include/templates');
+$_tpl->setTemplateDir('./include/templates/source');
 $_tpl->setCompileDir('./include/templates/compiled');
 $_tpl->setCacheDir('./include/templates/cache');
 $_tpl->setConfigDir('./include/templates/configs');
