@@ -145,7 +145,7 @@
 	</div>
 </div>
 
-<div class="box tickets">
+<div class="box" id="tickets">
 	<div class="top">
 		Tickets in dieser Bestellung
 	</div>
@@ -157,7 +157,7 @@
 				<td>Aufführung</td>
 			</tr>
 			{foreach $tickets as $ticket}
-			<tr{if $ticket->isCancelled()} class="cancelled"{/if}>
+			<tr class="{if $ticket->isCancelled()}cancelled{/if} {if $ticket->getId() == $smarty.get.ticket}highlighted{/if}">
 				<td class="sId">{$ticket->getSid()}</td>
 				<td>{$ticket->getDesc()}</td>
 				<td>{$ticket->getDateString()}</td>
@@ -168,7 +168,7 @@
 </div>
 
 {$log=$order->getEvents()}
-<div class="box tickets">
+<div class="box">
 	<div class="top">
 		Protokoll
 	</div>

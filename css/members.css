@@ -12,6 +12,16 @@ table .title td {
 	padding-bottom: 2px;
 	font-size: 15px;
 }
+table td.actions {
+	width: 10%;
+	text-align: right;
+}
+table td.actions img {
+	vertical-align: top;
+}
+table td.sId {
+	font-weight: bold;
+}
 .hl.section {
 	font-size: 30px;
 	margin-top: 0px;
@@ -118,23 +128,25 @@ table .title td {
 	font-size: 14px;
 	font-weight: bold;
 }
-.tickets td.actions {
-	width: 10%;
-	text-align: right;
-}
-.tickets td.actions img {
-	vertical-align: top;
-}
-.tickets td.sId {
-	font-weight: bold;
-}
-.tickets .more div {
+.tickets table .more div {
 	letter-spacing: 5px;
 	font-size: 20px;
 	margin-bottom: 5px;
 }
-.tickets .more a {
+.tickets table .more a {
 	font-size: 14px;
+}
+.tickets .search input[type=tel] {
+	border-radius: 5px;
+	border: none;
+	height: 17px;
+	width: 70px;
+	padding: 2px;
+	font-size: 16px;
+	box-shadow: inset 1px 1px 2px #cccccc;
+}
+.tickets .search input {
+	vertical-align: middle;
 }
 
 
@@ -192,10 +204,13 @@ table .title td {
 .orderDetails .overview .cancelled {
 	color: red;
 }
-.orderDetails .tickets .cancelled {
+.orderDetails .overview .finished {
+	color: green;
+}
+.orderDetails #tickets .cancelled {
 	text-decoration: line-through;
 	color: #cccccc;
 }
-.orderDetails .finished {
-	color: green;
+.orderDetails #tickets .highlighted td {
+	background: #ffb0b0;
 }

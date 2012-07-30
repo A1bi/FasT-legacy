@@ -82,6 +82,22 @@ if (!empty($_GET['order'])) {
 		redirectTo("/mitglieder/tickets" . (($_GET['goto'] != "overview") ? "?action=showDetails&order=".$order->getId() : ""));
 	}
 
+} elseif ($_GET['action'] == "search") {
+	if ($_POST['order']) {
+		$result = $_db->query('SELECT id FROM orders WHERE sId = ?', array($_POST['order']));
+	
+	} else {
+		$result = $_db->query('SELECT o.id, t.id AS tId FROM orders AS o, orders_tickets AS t WHERE t.sId = ? AND o.id = t.order', array($_POST['ticket']));
+		
+	}
+	
+	$order = $result->fetch();
+	if ($order['id']) {
+		redirectTo("/mitglieder/tickets?action=showDetails&order=" . $order['id'] . (($_POST['ticket']) ? "&ticket=" . $order['tId'] . "#tickets" : ""));
+	}
+	
+	redirectTo("/mitglieder/tickets");
+
 } elseif ($_GET['action'] == "getChargesSheet") {
 	$file = "./media/charges/" . $_GET['id'] . ".pdf";
 	if (file_exists($file)) {
