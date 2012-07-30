@@ -128,12 +128,12 @@ table td.sId {
 	font-size: 14px;
 	font-weight: bold;
 }
-.tickets table .more div {
+.tickets .more div {
 	letter-spacing: 5px;
 	font-size: 20px;
 	margin-bottom: 5px;
 }
-.tickets table .more a {
+.tickets .more a {
 	font-size: 14px;
 }
 .tickets .search input[type=tel] {
