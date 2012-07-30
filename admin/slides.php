@@ -36,5 +36,5 @@ if (!empty($_POST['submit'])) {
 
 }
 
-$_tpl->display("admin_slides.tpl");
+$_tpl->display("admin/slides.tpl");
 ?>

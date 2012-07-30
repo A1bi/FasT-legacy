@@ -19,7 +19,7 @@ Ihre Karten werden in wenigen Momenten auf dieser e-mail-Adresse eintreffen!
 {else}
 Bitte überweisen Sie den Betrag von {$order->GetTotal()} € auf folgendes Konto:
 
-{include file="order_mail_bankdetails.tpl"}
+{include file="mail/order_bankdetails.tpl"}
 {/if}
 
 

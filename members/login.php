@@ -43,5 +43,5 @@ if ($_user['id']) {
 
 }
 
-$_tpl->display("members_login.tpl");
+$_tpl->display("members/login.tpl");
 ?>

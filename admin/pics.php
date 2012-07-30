@@ -50,5 +50,5 @@ if (!empty($_GET['id']) && (!empty($_POST['submit']) || $_GET['import'])) {
 	$_tpl->assign("galleries", $result->fetchAll());
 }
 
-$_tpl->display("admin_pics.tpl");
+$_tpl->display("admin/pics.tpl");
 ?>

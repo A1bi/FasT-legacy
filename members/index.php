@@ -1,5 +1,5 @@
 <?php
 include('../include/members.php');
 
-$_tpl->display("members_index.tpl");
+$_tpl->display("members/index.tpl");
 ?>

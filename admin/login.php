@@ -17,5 +17,5 @@ if ($_GET['action'] == "logout") {
 }
 
 $_tpl->assign("msg", $msg);
-$_tpl->display("admin_login.tpl");
+$_tpl->display("admin/login.tpl");
 ?>

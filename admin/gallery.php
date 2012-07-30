@@ -13,5 +13,5 @@ if (!empty($_POST['title'])) {
 	$_tpl->assign(array("id" => $id, "success" => true));
 }
 
-$_tpl->display("admin_gallery.tpl");
+$_tpl->display("admin/gallery.tpl");
 ?>

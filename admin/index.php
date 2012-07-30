@@ -1,5 +1,5 @@
 <?php
 include('../include/admin.php');
 
-$_tpl->display("admin_index.tpl");
+$_tpl->display("admin/index.tpl");
 ?>

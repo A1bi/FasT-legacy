@@ -1,4 +1,4 @@
-{include file="members_head.tpl" title="Einstellungen"}
+{include file="members/head.tpl" title="Einstellungen"}
 <div class="hl section">Einstellungen</div>
 
 <div class="box settings">

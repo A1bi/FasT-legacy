@@ -47,7 +47,7 @@ if (!empty($_GET['order'])) {
 	
 	if ($_GET['action'] == "showDetails") {
 		$_tpl->assign("order", $order);
-		$_tpl->display("members_tickets_details.tpl");
+		$_tpl->display("members/tickets_details.tpl");
 			
 	} else {
 		loadComponent("queue");
@@ -148,7 +148,7 @@ if (!empty($_GET['order'])) {
 		$mail->AddAddress(($_config['dev']) ? "a1bi@me.com" : $chargeInfo['bankEmail']);
 		
 		$mail->Subject = "DTA-Datei";
-		$mail->Body = $_tpl->fetch("members_tickets_mail_bank.tpl");
+		$mail->Body = $_tpl->fetch("mail/tickets_bank.tpl");
 		
 		// save temporary dta file
 		$tmpFile = "/tmp/dta.txt";
@@ -282,6 +282,6 @@ if (!empty($_GET['order'])) {
 							');
 	$_tpl->assign("oldCharges", $result->fetchAll());
 	
-	$_tpl->display("members_tickets.tpl");
+	$_tpl->display("members/tickets.tpl");
 }
 ?>

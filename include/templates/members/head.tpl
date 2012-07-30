@@ -1,4 +1,4 @@
-{include file="head.tpl" title="Mitgliederbereich -  {$title}" cssfile="members" noSlides=true}
+{include file="head.tpl" title="Mitgliederbereich -  {$title}" cssfile="members/main" noSlides=true}
 {$sections['members'] = ["Mitglieder", [
 	["index", "", "Hauptseite"], ["settings", "einstellungen", "Einstellungen"]
 ]]}

@@ -1,4 +1,4 @@
-{include file="members_head.tpl" title="Login"}
+{include file="members/head.tpl" title="Login"}
 <div class="hl section">Bitte einloggen!</div>
 <div class="trenner"></div>
 <form method="post" action="login" class="login">

@@ -145,7 +145,7 @@ class Order {
 		$mail->AddAddress($this->address['email']);
 		
 		$mail->Subject = $subject;
-		$mail->Body = $_tpl->fetch("order_mail_" . $tpl . ".tpl");
+		$mail->Body = $_tpl->fetch("mail/order_" . $tpl . ".tpl");
 		
 		$mail->Send();
 	}

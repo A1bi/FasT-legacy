@@ -26,5 +26,5 @@ if ($_POST['submit']) {
 	$_tpl->assign("msg", $msg);
 }
 
-$_tpl->display("members_settings.tpl");
+$_tpl->display("members/settings.tpl");
 ?>
