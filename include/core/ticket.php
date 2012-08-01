@@ -68,6 +68,10 @@ class Ticket {
 		
 		return true;
 	}
+	
+	public function getDate() {
+		return $this->date;
+	}
 
 	public function getDateString() {
 		return OrderManager::getStringForDate(OrderManager::$theater['dates'][$this->date]);
