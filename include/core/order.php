@@ -2,6 +2,7 @@
 
 loadComponent("orderManager");
 loadComponent("ticket");
+loadComponent("ticketStats");
 
 class OrderStatus {
 	const Placed = 0, WaitingForApproval = 1, WaitingForPayment = 2, Approved = 3, Finished = 4, Cancelled = 5;
@@ -25,7 +26,12 @@ class Order {
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
 			$cancelled = array("cancelled" => false, "reason" => ""),
-			$tickets = NULL, $events = NULL;
+			$tickets = NULL, $events = NULL,
+			$stats;
+			
+	public function __construct() {
+		$this->stats = new TicketStats;
+	}
 	
 	public function create($type) {
 		// set info
@@ -248,6 +254,8 @@ class Order {
 			$ticket->save();
 		}
 		
+		$this->updateStats();
+		
 		$this->logEvent(OrderEvent::Placed);
 	}
 	
@@ -279,6 +287,8 @@ class Order {
 		
 		$this->mailCancellation();
 		
+		$this->updateStats();
+		
 		$this->logEvent(OrderEvent::Cancelled);
 		
 		return true;
@@ -291,6 +301,10 @@ class Order {
 									(`order`, event, info, user)
 						VALUES		(?, ?, ?, ?)
 					', array($this->id, $event, $info, $_user['id']));
+	}
+	
+	private function updateStats() {
+		$this->stats->updateForOrder($this);
 	}
 	
 	private function initEvents() {
