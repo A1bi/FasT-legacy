@@ -220,40 +220,6 @@ if (!empty($_GET['order'])) {
 
 // nothing chosen -> show overview
 } else {
-	// statistics
-	$result = $_db->query('SELECT date, type, COUNT(*) as number FROM orders_tickets WHERE cancelled = 0 GROUP BY date, type WITH ROLLUP');
-	$ticketData = $result->fetchAll();
-	
-	$stats = array("total" => array(), "dates" => array());
-	foreach ($ticketData as $ticket) {
-		if ($ticket['date'] == "") {
-			$arr = &$stats['total']['sum'];
-		} else {
-			$dateArr = &$stats['dates'][$ticket['date']];
-			if ($ticket['type'] != "") {
-				$arr = &$dateArr['types'][$ticket['type']];
-				$stats['total']['types'][$ticket['type']] += $ticket['number'];
-			} else {
-				$arr = &$dateArr['sum'];
-			}
-		}
-		
-		$arr = $ticket['number'];
-	}
-	
-	// calculate revenue
-	foreach ($stats['dates'] as $key => $date) {
-		$sum = 0;
-		foreach (OrderManager::$theater['prices'] as $key2 => $price) {
-			$sum += $price['price'] * $date['types'][$key2];
-		}
-		$stats['dates'][$key]['revenue'] = $sum;
-		$stats['total']['revenue'] += $sum;
-	}
-	
-	$_tpl->assign("stats", $stats);
-	
-	
 	// orders to check
 	$_tpl->assign("ordersCheck", getOrdersByStatus(OrderStatus::WaitingForApproval));
 	

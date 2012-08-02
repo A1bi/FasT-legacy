@@ -110,7 +110,7 @@ table td.sId {
 
 /* -- tickets overview -- */
 .tickets .box {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 .tickets .box.important .top {
 	text-shadow: 1px 1px 3px white;
@@ -136,6 +136,13 @@ table td.sId {
 .tickets .more a {
 	font-size: 14px;
 }
+.tickets .search {
+	margin-bottom: 30px;
+}
+.tickets .search > div {
+	padding: 3px 8px;
+	font-size: 14px;
+}
 .tickets .search input[type=tel] {
 	border-radius: 5px;
 	border: none;
@@ -148,7 +155,6 @@ table td.sId {
 .tickets .search input {
 	vertical-align: middle;
 }
-
 
 /* -- order details -- */
 .orderDetails .back {
