@@ -15,24 +15,30 @@ class OrderPayMethod {
 	const Charge = 1, Transfer = 2;
 }
 
+class OrderType {
+	const Online = 0, Manual = 1, Free = 3, Retail = 2;
+}
+
 class Order {
 	
-	private $id, $sId, $total = 0, $hash, $time, $status = OrderStatus::Placed, $paid = false,
+	private $id, $sId, $type, $total = 0, $hash, $time, $status = OrderStatus::Placed, $paid = false,
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
 			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = NULL, $events = NULL;
 	
-	public function create() {
+	public function create($type) {
 		// set info
 		$this->sId = createId(6, "orders", "sId", true);
 		$this->hash = md5($this->sId);
+		$this->type = $type;
 	}
 	
 	public function init($orderInfo) {
 		// set info from db
 		$this->id = $orderInfo['id'];
 		$this->sId = $orderInfo['sId'];
+		$this->type = $orderInfo['type'];
 		$this->time = $orderInfo['time'];
 		$this->total = $orderInfo['total'];
 		$this->status = $orderInfo['status'];
@@ -231,9 +237,9 @@ class Order {
 		
 		// save everything to db
 		$_db->query('	INSERT INTO	orders
-									(sId, gender, firstname, lastname, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
-						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-					', array($this->getSId(), $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
+									(sId, type, gender, firstname, lastname, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
+						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+					', array($this->getSId(), $this->type, $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
 		
 		$this->id = $_db->id();
 		
@@ -317,6 +323,10 @@ class Order {
 	
 	public function getSId() {
 		return $this->sId;
+	}
+	
+	public function getType() {
+		return $this->type;
 	}
 	
 	public function getTotal() {

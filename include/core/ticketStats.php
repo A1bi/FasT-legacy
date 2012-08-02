@@ -8,10 +8,10 @@ class TicketStats {
 		$updated = array();
 	
 		foreach ($order->getTickets() as $ticket) {
-			$cache = &$updated[$ticket->getDate()][$ticket->getType()][0];
+			$cache = &$updated[$ticket->getDate()][$ticket->getType()][$order->getType()];
 			if ($cache) continue;
 			
-			$this->updateForTicket($ticket, 0);
+			$this->updateForTicket($ticket, $order->getType());
 			$cache = true;
 		}
 	}
@@ -44,7 +44,7 @@ class TicketStats {
 	}
 	
 	public function updateForTicket($ticket, $orderType) {
-		$this->calculateAndUpdate($ticket->getDate(), $ticket->getType(), $ticket->getPrice(), 0);
+		$this->calculateAndUpdate($ticket->getDate(), $ticket->getType(), $ticket->getPrice(), $orderType);
 	}
 	
 	private function calculateAndUpdate($date, $ticketType, $price, $orderType) {
@@ -138,7 +138,9 @@ class TicketStats {
 	public function updateAll() {
 		foreach (OrderManager::$theater['dates'] as $date => $dummy) {
 			foreach (OrderManager::$theater['prices'] as $ticketType => $price) {
-				$this->calculateAndUpdate($date, $ticketType, $price['price'], 0);
+				for ($i = OrderType::Online; $i < OrderType::Free; $i++) {
+					$this->calculateAndUpdate($date, $ticketType, $price['price'], $i);
+				}
 			}
 		}
 		

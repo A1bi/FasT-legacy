@@ -43,7 +43,7 @@ if ($_GET['ajax']) {
 			$_POST['order']['payment']['method'] = $payMethods[$_POST['order']['payment']['method']];
 			
 			$order = new Order();
-			$order->create();
+			$order->create(OrderType::Online);
 			
 			if (!$order->setAddress($_POST['order']['address'])) {
 				$error = "address";
