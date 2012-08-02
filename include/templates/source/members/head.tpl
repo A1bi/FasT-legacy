@@ -4,7 +4,7 @@
 ]]}
 {if $_user['group'] == 2}
 {$sections['board'] = ["Vorstand", [
-	["tickets", "tickets", "Ticketbestellungen"]
+	["orders", "bestellungen", "Ticketbestellungen"]
 ]]}
 {/if}
 <div class="navbar box">

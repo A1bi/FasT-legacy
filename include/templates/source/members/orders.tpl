@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Ticketbestellungen" jsfile="members/tickets"}
+{include file="members/head.tpl" title="Ticketbestellungen" jsfile="members/orders"}
 <div class="hl section">Ticketbestellungen</div>
 
 <div class="tickets">
@@ -40,13 +40,13 @@
 	<div class="trenner"></div>
 	<div class="box search">
 		<div class="top">
-			<form action="/mitglieder/tickets?action=search" method="post">
+			<form action="?action=search" method="post">
 			Bestellung suchen anhand ON: <input type="tel" name="order" maxlength="6" /> oder TN: <input type="tel" name="ticket" maxlength="6" /> <input type="submit" name="search" value="suchen" />
 			</form>
 		</div>
 	</div>
-	{include file="members/tickets_table.tpl" title="Zu überprüfende Bestellungen" aName="waitingForApproval" orders=$ordersCheck important=true}
-	{include file="members/tickets_table.tpl" title="Unbezahlte Bestellungen" aName="unpaid" orders=$ordersPay important=true unpaid=true}
+	{include file="members/orders_table.tpl" title="Zu überprüfende Bestellungen" aName="waitingForApproval" orders=$ordersCheck important=true}
+	{include file="members/orders_table.tpl" title="Unbezahlte Bestellungen" aName="unpaid" orders=$ordersPay important=true unpaid=true}
 	<div class="box charges{if $charges} important{/if}">
 		<div class="top">
 			Ausstehende Lastschriften
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	<div class="trenner"></div>
-	{include file="members/tickets_table.tpl" title="Vergangene Bestellungen" aName="finished" orders=$ordersFinished}
+	{include file="members/orders_table.tpl" title="Vergangene Bestellungen" aName="finished" orders=$ordersFinished}
 	<div class="box">
 		<div class="top">
 			Vergangene Einreichungen von Lastschriften

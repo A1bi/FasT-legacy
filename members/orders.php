@@ -42,12 +42,12 @@ if (!empty($_GET['order'])) {
 	$order = OrderManager::getInstance()->getOrderById($_GET['order']);
 	// not found ?
 	if (!$order->getId()) {
-		redirectTo("/mitglieder/tickets");
+		redirectTo("?");
 	}
 	
 	if ($_GET['action'] == "showDetails") {
 		$_tpl->assign("order", $order);
-		$_tpl->display("members/tickets_details.tpl");
+		$_tpl->display("members/orders_details.tpl");
 			
 	} else {
 		loadComponent("queue");
@@ -79,7 +79,7 @@ if (!empty($_GET['order'])) {
 				break;
 		}
 		
-		redirectTo("/mitglieder/tickets" . (($_GET['goto'] != "overview") ? "?action=showDetails&order=".$order->getId() : ""));
+		redirectTo("?" . (($_GET['goto'] != "overview") ? "action=showDetails&order=".$order->getId() : ""));
 	}
 
 } elseif ($_GET['action'] == "search") {
@@ -93,10 +93,10 @@ if (!empty($_GET['order'])) {
 	
 	$order = $result->fetch();
 	if ($order['id']) {
-		redirectTo("/mitglieder/tickets?action=showDetails&order=" . $order['id'] . (($_POST['ticket']) ? "&ticket=" . $order['tId'] . "#tickets" : ""));
+		redirectTo("?action=showDetails&order=" . $order['id'] . (($_POST['ticket']) ? "&ticket=" . $order['tId'] . "#tickets" : ""));
 	}
 	
-	redirectTo("/mitglieder/tickets");
+	redirectTo("?");
 
 } elseif ($_GET['action'] == "getChargesSheet") {
 	$file = "./media/charges/" . $_GET['id'] . ".pdf";
@@ -215,7 +215,7 @@ if (!empty($_GET['order'])) {
 		redirectTo("?action=getChargesSheet&id=" . $chargeId);
 	}
 	
-	redirectTo("/mitglieder/tickets");
+	redirectTo("?");
 
 
 // nothing chosen -> show overview
@@ -282,6 +282,6 @@ if (!empty($_GET['order'])) {
 							');
 	$_tpl->assign("oldCharges", $result->fetchAll());
 	
-	$_tpl->display("members/tickets.tpl");
+	$_tpl->display("members/orders.tpl");
 }
 ?>
