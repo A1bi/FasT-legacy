@@ -138,7 +138,7 @@ class TicketStats {
 	public function updateAll() {
 		foreach (OrderManager::$theater['dates'] as $date => $dummy) {
 			foreach (OrderManager::$theater['prices'] as $ticketType => $price) {
-				for ($i = OrderType::Online; $i < OrderType::Free; $i++) {
+				for ($i = OrderType::Online; $i < OrderType::Retail; $i++) {
 					$this->calculateAndUpdate($date, $ticketType, $price['price'], $i);
 				}
 			}

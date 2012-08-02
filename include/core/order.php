@@ -16,7 +16,7 @@ class OrderPayMethod {
 }
 
 class OrderType {
-	const Online = 0, Manual = 1, Free = 3, Retail = 2;
+	const Online = 0, Manual = 1, Free = 2, Retail = 3;
 }
 
 class Order {

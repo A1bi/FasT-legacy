@@ -41,7 +41,7 @@ function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
 if (!empty($_GET['order'])) {
 	$order = OrderManager::getInstance()->getOrderById($_GET['order']);
 	// not found ?
-	if (!$order->getId()) {
+	if (!$order) {
 		redirectTo("?");
 	}
 	

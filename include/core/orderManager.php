@@ -41,7 +41,7 @@ class OrderManager {
 				self::$orders[$order->getId()] = $order;
 			
 			} else {
-				self::$orders[$order->getId()] = null;
+				self::$orders[$id] = null;
 			}
 		}
 		
