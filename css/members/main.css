@@ -158,13 +158,13 @@ table td.sId {
 .tickets .search input {
 	vertical-align: middle;
 }
-.tickets .new {
+.new {
 	position: absolute;
 	right: 1%;
 	top: -68px;
 	width: auto;
 }
-.tickets .new a {
+.new a {
 	font-size: 14px;
 	color: white;
 	text-decoration: none;
@@ -247,4 +247,9 @@ table td.sId {
 }
 .newOrder td .small {
 	margin-top: 5px;
+}
+
+/* -- free tickets -- */
+.free {
+	position: relative;
 }

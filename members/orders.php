@@ -12,20 +12,21 @@ function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
 	$maxEntries = 10;
 	
 	// construct query
-	$cond = ' FROM orders WHERE	status '.$operator.' ?';
+	$cond = ' FROM orders WHERE	type IN (?, ?) AND status '.$operator.' ?';
 	$order = ' ORDER BY	'.$orderBy;
+	$args = array(OrderType::Online, OrderType::Manual, $status);
 	if (!$_GET['showAll']) {
 		$limit .= ' LIMIT 0, '.$maxEntries;
 	
 		// get number of entries
 		$query = 'SELECT COUNT(*) AS number' . $cond;
-		$result = $_db->query($query, array($status));
+		$result = $_db->query($query, $args);
 		$count = $result->fetch();
 	}
 
 	// get entries
 	$query = 'SELECT id' . $cond . $order . $limit;
-	$result = $_db->query($query, array($status));
+	$result = $_db->query($query, $args);
 	
 	$orders = array();
 	while ($id = $result->fetch()) {

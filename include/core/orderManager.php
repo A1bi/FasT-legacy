@@ -11,6 +11,12 @@ class OrderManager {
 	private function __construct() {
 		self::$theater = getData("theater_montevideo");
 		self::$company = getData("company");
+		
+		// add free ticket type
+		self::$theater['prices'][] = array(
+			"type" => "free",
+			"price" => 0
+		);
 	}
 	
 	static function init() {
