@@ -31,6 +31,10 @@
 				<td>Verwendungszweck:</td>
 				<td>ON{$order->getSId()}</td>
 			</tr>
+			<tr>
+				<td>Betrag:</td>
+				<td>{$order->getTotal()} €</td>
+			</tr>
 		</table>
 		<div class="hcen">
 			<a href="?action=showDetails&amp;order={$order->getId()}">Zu den Details dieser Bestellung</a>

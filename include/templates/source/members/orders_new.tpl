@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen"}
+{include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen" jsfile="members/orders_new"}
 <div class="hl section">Bestellung aufnehmen</div>
 
 <div class="back"><a href="?">Zurück zur Übersicht</a></div>
@@ -18,15 +18,15 @@
 					<td></td>
 				</tr>
 				{foreach OrderManager::$theater['prices'] as $price}
-				<tr>
+				<tr class="type">
 					<td>{$price['desc']}</td>
 					<td><select name="number[{$price@key}]">{for $i=0 to 50}<option>{$i}</option>{/for}</select></td>
-					<td>0 €</td>
+					<td>je <span class="each">{$price['price']}</span> €</td>
 				</tr>
 				{/foreach}
 				<tr>
 					<td colspan="2"></td>
-					<td>0 €</td>
+					<td><span class="total">0</span> €</td>
 				</tr>
 			</table>
 		</div>
