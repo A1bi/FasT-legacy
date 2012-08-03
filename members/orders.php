@@ -56,6 +56,8 @@ if (!empty($_GET['order'])) {
 		switch ($_GET['action']) {
 			case "markPaid":
 				if ($order->markPaid()) {
+					if ($order->getType() != OrderType::Online) break;
+					
 					$payment = $order->getPayment();
 					if ($payment['method'] == OrderPayMethod::Transfer) {
 						$queue->beginNewBatch();
@@ -216,6 +218,43 @@ if (!empty($_GET['order'])) {
 	}
 	
 	redirectTo("?");
+
+
+} elseif ($_GET['action'] == "new") {
+	if ($_GET['finished']) {
+		$order = OrderManager::getOrderById($_GET['finished']);
+		
+		$_tpl->assign("order", $order);
+		$_tpl->display("members/orders_new_finished.tpl");
+		
+	} else {
+		if ($_POST['confirm']) {
+		
+			$order = new Order();
+			$order->create(OrderType::Manual);
+			$order->setPayment(array("method" => OrderPayMethod::Transfer));
+			$order->setAddress($_POST['address']);
+				
+			foreach (OrderManager::$theater['prices'] as $type => $price) {
+				for ($i = 0; $i < $_POST['number'][$type]; $i++) {
+					if (!$order->addTicket($type, $_POST['date'])) {
+						break;
+					}
+				}
+			}
+			
+			if ($order->getTotal() == 0) {
+				$_tpl->assign("error", "Bitte wählen Sie mindestens eine Karte aus!");
+			
+			} else {
+				$order->save();
+				
+				redirectTo("?action=new&finished=" . $order->getId());
+			}
+		}
+		
+		$_tpl->display("members/orders_new.tpl");
+	}
 
 
 // nothing chosen -> show overview

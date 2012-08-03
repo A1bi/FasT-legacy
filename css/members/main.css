@@ -109,6 +109,9 @@ table td.sId {
 }
 
 /* -- tickets overview -- */
+.tickets {
+	position: relative;
+}
 .tickets .box {
 	margin-bottom: 10px;
 }
@@ -155,9 +158,20 @@ table td.sId {
 .tickets .search input {
 	vertical-align: middle;
 }
+.tickets .new {
+	position: absolute;
+	right: 1%;
+	top: -68px;
+	width: auto;
+}
+.tickets .new a {
+	font-size: 14px;
+	color: white;
+	text-decoration: none;
+}
 
 /* -- order details -- */
-.orderDetails .back {
+.back {
 	font-size: 13px;
 	margin-left: 20px;
 }
@@ -219,4 +233,18 @@ table td.sId {
 }
 .orderDetails #tickets .highlighted td {
 	background: #ffb0b0;
+}
+
+/* -- new order -- */
+.newOrder table {
+	border-collapse: collapse;
+}
+.newOrder tr td:first-child {
+	width: 30%;
+}
+.newOrder td {
+	padding: 5px;
+}
+.newOrder td .small {
+	margin-top: 5px;
 }

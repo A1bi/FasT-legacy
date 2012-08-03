@@ -1,7 +1,13 @@
 {include file="members/head.tpl" title="Ticketbestellungen" jsfile="members/orders"}
-<div class="hl section">Ticketbestellungen</div>
-
+<div class="hl section">
+	Ticketbestellungen
+</div>
 <div class="tickets">
+	<div class="box new">
+		<div class="top">
+			<a href="?action=new">Neue Bestellung aufnehmen</a>
+		</div>
+	</div>
 	<div class="box search">
 		<div class="top">
 			<form action="?action=search" method="post">
