@@ -68,18 +68,12 @@
 					<td>Käufer:</td>
 					<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
 				</tr>
+				{foreach [["plz", "PLZ"], ["fon", "Telefon"], ["email", "e-mail"]] as $field}
 				<tr>
-					<td>PLZ:</td>
-					<td>{$address['plz']|default:"<em>unbekannt</em>"}</td>
+					<td>{$field[1]}:</td>
+					<td>{if empty($address[$field[0]])}<em class="small">nicht angegeben</em>{else}{$address[$field[0]]}{/if}</td>
 				</tr>
-				<tr>
-					<td>Telefon:</td>
-					<td>{$address['fon']|escape}</td>
-				</tr>
-				<tr>
-					<td>e-mail:</td>
-					<td>{$address['email']}</td>
-				</tr>
+				{/foreach}
 				<tr class="newSection">
 					<td>Zahlungsmethode:</td>
 					<td><b>{$payMethods[$payment['method']]}</b></td>
@@ -117,7 +111,9 @@
 				{/if}
 				{if $order->getStatus() == OrderStatus::WaitingForPayment}
 				<li><a href="?order={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
+				{if $address['email']}
 				<li><a href="?order={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
+				{/if}
 				{/if}
 				{if $order->getStatus() == OrderStatus::Approved}
 				<li><a href="?order={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>

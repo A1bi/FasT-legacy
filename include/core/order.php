@@ -347,8 +347,7 @@ class Order {
 		return $this->total;
 	}
 	
-	public function setAddress($address) {
-		// check address
+	public function checkAndSetAddress($address) {
 		foreach ($this->address as $key => $value) {
 			if (empty($address[$key])) {
 				return false;
@@ -358,18 +357,21 @@ class Order {
 		if (!$this->isInt($address['plz']) || strlen($address['plz']) != 5) return false;
 		if (!preg_match("#^([a-z0-9-]+\.?)+@([a-z0-9-]+\.)+[a-z]{2,9}$#i", $address['email'])) return false;
 		
-		$this->address = $address;
-		$this->address['gender'] = ($address['gender'] == 2) ? 2 : 1;
+		$this->setAddress($address);
 		
 		return true;
+	}
+	
+	public function setAddress($address) {
+		$this->address = $address;
+		$this->address['gender'] = ($address['gender'] == 2) ? 2 : 1;
 	}
 	
 	public function getAddress() {
 		return $this->address;
 	}
 	
-	public function setPayment($payment) {
-		// check payment
+	public function checkAndSetPayment($payment) {
 		if ($payment['method'] == OrderPayMethod::Charge) {
 			foreach ($this->payment as $key => $value) {
 				if (empty($payment[$key])) {
@@ -385,9 +387,13 @@ class Order {
 			return false;
 		}
 		
-		$this->payment = $payment;
+		$this->setPayment($payment);
 		
 		return true;
+	}
+	
+	public function setPayment($payment) {
+		$this->payment = $payment;
 	}
 	
 	public function getPayment() {

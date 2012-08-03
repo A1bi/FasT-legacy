@@ -45,10 +45,10 @@ if ($_GET['ajax']) {
 			$order = new Order();
 			$order->create(OrderType::Online);
 			
-			if (!$order->setAddress($_POST['order']['address'])) {
+			if (!$order->checkAndSetAddress($_POST['order']['address'])) {
 				$error = "address";
 				
-			} elseif (!$order->setPayment($_POST['order']['payment']) || ($_POST['order']['payment']['method'] == OrderPayMethod::Charge && $_POST['order']['payment']['accepted'] != "true")) {
+			} elseif (!$order->checkAndSetPayment($_POST['order']['payment']) || ($_POST['order']['payment']['method'] == OrderPayMethod::Charge && $_POST['order']['payment']['accepted'] != "true")) {
 				$error = "payment";
 				
 			} elseif ($_POST['order']['accepted'] != "true") {
