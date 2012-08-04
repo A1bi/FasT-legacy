@@ -7,8 +7,7 @@
 			Übersicht über alle Kartenverkäufe
 		</div>
 		<div class="con">
-			
-			Anzeigen: {html_options name="orderType" options=$orderTypes}
+			Anzeigen: {html_options name="orderType" options=$orderTypes['options'] selected=$orderTypes['selected']}
 			<table>
 				<tr class="title">
 					<td>Aufführung</td>
@@ -40,6 +39,7 @@
 					<td><span class="revenue"></span> €</td>
 				</tr>
 			</table>
+			<div class="edit"><a href="#">bearbeiten</a></div>
 		</div>
 	</div>
 </div>

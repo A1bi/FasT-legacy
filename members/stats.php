@@ -31,6 +31,27 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	}
 	
 	echo json_encode($stats);
+	
+} elseif ($_GET['action'] == "editRetail") {
+	$retail = OrderManager::$theater['retails'][$_GET['retail']];
+	if (!$retail) redirectTo("?");
+	
+	$stats = new TicketStats;
+	
+	if ($_POST['edit']) {
+		foreach (OrderManager::$theater['prices'] as $ticketType => $dummy) {
+			foreach (OrderManager::$theater['dates'] as $date => $dummy2) {
+				$stats->updateForRetail($date, $ticketType, $_GET['retail'], $_POST['number'][$date][$ticketType]);
+			}
+		}
+		$stats->updateTotals();
+		
+		redirectTo("?retail=".$_GET['retail']);
+	}
+	
+	$_tpl->assign("stats", $stats);
+	$_tpl->assign("retail", $retail);
+	$_tpl->display("members/stats_edit.tpl");
 
 } else {
 	$retails = array();
@@ -39,9 +60,12 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	}
 	
 	$options = array(
-		"Bestellungen" => array(OrderType::Online => "Online", OrderType::Manual => "Telefon", OrderType::Free => "Freikarten"),
-		"Vorverkaufsstellen" => $retails,
-		"Gesamt" => array("-1,0" => "ohne Freikarten", "-1,1" => "mit Freikarten")
+		"options" => array(
+			"Bestellungen" => array(OrderType::Online => "Online", OrderType::Manual => "Telefon", OrderType::Free => "Freikarten"),
+			"Vorverkaufsstellen" => $retails,
+			"Gesamt" => array("-1,0" => "ohne Freikarten", "-1,1" => "mit Freikarten")
+		),
+		"selected" => OrderType::Retail.",".$_GET['retail']
 	);
 	
 	$_tpl->assign("orderTypes", $options);

@@ -1,5 +1,6 @@
 var stats = new function () {
 	var stats = {};
+	var orderType = 0, additional = 0;
 	
 	var loadStats = function () {
 		$.getJSON("?ajax=1&action=getStats", function (data) {
@@ -10,10 +11,23 @@ var stats = new function () {
 		});
 	}
 	
+	var triggerEdit = function () {
+		location.href = "?action=editRetail&retail=" + additional;
+	}
+	
 	var updateNumbers = function () {
 		var selection = $("select").val().split(",");
-		var orderType = selection[0];
-		var additional = selection[1];
+		orderType = selection[0];
+		additional = selection[1];
+		
+		var retail, slide;
+		if (orderType == 3) {
+			retail = additional;
+			$(".edit").slideDown();
+		} else {
+			retail = 0;
+			$(".edit").slideUp();
+		}
 		
 		var dates = $("table tr:not(.title)");
 		dates.each(function (i) {
@@ -23,7 +37,6 @@ var stats = new function () {
 				date = i+1;
 			}
 			
-			var retail = (orderType == 3) ? additional : 0;
 			var dateStats = stats[orderType][retail][date];
 			
 			$(".type", this).each(function (ticketType) {
@@ -49,6 +62,7 @@ var stats = new function () {
 	
 	var registerEvents = function () {
 		$("select").change(updateNumbers);
+		$(".edit").click(triggerEdit);
 	}
 	
 	var init = function () {

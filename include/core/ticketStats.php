@@ -49,9 +49,9 @@ class TicketStats {
 		$this->calculateAndUpdate($ticket->getDate(), $ticket->getType(), $ticket->getPrice(), $orderType);
 	}
 	
-	public function updateForRetail($date, $ticketType, $orderType, $retail, $number) {
-		$this->updateValueWithPrice($date, $ticketType, $orderType, $retail, $number, OrderManager::$theater['prices'][$ticketType]['prices']);
-		$this->updateSubTotals($date, $ticketType, $orderType, $retail);
+	public function updateForRetail($date, $ticketType, $retail, $number) {
+		$this->updateValueWithPrice($date, $ticketType, OrderType::Retail, $retail, $number, OrderManager::$theater['prices'][$ticketType]['price']);
+		$this->updateSubTotals($date, $ticketType, OrderType::Retail, $retail);
 	}
 	
 	private function calculateAndUpdate($date, $ticketType, $price, $orderType) {
