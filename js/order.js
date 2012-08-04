@@ -145,6 +145,9 @@ var order = new function () {
 				} else if (order.total <= 0) {
 					ok = false;
 					error = "Bitte wählen Sie mindestens eine Karte.";
+				} else if (!checkTicketsLeft()) {
+					ok = false;
+					error = "Bitte beachten Sie den Hinweis!";
 				}
 				break;
 				
@@ -213,11 +216,13 @@ var order = new function () {
 		// dates
 		var list = $(".date ul");
 		$.each(info.dates, function (key, date) {
-			list.append(
-				$("<li>")
-				.append($("<span>").addClass("string").html(date))
-				.append($("<span>").addClass("id").html(key))
-			);
+			var dateItem = $("<li>")
+				.append($("<span>").addClass("string").html(date.string))
+				.append($("<span>").addClass("id").html(key));
+			if (date.ticketsLeft < 1) {
+				dateItem.addClass("soldOut").append($("<span>").addClass("msg").html("ausverkauft!"));
+			}
+			list.append(dateItem);
 		});
 		
 		// prices
@@ -235,12 +240,17 @@ var order = new function () {
 	}
 	
 	var choseDate = function () {
-		$(this).parent().parent().find(".selected").removeClass("selected");
+		if ($(this).is(".soldOut")) return;
+		
+		$(this).parent().find(".selected").removeClass("selected");
 		$(this).addClass("selected");
 		slideToggle($(".date div.number"), true);
 
-		order.date = $(this).parent().find(".id").html();
+		order.date = $(".id", this).html();
 		$(".stepCon.confirm .date").html($(this).html());
+		
+		$(".tooMany span").html(info.dates[order.date]['ticketsLeft']);
+		updateTicketsLeft();
 	}
 	
 	var choseNumber = function () {
@@ -249,7 +259,7 @@ var order = new function () {
 		
 		$.each(info.prices, function (key, price) {
 			if (price.type == type) {
-				order.number[key] = number;
+				order.number[key] = parseInt(number);
 			}
 		});
 		updateNumbers();
@@ -257,12 +267,14 @@ var order = new function () {
 	
 	var updateNumbers = function () {
 		order.total = 0;
+		order.totalNumber = 0;
 		var tables = $(".date, .confirm");
 		
 		$.each(order.number, function (key, number) {
 			var price = info.prices[key];
 			var total = price.price * number;
 			order.total += total;
+			order.totalNumber += number;
 			
 			var typeBox = tables.find("."+price.type);
 			typeBox.find(".total span").html(total);
@@ -271,6 +283,16 @@ var order = new function () {
 		
 		tables.find("tr.total .total span").html(order.total);
 		$(".stepCon.finish span.total").html(order.total);
+		
+		updateTicketsLeft();
+	}
+	
+	var checkTicketsLeft = function () {
+		return !(info.dates[order.date]['ticketsLeft'] < order.totalNumber);
+	}
+	
+	var updateTicketsLeft = function () {
+		slideToggle($(".tooMany"), !checkTicketsLeft());
 	}
 	
 	var updateAddress = function () {
@@ -323,7 +345,7 @@ var order = new function () {
 		$(".btn").click(goNext);
 		$(".btns .msg").bind("animationend webkitAnimationEnd", altertHighlightEnded);
 	
-		$(".stepCon.date li .string").click(choseDate);
+		$(".stepCon.date li").click(choseDate);
 		$(".stepCon.date select").change(choseNumber);
 		
 		$(".stepCon.address").find("select, input").keyup(updateAddress).change(updateAddress);

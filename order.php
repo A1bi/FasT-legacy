@@ -3,10 +3,12 @@ include('./include/main.php');
 
 $_db = new database;
 loadComponent("orderManager");
+loadComponent("ticketStats");
 
 if ($_GET['ajax']) {
 	$response = array();
 	OrderManager::init();
+	$stats = new TicketStats;
 	
 	switch ($_POST['action']) {
 		
@@ -19,7 +21,11 @@ if ($_GET['ajax']) {
 			);
 			
 			foreach (OrderManager::$theater['dates'] as $key => $date) {
-				$response['info']['dates'][$key] = OrderManager::getStringForDate($date);
+				$stat = $stats->getValue($key, -1, -1);
+				$response['info']['dates'][$key] = array(
+					"string" => OrderManager::getStringForDate($date),
+					"ticketsLeft" => 310 - $stat['number']
+				);
 			}
 
 			if (!is_array($_SESSION['order']) || $_SESSION['order']['lastUpdate']+600 < time()) {

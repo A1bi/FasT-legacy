@@ -289,23 +289,43 @@ table td {
 .stepCon.date ul {
 	list-style-type: none;
 }
+.stepCon.date ul li {
+	padding-bottom: 5px;
+}
 .stepCon.date ul li .string {
 	font-size: 18px;
 	text-decoration: underline;
 	cursor: pointer;
 }
+.stepCon.date ul li.soldOut .string {
+	text-decoration: line-through !important;
+	cursor: auto;
+	color: #cccccc;
+}
 .stepCon.date ul li .string:hover {
 	text-decoration: none;
 }
-.stepCon.date ul li .string.selected {
+.stepCon.date ul li.selected .string {
 	font-weight: bold;
 	text-decoration: none;
 }
 .stepCon.date ul li .id {
 	display: none;
 }
+.stepCon.date ul li.soldOut .msg {
+	color: red;
+	padding-left: 15px;
+}
 .stepCon.date div.number {
 	display: none;
+}
+.stepCon.date div.number .tooMany {
+	border-color: red;
+	padding: 10px;
+	display: none;
+}
+.stepCon.date div.number .tooMany span {
+	font-weight: bold;
 }
 .stepCon.date td.number {
 	width: 12%;

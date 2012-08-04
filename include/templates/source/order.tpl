@@ -36,6 +36,9 @@
 					<td class="total"><span>0</span> €</td>
 				</tr>
 			</table>
+			<div class="inner rTable tooMany">
+				Leider sind für die gewünschte Aufführung nur noch <span>3</span> Karten verfügbar.
+			</div>
 		</div>
 	</div>
 	<div class="stepCon address">
