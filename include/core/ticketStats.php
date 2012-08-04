@@ -14,6 +14,8 @@ class TicketStats {
 			$this->updateForTicket($ticket, $order->getType());
 			$cache = true;
 		}
+		
+		$this->updateTotals();
 	}
 	
 	public function getValue($date, $ticketType, $orderType) {

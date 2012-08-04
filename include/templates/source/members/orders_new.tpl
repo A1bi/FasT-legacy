@@ -18,6 +18,7 @@
 					<td></td>
 				</tr>
 				{foreach OrderManager::$theater['prices'] as $price}
+				{if $price['type'] == "free"}{continue}{/if}
 				<tr class="type">
 					<td>{$price['desc']}</td>
 					<td><select name="number[{$price@key}]">{for $i=0 to 50}<option>{$i}</option>{/for}</select></td>
