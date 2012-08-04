@@ -23,20 +23,23 @@ var stats = new function () {
 				date = i+1;
 			}
 			
+			var retail = (orderType == 3) ? additional : 0;
+			var dateStats = stats[orderType][retail][date];
+			
 			$(".type", this).each(function (ticketType) {
 				if (orderType != 2) {
-					$(this).html(stats[orderType][date][ticketType]['number']);
+					$(this).html(dateStats[ticketType]['number']);
 				} else {
 					$(this).empty();
 				}
 			});
 			
-			var number = stats[orderType][date][-1]['number'];
-			var revenue = stats[orderType][date][-1]['revenue'];
+			var number = dateStats[-1]['number'];
+			var revenue = dateStats[-1]['revenue'];
 			// subtract number of free tickets
 			if (orderType == -1 && additional == 0) {
-				number -= stats[2][date][-1]['number'];
-				revenue -= stats[2][date][-1]['revenue'];
+				number -= stats[2][retail][date][-1]['number'];
+				revenue -= stats[2][retail][date][-1]['revenue'];
 			}
 			
 			$(".total", this).html(number);
