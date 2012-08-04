@@ -21,12 +21,12 @@
 					<td class="left">{OrderManager::getStringForDate($date)}</td>
 {foreach OrderManager::$theater['prices'] as $price}
 {if $price['type'] == "free"}{continue}{/if}
-{$stat=$stats->getValue($date@key, $price@key, OrderType::Retail, $smarty.get.retail)}
-					<td><input type="tel" name="number[{$date@key}][{$price@key}]" value="{$stat['number']}" /></td>
+					<td><input type="tel" name="number[{$date@key}][{$price@key}]" /></td>
 {/foreach}
 				</tr>
 				{/foreach}
 			</table>
+			<p>Die eingegebenen Werte werden zu den aktuellen addiert.</p>
 			<div class="hcen"><input type="submit" name="edit" value="speichern" class="btn" /></div>
 		</div>
 	</div>

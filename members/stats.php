@@ -41,7 +41,11 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	if ($_POST['edit']) {
 		foreach (OrderManager::$theater['prices'] as $ticketType => $dummy) {
 			foreach (OrderManager::$theater['dates'] as $date => $dummy2) {
-				$stats->updateForRetail($date, $ticketType, $_GET['retail'], $_POST['number'][$date][$ticketType]);
+				$add = intval($_POST['number'][$date][$ticketType]);
+				if ($add != 0) {
+					$current = $stats->getValue($date, $ticketType, OrderType::Retail, $_GET['retail']);
+					$stats->updateForRetail($date, $ticketType, $_GET['retail'], $current['number'] + $add);
+				}
 			}
 		}
 		$stats->updateTotals();
@@ -49,7 +53,6 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 		redirectTo("?retail=".$_GET['retail']);
 	}
 	
-	$_tpl->assign("stats", $stats);
 	$_tpl->assign("retail", $retail);
 	$_tpl->display("members/stats_edit.tpl");
 
