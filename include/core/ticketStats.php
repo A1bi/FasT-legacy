@@ -18,14 +18,14 @@ class TicketStats {
 		$this->updateTotals();
 	}
 	
-	public function getValue($date, $ticketType, $orderType, $retail = 0) {
+	public function getValue($date, $ticketType, $orderType, $retail = -1) {
 		global $_db;
 		
 		$result = $_db->query('SELECT id, number, revenue FROM orders_stats WHERE date = ? AND ticketType = ? AND orderType = ? AND retail = ?', array($date, $ticketType, $orderType, $retail));
 		return $result->fetch();
 	}
 	
-	public function updateValueWithPrice($date, $ticketType, $orderType, $retail, $number, $price) {
+	private function updateValueWithPrice($date, $ticketType, $orderType, $retail, $number, $price) {
 		$this->updateValue($date, $ticketType, $orderType, $retail, $number, $number * $price);
 	}
 	
@@ -69,9 +69,9 @@ class TicketStats {
 								array($date, $ticketType, $orderType));
 		$stat = $result->fetch();
 		
-		$this->updateValueWithPrice($date, $ticketType, $orderType, 0, $stat['number'], $price);
+		$this->updateValueWithPrice($date, $ticketType, $orderType, -1, $stat['number'], $price);
 		
-		$this->updateSubTotals($date, $ticketType, $orderType, 0);
+		$this->updateSubTotals($date, $ticketType, $orderType, -1);
 	}
 	
 	private function updateSubTotals($date, $ticketType, $orderType, $retail) {
@@ -132,7 +132,7 @@ class TicketStats {
 								WITH ROLLUP');
 								
 		while ($stat = $result->fetch()) {
-			$this->updateValue((!is_null($stat['date'])) ? $stat['date'] : -1, (!is_null($stat['ticketType'])) ? $stat['ticketType'] : -1, -1, 0, $stat['number'], $stat['revenue']);
+			$this->updateValue((!is_null($stat['date'])) ? $stat['date'] : -1, (!is_null($stat['ticketType'])) ? $stat['ticketType'] : -1, -1, -1, $stat['number'], $stat['revenue']);
 		}
 		
 		$result = $_db->query('	SELECT		date,
@@ -146,7 +146,7 @@ class TicketStats {
 								WITH ROLLUP');
 								
 		while ($stat = $result->fetch()) {
-			$this->updateValue((!is_null($stat['date'])) ? $stat['date'] : -1, -1, -1, 0, $stat['number'], $stat['revenue']);
+			$this->updateValue((!is_null($stat['date'])) ? $stat['date'] : -1, -1, -1, -1, $stat['number'], $stat['revenue']);
 		}
 	}
 	

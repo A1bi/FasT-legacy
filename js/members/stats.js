@@ -25,7 +25,7 @@ var stats = new function () {
 			retail = additional;
 			$(".edit").slideDown();
 		} else {
-			retail = 0;
+			retail = -1;
 			$(".edit").slideUp();
 		}
 		

@@ -21,7 +21,7 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 			if ($date == 0) continue;
 			
 			foreach (OrderManager::$theater['retails'] as $retail => $dummy) {
-				if ($orderType != OrderType::Retail) $retail = 0;
+				if ($orderType != OrderType::Retail) $retail = -1;
 				
 				for ($ticketType = -1; $ticketType < count(OrderManager::$theater['prices']); $ticketType++) {
 					addStat($date, $ticketType, $orderType, $retail, $tStats, $stats);
