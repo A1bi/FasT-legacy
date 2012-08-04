@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Ticketstatistik"}
+{include file="members/head.tpl" title="Ticketstatistik" jsfile="members/stats"}
 <div class="hl section">Ticketstatistik</div>
 
 <div class="tickets">
@@ -7,10 +7,13 @@
 			Übersicht über alle Kartenverkäufe
 		</div>
 		<div class="con">
+			
+			Anzeigen: {html_options name="orderType" options=$orderTypes}
 			<table>
 				<tr class="title">
 					<td>Aufführung</td>
 {foreach OrderManager::$theater['prices'] as $price}
+{if $price['type'] == "free"}{continue}{/if}
 					<td>{$price['desc']}</td>
 {/foreach}
 					<td>Gesamt</td>
@@ -20,23 +23,21 @@
 				<tr>
 					<td class="left">{OrderManager::getStringForDate($date)}</td>
 {foreach OrderManager::$theater['prices'] as $price}
-{$stat=$stats->getValue($date@key, $price@key, 0)}
-					<td>{$stat['number']}</td>
+{if $price['type'] == "free"}{continue}{/if}
+					<td class="type"></td>
 {/foreach}
-{$stat=$stats->getValue($date@key, -1, 0)}
-					<td>{$stat['number']}</td>
-					<td>{"%!.0n"|money_format:$stat['revenue']} €</td>
+					<td class="total"></td>
+					<td><span class="revenue"></span> €</td>
 				</tr>
 				{/foreach}
 				<tr class="total">
 					<td class="left">Gesamt</td>
 {foreach OrderManager::$theater['prices'] as $price}
-{$stat=$stats->getValue(-1, $price@key, 0)}
-					<td>{$stat['number']}</td>
+{if $price['type'] == "free"}{continue}{/if}
+					<td class="type"></td>
 {/foreach}
-{$stat=$stats->getValue(-1, -1, 0)}
-					<td>{$stat['number']}</td>
-					<td>{"%!.0n"|money_format:$stat['revenue']} €</td>
+					<td class="total"></td>
+					<td><span class="revenue"></span> €</td>
 				</tr>
 			</table>
 		</div>
