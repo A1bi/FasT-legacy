@@ -1,4 +1,5 @@
 {include file="members/head.tpl" title="Freikarten"}
+{$gender=["Frau", "Herr"]}
 <div class="hl section">Freikarten</div>
 
 <div class="free">
@@ -24,7 +25,14 @@
 				{$address=$order->getAddress()}
 				{$tickets=$order->getTickets()}
 				<tr>
-					<td>{$address['affiliation']|default:"{$address['firstname']} {$address['lastname']}"|escape}</td>
+					<td>
+					{if $address['affiliation'] != ""}
+						{$address['affiliation']|escape}
+					{else}
+						{if $address['firstname'] != ""}{$address['firstname']|escape}
+						{else}{$gender[$address['gender']]}{/if} {$address['lastname']|escape}
+					{/if}
+					</td>
 					<td>{$tickets[0]->getDateString()}</td>
 					<td>{$order->getNumberOfValidTickets()}</td>
 				</tr>
