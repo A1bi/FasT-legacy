@@ -1,5 +1,5 @@
 {include file="members/head.tpl" title="Freikarten"}
-{$gender=["Frau", "Herr"]}
+{$gender=["", "Frau", "Herr"]}
 <div class="hl section">Freikarten</div>
 
 <div class="free">
