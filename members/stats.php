@@ -9,7 +9,7 @@ OrderManager::init();
 
 function addStat($date, $ticketType, $orderType, $retail, &$tStats, &$stats) {
 	$stat = $tStats->getValue($date, $ticketType, $orderType, $retail);
-	$stats[$orderType][$retail][$date][$ticketType] = array("number" => $stat['number'], "revenue" => $stat['revenue']);
+	$stats[$orderType][$retail][$date][$ticketType] = array("number" => $stat['number'], "revenue" => money_format("%!.0n", $stat['revenue']));
 }
 
 if ($_GET['ajax'] && $_GET['action'] == "getStats") {	
