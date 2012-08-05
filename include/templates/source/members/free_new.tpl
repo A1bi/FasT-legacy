@@ -31,6 +31,10 @@
 		<div class="con">
 			<table>
 				<tr>
+					<td>Gruppe:</td>
+					<td><input type="text" name="address[affiliation]" value="" class="field" /></td>
+				</tr>
+				<tr>
 					<td>Anrede:</td>
 					<td><select name="address[gender]"><option value="1">Frau</option><option value="2">Herr</option></select></td>
 				</tr>

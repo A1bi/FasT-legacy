@@ -23,7 +23,7 @@ class OrderType {
 class Order {
 	
 	private $id, $sId, $type, $total = 0, $hash, $time, $status = OrderStatus::Placed, $paid = false,
-			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "plz" => 0, "fon" => "", "email" => ""),
+			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "affiliation" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
 			$cancelled = array("cancelled" => false, "reason" => ""),
 			$tickets = NULL, $events = NULL,
@@ -52,10 +52,8 @@ class Order {
 		$this->hash = md5($this->sId);
 		
 		// address
-		$this->address = array();
-		$addressFields = array("gender", "firstname", "lastname", "plz", "fon", "email");
-		foreach ($addressFields as $field) {
-			$this->address[$field] = $orderInfo[$field];
+		foreach ($this->address as $key => &$field) {
+			$field = $orderInfo[$key];
 		}
 		
 		// payment
@@ -243,9 +241,9 @@ class Order {
 		
 		// save everything to db
 		$_db->query('	INSERT INTO	orders
-									(sId, type, gender, firstname, lastname, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
-						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-					', array($this->getSId(), $this->type, $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
+									(sId, type, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
+						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+					', array($this->getSId(), $this->type, $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
 		
 		$this->id = $_db->id();
 		
@@ -348,10 +346,9 @@ class Order {
 	}
 	
 	public function checkAndSetAddress($address) {
-		foreach ($this->address as $key => $value) {
-			if (empty($address[$key])) {
-				return false;
-			}
+		$required = array("firstname", "lastname", "fon");
+		foreach ($required as $field) {
+			if (empty($address[$field])) return false;
 		}
 		
 		if (!$this->isInt($address['plz']) || strlen($address['plz']) != 5) return false;

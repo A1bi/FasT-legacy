@@ -51,6 +51,10 @@
 					<td>Nachname:</td>
 					<td><input type="text" name="address[lastname]" value="" class="field" /></td>
 				</tr>
+				<tr>
+					<td>Gruppe:</td>
+					<td><input type="text" name="address[affiliation]" value="" class="field" /></td>
+				</tr>
 			</table>
 			<div class="inner newSection"></div>
 			<table>

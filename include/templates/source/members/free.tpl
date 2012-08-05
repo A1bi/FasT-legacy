@@ -24,7 +24,7 @@
 				{$address=$order->getAddress()}
 				{$tickets=$order->getTickets()}
 				<tr>
-					<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
+					<td>{$address['affiliation']|default:"{$address['firstname']} {$address['lastname']}"|escape}</td>
 					<td>{$tickets[0]->getDateString()}</td>
 					<td>{$order->getNumberOfValidTickets()}</td>
 				</tr>

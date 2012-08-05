@@ -56,6 +56,13 @@
 				<td>Nachname:</td>
 				<td><input type="text" name="lastname" value="" class="field" /></td>
 			</tr>
+			<tr>
+				<td>Gruppe:</td>
+				<td>
+					<input type="text" name="affiliation" value="" class="field" />
+					<div class="small">Falls Sie Karten für eine Gruppe bestellen, können Sie diese hier angeben. Ansonsten lassen Sie dieses Feld einfach frei.</div>
+				</td>
+			</tr>
 		</table>
 		<div class="inner newSection"></div>
 		<table class="inner">

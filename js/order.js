@@ -121,10 +121,10 @@ var order = new function () {
 		return (val.indexOf(".") == -1 && !isNaN(val));
 	}
 	
-	var checkFields = function (fields) {
+	var checkFields = function (fields, required) {
 		var ok = true;
-		$.each(fields, function (key, val) {
-			if (val == "" && val !== false) {
+		$.each(required, function (key, val) {
+			if (fields[val] == "") {
 				ok = false;
 				return;
 			}
@@ -152,7 +152,7 @@ var order = new function () {
 				break;
 				
 			case 1:
-				ok = checkFields(order.address);
+				ok = checkFields(order.address, ["firstname", "lastname", "fon"]);
 				if (!ok) {
 					error = "Bitte füllen Sie alle Felder aus.";
 				} else if (!isInt(order.address['plz']) || order.address['plz'].length < 5) {
@@ -169,7 +169,7 @@ var order = new function () {
 					ok = false;
 					error = "Bitte wählen Sie eine Zahlungsmethode.";
 				} else if (order.payment.method == "charge") {
-					ok = checkFields(order.payment);
+					ok = checkFields(order.payment, ["name", "bank"]);
 					if (!ok) {
 						error = "Bitte füllen Sie alle Felder aus.";
 					} else if (!isInt(order.payment['number'])) {

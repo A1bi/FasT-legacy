@@ -68,7 +68,7 @@
 					<td>Käufer:</td>
 					<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
 				</tr>
-				{foreach [["plz", "PLZ"], ["fon", "Telefon"], ["email", "e-mail"]] as $field}
+				{foreach [["affiliation", "Gruppe"], ["plz", "PLZ"], ["fon", "Telefon"], ["email", "e-mail"]] as $field}
 				<tr>
 					<td>{$field[1]}:</td>
 					<td>{if empty($address[$field[0]])}<em class="small">nicht angegeben</em>{else}{$address[$field[0]]}{/if}</td>
