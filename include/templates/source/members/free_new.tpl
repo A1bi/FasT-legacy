@@ -46,6 +46,10 @@
 					<td>Nachname:</td>
 					<td><input type="text" name="address[lastname]" value="" class="field" /></td>
 				</tr>
+				<tr>
+					<td>Kategorie:</td>
+					<td>{html_options name="category" options=$cats}</td>
+				</tr>
 			</table>
 		</div>
 	</div>

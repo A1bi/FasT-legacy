@@ -21,9 +21,17 @@
 					<td>Aufführung</td>
 					<td>Karten</td>
 				</tr>
+				{$cCat=-1}
 				{foreach $orders as $order}
 				{$address=$order->getAddress()}
 				{$tickets=$order->getTickets()}
+				{$cat=$order->getCategory()}
+				{if $cat['id'] != $cCat}
+				{$cCat=$cat['id']}
+				<tr class="category">
+					<td colspan="3">{$cat['name']|default:"<em>nicht zugeordnet</em>"}</td>
+				</tr>
+				{/if}
 				<tr>
 					<td>
 					{if $address['affiliation'] != ""}

@@ -53,6 +53,14 @@ class OrderManager {
 		
 		return self::$orders[$id];
 	}
+	
+	static function getCategories() {
+		global $_db;
+		
+		$result = $_db->query('SELECT * FROM orders_categories ORDER BY name');
+		
+		return $result->fetchAll();
+	}
 }
 
 ?>

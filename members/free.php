@@ -17,6 +17,7 @@ if ($_GET['action'] == "new") {
 			$order->create(OrderType::Free);
 			$order->setPayment(array("method" => OrderPayMethod::Transfer));
 			$order->setAddress($_POST['address']);
+			$order->setCategory($_POST['category']);
 			
 			foreach (OrderManager::$theater['prices'] as $key => $price) {
 				if ($price['type'] == "free") break;
@@ -32,10 +33,24 @@ if ($_GET['action'] == "new") {
 		}
 	}
 	
+	$cats = array();
+	foreach (OrderManager::getCategories() as $cat) {
+		$cats[$cat['id']] = $cat['name'];
+	}
+	
+	$_tpl->assign("cats", $cats);
 	$_tpl->display("members/free_new.tpl");
 
 } else {
-	$result = $_db->query('SELECT id FROM orders WHERE type = ? ORDER BY lastname', array(OrderType::Free));
+	$result = $_db->query('	SELECT		o.id
+							FROM		orders AS o
+							LEFT JOIN	orders_categories AS c
+							ON			o.category = c.id
+							WHERE		o.type = ?
+							ORDER BY	c.name,
+										o.affiliation,
+										o.lastname',
+										array(OrderType::Free));
 	$orders = array();
 	while ($order = $result->fetch()) {
 		$orders[] = OrderManager::getOrderById($order['id']);

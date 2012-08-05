@@ -23,6 +23,7 @@ class OrderType {
 class Order {
 	
 	private $id, $sId, $type, $total = 0, $hash, $time, $status = OrderStatus::Placed, $paid = false,
+			$category = array("id" => 0, "name" => ""),
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "affiliation" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
 			$cancelled = array("cancelled" => false, "reason" => ""),
@@ -45,6 +46,7 @@ class Order {
 		$this->id = $orderInfo['id'];
 		$this->sId = $orderInfo['sId'];
 		$this->type = $orderInfo['type'];
+		$this->setCategory($orderInfo['category']);
 		$this->time = $orderInfo['time'];
 		$this->total = $orderInfo['total'];
 		$this->status = $orderInfo['status'];
@@ -241,9 +243,9 @@ class Order {
 		
 		// save everything to db
 		$_db->query('	INSERT INTO	orders
-									(sId, type, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
-						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-					', array($this->getSId(), $this->type, $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
+									(sId, type, cat, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
+						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+					', array($this->getSId(), $this->type, $this->category['id'], $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
 		
 		$this->id = $_db->id();
 		
@@ -339,6 +341,21 @@ class Order {
 	
 	public function getType() {
 		return $this->type;
+	}
+	
+	public function setCategory($id) {
+		$this->category['id'] = $id;
+	}
+	
+	public function getCategory() {
+		global $_db;
+		
+		if ($this->category['id'] > 0 && empty($this->category['name'])) {
+			$result = $_db->query('SELECT id, name FROM orders_categories WHERE id = ?', array($this->category['id']));
+			$this->category = $result->fetch();
+		}
+		
+		return $this->category;
 	}
 	
 	public function getTotal() {
