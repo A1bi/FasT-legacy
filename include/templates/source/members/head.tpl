@@ -23,7 +23,7 @@
 			<div class="name">{$section[0]}</div>
 {foreach $section[1] as $page}
 			<div class="section">
-				<a href="/mitglieder/{$page[1]}"{if basename($smarty.server.SCRIPT_FILENAME, ".php") == $page[0]} class="current"{/if}>{$page[2]}</a>
+				<a href="/mitglieder/{$page[1]}"{if $pageBelongsTo == $page[0] || basename($smarty.server.SCRIPT_FILENAME, ".php") == $page[0]} class="current"{/if}>{$page[2]}</a>
 			</div>
 {/foreach}
 		</div>

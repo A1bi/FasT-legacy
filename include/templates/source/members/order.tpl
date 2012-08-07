@@ -23,13 +23,13 @@
 {$types[OrderType::Online]="Online-Bestellung"}
 {$types[OrderType::Manual]="Normale Bestellung (Telefon, etc.)"}
 {$types[OrderType::Free]="Freikarten-Reservierung"}
-{include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders"}
+{include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders" pageBelongsTo="{if $isFree}free{else}orders{/if}"}
 
 <div class="hl section">{$terminus}sdetails</div>
 
 <div class="orderDetails">
 
-<div class="back"><a href="bestellungen">Zurück zur Übersicht</a></div>
+<div class="back"><a href="{if $isFree}freikarten{else}bestellungen{/if}">Zurück zur Übersicht</a></div>
 
 <div class="topRow">
 	<div class="box overview">
@@ -131,7 +131,7 @@
 		</div>
 		<div class="con">
 			<ul>
-				{if $isFree}
+				{if $isFree && false}
 				<li><a href="?id={$order->getId()}&amp;action=delete">Reservierung löschen</a></li>
 				{else}
 				{if !$order->isCancelled()}
