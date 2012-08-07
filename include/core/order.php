@@ -243,7 +243,7 @@ class Order {
 		
 		// save everything to db
 		$_db->query('	INSERT INTO	orders
-									(sId, type, cat, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
+									(sId, type, category, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
 						VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 					', array($this->getSId(), $this->type, $this->category['id'], $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
 		

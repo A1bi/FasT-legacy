@@ -29,7 +29,7 @@ if ($_GET['action'] == "new") {
 
 			$order->save();
 			
-			redirectTo("?");
+			redirectTo("bestellung?id=".$order->getId());
 		}
 	}
 	

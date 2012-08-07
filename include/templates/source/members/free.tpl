@@ -20,6 +20,7 @@
 					<td>Name</td>
 					<td>Aufführung</td>
 					<td>Karten</td>
+					<td></td>
 				</tr>
 				{$cCat=-1}
 				{foreach $orders as $order}
@@ -43,6 +44,7 @@
 					</td>
 					<td>{$tickets[0]->getDateString()}</td>
 					<td>{$order->getNumberOfValidTickets()}</td>
+					<td><a href="bestellung?id={$order->getId()}"><img src="/gfx/members/details.png" alt="Details anzeigen" title="Details anzeigen" /></a></td>
 				</tr>
 				{/foreach}
 			</table>

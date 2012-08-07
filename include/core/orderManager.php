@@ -15,7 +15,8 @@ class OrderManager {
 		// add free ticket type
 		self::$theater['prices'][] = array(
 			"type" => "free",
-			"price" => 0
+			"price" => 0,
+			"desc" => "Freikarte"
 		);
 	}
 	

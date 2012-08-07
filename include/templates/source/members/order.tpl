@@ -1,15 +1,17 @@
-{include file="members/head.tpl" title="Ticketbestellungen - Bestellungsdetails" jsfile="members/orders"}
 {$address=$order->getAddress()}
+{$cat=$order->getCategory()}
 {$payment=$order->getPayment()}
 {$tickets=$order->getTickets()}
 {$payMethods=[OrderPayMethod::Charge => "Lastschrift", OrderPayMethod::Transfer => "Überweisung"]}
-{$statuses[OrderStatus::Placed]="Bestellung aufgenommen"}
+{$isFree=$order->getType() == OrderType::Free}
+{if $isFree}{$terminus="Reservierung"}{else}{$terminus="Bestellung"}{/if}
+{$statuses[OrderStatus::Placed]="{$terminus} aufgenommen"}
 {$statuses[OrderStatus::WaitingForApproval]="Warte auf Freischaltung.."}
 {$statuses[OrderStatus::WaitingForPayment]="Warte auf Zahlung.."}
 {$statuses[OrderStatus::Approved]="Überprüft, Lastschrift ausstehend.."}
 {$statuses[OrderStatus::Finished]="<span class=\"finished\">Abgeschlossen</span>"}
 {$statuses[OrderStatus::Cancelled]="<span class=\"cancelled\">Storniert</span>"}
-{$events[OrderEvent::Placed]="Bestellung aufgegeben"}
+{$events[OrderEvent::Placed]="{$terminus} aufgegeben"}
 {$events[OrderEvent::Approved]="Bestellung als geprüft markiert"}
 {$events[OrderEvent::Disapproved]="Überprüfung wieder aufgehoben"}
 {$events[OrderEvent::MarkedAsPaid]="Als bezahlt markiert"}
@@ -18,7 +20,12 @@
 {$events[OrderEvent::CancelledTicket]="Einzelnes Ticket storniert"}
 {$events[OrderEvent::SentTickets]="Tickets an Käufer gesendet"}
 {$events[OrderEvent::SentPayReminder]="Zahlungserinnerung gesendet"}
-<div class="hl section">Bestellungsdetails</div>
+{$types[OrderType::Online]="Online-Bestellung"}
+{$types[OrderType::Manual]="Normale Bestellung (Telefon, etc.)"}
+{$types[OrderType::Free]="Freikarten-Reservierung"}
+{include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders"}
+
+<div class="hl section">{$terminus}sdetails</div>
 
 <div class="orderDetails">
 
@@ -30,6 +37,7 @@
 			Übersicht
 		</div>
 		<div class="con">
+			<div class="type">{$types[$order->getType()]}</div>
 			<table>
 				<tr>
 					<td class="left">ON:</td>
@@ -39,6 +47,7 @@
 					<td>Tickets:</td>
 					<td><b>{$order->getNumberOfValidTickets()}</b></td>
 				</tr>
+				{if !$isFree}
 				<tr>
 					<td>Gesamtbetrag:</td>
 					<td><b>{$order->getTotal()} €</b></td>
@@ -64,16 +73,14 @@
 					<td>Zahlung erfolgt:</td>
 					<td>{if $order->isPaid()}Ja{else}Nein{/if}</td>
 				</tr>
-				<tr class="newSection">
-					<td>Käufer:</td>
-					<td>{"{$address['firstname']} {$address['lastname']}"|escape}</td>
-				</tr>
-				{foreach [["affiliation", "Gruppe"], ["plz", "PLZ"], ["fon", "Telefon"], ["email", "e-mail"]] as $field}
-				<tr>
+				{/if}
+				{foreach [["firstname", "Vorname"], ["lastname", "Nachname"], ["affiliation", "Gruppe"], ["plz", "PLZ"], ["fon", "Telefon"], ["email", "e-mail"]] as $field}
+				<tr{if $field@first} class="newSection"{/if}>
 					<td>{$field[1]}:</td>
-					<td>{if empty($address[$field[0]])}<em class="small">nicht angegeben</em>{else}{$address[$field[0]]}{/if}</td>
+					<td>{$address[$field[0]]|escape|default:"<em class=\"small\">nicht angegeben</em>"}</td>
 				</tr>
 				{/foreach}
+				{if !$isFree}
 				<tr class="newSection">
 					<td>Zahlungsmethode:</td>
 					<td><b>{$payMethods[$payment['method']]}</b></td>
@@ -96,6 +103,11 @@
 					<td>{$payment['bank']|escape}</td>
 				</tr>
 				{/if}
+				{/if}
+				<tr class="newSection">
+					<td>Kategorie:</td>
+					<td>{$cat['name']|escape|default:"<em class=\"small\">nicht zugeordnet</em>"}</td>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -105,6 +117,9 @@
 		</div>
 		<div class="con">
 			<ul>
+				{if $isFree}
+				<li><a href="?id={$order->getId()}&amp;action=delete">Reservierung löschen</a></li>
+				{else}
 				{if !$order->isCancelled()}
 				{if $order->getStatus() == OrderStatus::WaitingForApproval}
 				<li><a href="?id={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>
@@ -122,6 +137,8 @@
 				{else}
 				Keine Aktionen möglich, da Bestellung storniert.
 				{/if}
+				{/if}
+				<li><a href="?id={$order->getId()}&amp;action=edit">Bearbeiten</a></li>
 			</ul>
 		</div>
 	</div>
@@ -143,7 +160,7 @@
 
 <div class="box" id="tickets">
 	<div class="top">
-		Tickets in dieser Bestellung
+		Enthaltene Tickets
 	</div>
 	<div class="con">
 		<table>
@@ -185,7 +202,7 @@
 			{/foreach}
 		</table>
 		{else}
-		<em>Für diese Bestellung liegt bisher kein Eintrag im Protokoll vor.</em>
+		<em>Für diese {$terminus} liegt bisher kein Eintrag im Protokoll vor.</em>
 		{/if}
 	</div>
 </div>
