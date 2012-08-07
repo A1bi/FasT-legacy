@@ -33,12 +33,6 @@ if ($_GET['action'] == "new") {
 		}
 	}
 	
-	$cats = array();
-	foreach (OrderManager::getCategories() as $cat) {
-		$cats[$cat['id']] = $cat['name'];
-	}
-	
-	$_tpl->assign("cats", $cats);
 	$_tpl->display("members/free_new.tpl");
 
 } else {

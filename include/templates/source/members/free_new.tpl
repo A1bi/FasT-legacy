@@ -48,7 +48,7 @@
 				</tr>
 				<tr>
 					<td>Kategorie:</td>
-					<td>{html_options name="category" options=$cats}</td>
+					<td>{html_options name="category" options=OrderManager::getCategories()}</td>
 				</tr>
 			</table>
 		</div>

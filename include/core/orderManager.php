@@ -60,7 +60,12 @@ class OrderManager {
 		
 		$result = $_db->query('SELECT * FROM orders_categories ORDER BY name');
 		
-		return $result->fetchAll();
+		$cats = array(0 => "");
+		while ($cat = $result->fetch()) {
+			$cats[$cat['id']] = $cat['name'];
+		}
+		
+		return $cats;
 	}
 }
 

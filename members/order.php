@@ -40,6 +40,16 @@ if (!empty($_GET['action'])) {
 		case "sendPayReminder":
 			$order->mailPayReminder();
 			break;
+			
+		case "edit":
+			if ($_POST['edit']) {
+				$order->setCategory($_POST['category']);
+				$order->setAddress($_POST['address']);
+				$order->setPayment($_POST['payment']);
+				$order->save();
+			}
+			break;
+			
 	}
 	
 	if ($_GET['goto'] == "orders") {

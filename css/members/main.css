@@ -202,6 +202,11 @@ table td.sId {
 .orderDetails .overview td.right {
 	width: 60%;
 }
+.orderDetails .overview .btn {
+	margin-top: 15px;
+	height: 23px;
+	font-size: 12px;
+}
 .orderDetails .actions {
 	width: 35%;
 	float: left;

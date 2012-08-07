@@ -38,6 +38,7 @@
 		</div>
 		<div class="con">
 			<div class="type">{$types[$order->getType()]}</div>
+			{if $smarty.get.edit}<form action="?id={$order->getId()}&amp;action=edit" method="post">{/if}
 			<table>
 				<tr>
 					<td class="left">ON:</td>
@@ -75,9 +76,16 @@
 				</tr>
 				{/if}
 				{foreach [["firstname", "Vorname"], ["lastname", "Nachname"], ["affiliation", "Gruppe"], ["plz", "PLZ"], ["fon", "Telefon"], ["email", "e-mail"]] as $field}
+				{if $address[$field[0]] == "0"}{$address[$field[0]]=""}{/if}
 				<tr{if $field@first} class="newSection"{/if}>
 					<td>{$field[1]}:</td>
-					<td>{$address[$field[0]]|escape|default:"<em class=\"small\">nicht angegeben</em>"}</td>
+					<td>
+						{if $smarty.get.edit}
+						<input type="text" name="address[{$field[0]}]" value="{$address[$field[0]]|escape}" />
+						{else}
+						{$address[$field[0]]|escape|default:"<em class=\"small\">nicht angegeben</em>"}
+						{/if}
+					</td>
 				</tr>
 				{/foreach}
 				{if !$isFree}
@@ -86,29 +94,35 @@
 					<td><b>{$payMethods[$payment['method']]}</b></td>
 				</tr>
 				{if $payment['method'] == OrderPayMethod::Charge}
+				{foreach [["name", "Kontoinhaber"], ["number", "Kontonummer"], ["blz", "BLZ"], ["bank", "Bankname"]] as $field}
 				<tr>
-					<td>Kontoinhaber:</td>
-					<td>{$payment['name']|escape}</td>
+					<td>{$field[1]}:</td>
+					<td>
+						{if $smarty.get.edit}
+						<input type="text" name="payment[{$field[0]}]" value="{$payment[$field[0]]|escape}" />
+						{else}
+						{$payment[$field[0]]|escape}
+						{/if}
+					</td>
 				</tr>
-				<tr>
-					<td>Kontonummer:</td>
-					<td>{$payment['number']}</td>
-				</tr>
-				<tr>
-					<td>BLZ:</td>
-					<td>{$payment['blz']}</td>
-				</tr>
-				<tr>
-					<td>Bankname:</td>
-					<td>{$payment['bank']|escape}</td>
-				</tr>
+				{/foreach}
 				{/if}
 				{/if}
 				<tr class="newSection">
 					<td>Kategorie:</td>
-					<td>{$cat['name']|escape|default:"<em class=\"small\">nicht zugeordnet</em>"}</td>
+					<td>
+						{if $smarty.get.edit}
+						{html_options name="category" options=OrderManager::getCategories() selected=$cat['id']}
+						{else}
+						{$cat['name']|escape|default:"<em class=\"small\">nicht zugeordnet</em>"}
+						{/if}
+					</td>
 				</tr>
 			</table>
+			{if $smarty.get.edit}
+			<div class="hcen"><input type="submit" name="edit" value="speichern" class="btn" /></div>
+			</form>
+			{/if}
 		</div>
 	</div>
 	<div class="box actions">
@@ -134,11 +148,9 @@
 				<li><a href="?id={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>
 				{/if}
 				<li><a href="#" id="cancelBtn">Stornieren</a></li>
-				{else}
-				Keine Aktionen möglich, da Bestellung storniert.
 				{/if}
 				{/if}
-				<li><a href="?id={$order->getId()}&amp;action=edit">Bearbeiten</a></li>
+				<li><a href="?id={$order->getId()}&amp;edit=1">Angaben bearbeiten</a></li>
 			</ul>
 		</div>
 	</div>
