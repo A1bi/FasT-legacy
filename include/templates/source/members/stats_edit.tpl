@@ -13,7 +13,7 @@
 					<td>Aufführung</td>
 {foreach OrderManager::$theater['prices'] as $price}
 {if $price['type'] == "free"}{continue}{/if}
-					<td>{$price['desc']}</td>
+					<td colspan="2">{$price['desc']}</td>
 {/foreach}
 				</tr>
 				{foreach OrderManager::$theater['dates'] as $date}
@@ -21,12 +21,14 @@
 					<td class="left">{OrderManager::getStringForDate($date)}</td>
 {foreach OrderManager::$theater['prices'] as $price}
 {if $price['type'] == "free"}{continue}{/if}
+{$stat=$stats->getValue($date@key, $price@key, OrderType::Retail, $smarty.get.retail)}
 					<td><input type="tel" name="number[{$date@key}][{$price@key}]" /></td>
+					<td>({$stat['number']|default:0})</td>
 {/foreach}
 				</tr>
 				{/foreach}
 			</table>
-			<p>Die eingegebenen Werte werden zu den aktuellen addiert.</p>
+			<p>Die eingegebenen Werte werden zu den aktuellen addiert.<br />Subtrahieren Sie, indem Sie ein Minus vor die Zahl setzen.<br />In Klammern steht die aktuelle Verkaufszahl.</p>
 			<div class="hcen"><input type="submit" name="edit" value="speichern" class="btn" /></div>
 		</div>
 	</div>

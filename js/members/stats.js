@@ -15,6 +15,11 @@ var stats = new function () {
 		location.href = "?action=editRetail&retail=" + additional;
 	}
 	
+	var updateNumber = function (obj, number) {
+		if (number == null) number = 0;
+		obj.html(number);
+	}
+	
 	var updateNumbers = function () {
 		var selection = $("select").val().split(",");
 		orderType = selection[0];
@@ -41,7 +46,7 @@ var stats = new function () {
 			
 			$(".type", this).each(function (ticketType) {
 				if (orderType != 2) {
-					$(this).html(dateStats[ticketType]['number']);
+					updateNumber($(this), dateStats[ticketType]['number']);
 				} else {
 					$(this).empty();
 				}
@@ -55,7 +60,7 @@ var stats = new function () {
 				revenue -= stats[2][retail][date][-1]['revenue'];
 			}
 			
-			$(".total", this).html(number);
+			updateNumber($(".total", this), number);
 			$(".revenue", this).html(revenue);
 		});
 	}

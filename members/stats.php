@@ -53,6 +53,7 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 		redirectTo("?retail=".$_GET['retail']);
 	}
 	
+	$_tpl->assign("stats", $stats);
 	$_tpl->assign("retail", $retail);
 	$_tpl->display("members/stats_edit.tpl");
 
@@ -64,7 +65,7 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	
 	$options = array(
 		"options" => array(
-			"Bestellungen" => array(OrderType::Online => "Online", OrderType::Manual => "Telefon", OrderType::Free => "Freikarten"),
+			"Bestellungen" => array(OrderType::Online => "Online", OrderType::Manual => "Normal", OrderType::Free => "Freikarten"),
 			"Vorverkaufsstellen" => $retails,
 			"Gesamt" => array("-1,0" => "ohne Freikarten", "-1,1" => "mit Freikarten")
 		),
