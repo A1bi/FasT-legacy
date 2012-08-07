@@ -37,7 +37,7 @@
 			</tr>
 		</table>
 		<div class="hcen">
-			<a href="?action=showDetails&amp;order={$order->getId()}">Zu den Details dieser Bestellung</a>
+			<a href="bestellung?id={$order->getId()}">Zu den Details dieser Bestellung</a>
 		</div>
 	</div>
 </div>

@@ -22,7 +22,7 @@
 
 <div class="orderDetails">
 
-<div class="back"><a href="?">Zurück zur Übersicht</a></div>
+<div class="back"><a href="bestellungen">Zurück zur Übersicht</a></div>
 
 <div class="topRow">
 	<div class="box overview">
@@ -107,16 +107,16 @@
 			<ul>
 				{if !$order->isCancelled()}
 				{if $order->getStatus() == OrderStatus::WaitingForApproval}
-				<li><a href="?order={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>
+				<li><a href="?id={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>
 				{/if}
 				{if $order->getStatus() == OrderStatus::WaitingForPayment}
 				<li><a href="?order={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
 				{if $address['email']}
-				<li><a href="?order={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
+				<li><a href="?id={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
 				{/if}
 				{/if}
 				{if $order->getStatus() == OrderStatus::Approved}
-				<li><a href="?order={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>
+				<li><a href="?id={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>
 				{/if}
 				<li><a href="#" id="cancelBtn">Stornieren</a></li>
 				{else}
@@ -130,7 +130,7 @@
 			Bestellung stornieren
 		</div>
 		<div class="con">
-			<form action="?order={$order->getId()}&amp;action=cancel" method="post">
+			<form action="?id={$order->getId()}&amp;action=cancel" method="post">
 			Grund:<br />
 			<input type="text" name="reason" />
 			<div class="hcen">
