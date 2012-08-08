@@ -138,12 +138,14 @@ if (!empty($_GET['order'])) {
 		// send mail to bank containing the dta file
 		require("/usr/share/php/libphp-phpmailer/class.phpmailer.php");
 		
+		$company = OrderManager::getCompanyInfo();
+		
 		$dta->generateData();
 		
 		$mail = new PHPMailer();
 		$mail->CharSet = 'utf-8';
 		
-		$mail->SetFrom(OrderManager::$company['email'], OrderManager::$company['name']);
+		$mail->SetFrom($company['email'], $company['name']);
 		// don't send anything to the bank in dev mode
 		$mail->AddAddress(($_config['dev']) ? "a1bi@me.com" : $chargeInfo['bankEmail']);
 		
@@ -165,7 +167,7 @@ if (!empty($_GET['order'])) {
 		
 		$pdf = new FPDF();
 		$pdf->SetTitle("DTA-Begleitzettel", true);
-		$pdf->SetAuthor(OrderManager::$company['name'], true);
+		$pdf->SetAuthor($company['name'], true);
 		$pdf->SetMargins(15, 15);
 		$pdf->AddPage();
 		
@@ -231,7 +233,7 @@ if (!empty($_GET['order'])) {
 			$order->setPayment(array("method" => OrderPayMethod::Transfer));
 			$order->setAddress($_POST['address']);
 				
-			foreach (OrderManager::getTicketTypes() as $type => $price) {
+			foreach (OrderManager::getTicketTypes(OrderType::Manual) as $type => $price) {
 				for ($i = 0; $i < $_POST['number'][$type]; $i++) {
 					if (!$order->addTicket($type, $_POST['date'])) {
 						break;

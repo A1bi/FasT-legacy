@@ -101,15 +101,17 @@ class Order {
 		global $_tpl;
 		require_once("/usr/share/php/libphp-phpmailer/class.phpmailer.php");
 		
+		$company = OrderManager::getCompanyInfo();
+		
 		$_tpl->assign("order", $this);
 		$_tpl->assign("address", $this->address);
 		
 		$mail = new PHPMailer();
 		$mail->CharSet = 'utf-8';
 		
-		$mail->SetFrom(OrderManager::$company['noreply'], OrderManager::$company['name']);
+		$mail->SetFrom($company['noreply'], $company['name']);
 		$mail->ClearReplyTos();
-		$mail->AddReplyTo(OrderManager::$company['email'], OrderManager::$company['name']);
+		$mail->AddReplyTo($company['email'], $company['name']);
 		$mail->AddAddress($this->address['email']);
 		
 		$mail->Subject = $subject;
@@ -146,10 +148,12 @@ class Order {
 	public function createPdf() {
 		global $_tpl;
 		require_once('/usr/share/php/fpdf/fpdf.php');
+		
+		$company = OrderManager::getCompanyInfo();
 
 		$pdf = new FPDF();
 		$pdf->SetTitle("Eintrittskarten - " . OrderManager::getTitle(), true);
-		$pdf->SetAuthor(OrderManager::$company['name'], true);
+		$pdf->SetAuthor($company['name'], true);
 		
 		$pdf->AddFont("Qlassik", "", "Qlassik_TB.php");
 		$pdf->AddFont("Code39", "", "code39.php");

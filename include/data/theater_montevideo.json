@@ -12,12 +12,20 @@
 		{
 			"type": "kids",
 			"price": 6,
-			"desc": "Ermäßigt"
+			"desc": "Ermäßigt",
+			"orderTypes": [0, 1, 3]
 		},
 		{
 			"type": "adults",
 			"price": 12,
-			"desc": "Erwachsene"
+			"desc": "Erwachsene",
+			"orderTypes": [0, 1, 3]
+		},
+		{
+			"type": "adults_grp",
+			"price": 10,
+			"desc": "Erwachsene (Gruppe)",
+			"orderTypes": [1]
 		}
 	],
 	"retails": [

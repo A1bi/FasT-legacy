@@ -17,7 +17,7 @@ if ($_GET['ajax']) {
 			
 			$response['info'] = array(
 				"dates" => array(),
-				"prices" => OrderManager::getTicketTypes()
+				"prices" => OrderManager::getTicketTypes(OrderType::Online)
 			);
 			
 			foreach (OrderManager::getDates() as $key => $date) {
@@ -33,7 +33,7 @@ if ($_GET['ajax']) {
 					"step" => 0,
 					"lastUpdate" => time(),
 					"date" => 0,
-					"number" => array(),
+					"number" => (object)array(),
 					"address" => array("gender" => 1, "firstname" => "", "lastname" => "", "affiliation" => "", "plz" => 0, "fon" => "", "email" => ""),
 					"payment" => array("method" => "", "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => false),
 					"accepted" => false,
@@ -61,7 +61,7 @@ if ($_GET['ajax']) {
 				$error = "accepted";
 				
 			} else {
-				foreach (OrderManager::getTicketTypes() as $type => $price) {
+				foreach (OrderManager::getTicketTypes(OrderType::Online) as $type => $price) {
 					for ($i = 0; $i < $_POST['order']['number'][$type]; $i++) {
 						if (!$order->addTicket($type, $_POST['order']['date'])) {
 							$error = "ticket";

@@ -64,7 +64,7 @@ class Ticket {
 	
 	public function setDate($date) {
 		$dates = OrderManager::getDates();
-		if (!OrderManager::$dates[$date]) return false;
+		if (!$dates[$date]) return false;
 		
 		$this->date = $date;
 		

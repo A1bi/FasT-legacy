@@ -43,13 +43,12 @@ var stats = new function () {
 			}
 			
 			var dateStats = stats[orderType][retail][date];
+			var typeBoxes = $(".type", this).empty();
 			
-			$(".type", this).each(function (ticketType) {
-				if (orderType != 2) {
-					updateNumber($(this), dateStats[ticketType]['number']);
-				} else {
-					$(this).empty();
-				}
+			$.each(dateStats, function (ticketType, ticketStats) {
+				var index = ticketType - 1;
+				if (index < 0) return true;
+				updateNumber(typeBoxes.eq(index), ticketStats['number']);
 			});
 			
 			var number = dateStats[-1]['number'];

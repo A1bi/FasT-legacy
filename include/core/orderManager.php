@@ -13,11 +13,12 @@ class OrderManager {
 		self::$company = getData("company");
 		
 		// add free ticket type
-		self::$event['ticketTypes'][] = array(
+		array_unshift(self::$event['ticketTypes'], array(
 			"type" => "free",
 			"price" => 0,
-			"desc" => "Freikarte"
-		);
+			"desc" => "Freikarte",
+			"orderTypes" => array(2)
+		));
 	}
 	
 	static function init() {
@@ -72,8 +73,20 @@ class OrderManager {
 		return self::$event['dates'];
 	}
 	
-	static function getTicketTypes() {
-		return self::$event['ticketTypes'];
+	static function getTicketTypes($orderType = NULL) {
+		if (is_null($orderType) || $orderType == -1) {
+			return self::$event['ticketTypes'];
+			
+		} else {
+			$types = array();
+			foreach (self::$event['ticketTypes'] as $key => $type) {
+				if (in_array($orderType, $type['orderTypes'])) {
+					$types[$key] = $type;
+				}
+			}
+			
+			return $types;
+		}
 	}
 	
 	static function getRetails() {
@@ -82,6 +95,10 @@ class OrderManager {
 	
 	static function getTitle() {
 		return self::$event['title'];
+	}
+	
+	static function getCompanyInfo() {
+		return self::$company;
 	}
 }
 

@@ -17,10 +17,9 @@
 					<td><select name="date">{foreach OrderManager::getDates() as $date}<option value="{$date@key}">{OrderManager::getStringForDate($date)}</option>{/foreach}</select></td>
 					<td></td>
 				</tr>
-				{foreach OrderManager::getTicketTypes() as $price}
-				{if $price['type'] == "free"}{continue}{/if}
+				{foreach OrderManager::getTicketTypes(OrderType::Manual) as $price}
 				<tr class="type">
-					<td>{$price['desc']}</td>
+					<td>{$price['desc']}:</td>
 					<td><select name="number[{$price@key}]">{for $i=0 to 50}<option>{$i}</option>{/for}</select></td>
 					<td>je <span class="each">{$price['price']}</span> €</td>
 				</tr>

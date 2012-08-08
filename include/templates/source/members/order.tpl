@@ -139,7 +139,7 @@
 				<li><a href="?id={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>
 				{/if}
 				{if $order->getStatus() == OrderStatus::WaitingForPayment}
-				<li><a href="?order={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
+				<li><a href="?id={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
 				{if $address['email']}
 				<li><a href="?id={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
 				{/if}

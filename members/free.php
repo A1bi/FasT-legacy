@@ -16,12 +16,8 @@ if ($_GET['action'] == "new") {
 			$order->setAddress($_POST['address']);
 			$order->setCategory($_POST['category']);
 			
-			foreach (OrderManager::getTicketTypes() as $key => $price) {
-				if ($price['type'] == "free") break;
-			}
-			
 			for ($i = 0; $i < $_POST['number']; $i++) {
-				if (!$order->addTicket($key, $_POST['date'])) break;
+				if (!$order->addTicket(0, $_POST['date'])) break;
 			}
 
 			$order->save();

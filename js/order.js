@@ -247,7 +247,7 @@ var order = new function () {
 		slideToggle($(".date div.number"), true);
 
 		order.date = $(".id", this).html();
-		$(".stepCon.confirm .date").html($(this).html());
+		$(".stepCon.confirm .date").html($(".string", this).html());
 		
 		$(".tooMany span").html(info.dates[order.date]['ticketsLeft']);
 		updateTicketsLeft();

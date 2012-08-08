@@ -21,13 +21,14 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 			foreach (OrderManager::getRetails() as $retail => $dummy) {
 				if ($orderType != OrderType::Retail) $retail = -1;
 				
-				for ($ticketType = -1; $ticketType < count(OrderManager::getTicketTypes()); $ticketType++) {
+				foreach (OrderManager::getTicketTypes($orderType) as $ticketType => $dummy) {
 					addStat($date, $ticketType, $orderType, $retail, $tStats, $stats);
 				}
+				addStat($date, -1, $orderType, $retail, $tStats, $stats);
 			}
 		}
 	}
-	
+
 	echo json_encode($stats);
 	
 } elseif ($_GET['action'] == "editRetail") {
@@ -38,7 +39,7 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	$stats = new TicketStats;
 	
 	if ($_POST['edit']) {
-		foreach (OrderManager::getTicketTypes() as $ticketType => $dummy) {
+		foreach (OrderManager::getTicketTypes(OrderType::Retail) as $ticketType => $dummy) {
 			foreach (OrderManager::getDates() as $date => $dummy2) {
 				$add = intval($_POST['number'][$date][$ticketType]);
 				if ($add != 0) {
@@ -55,6 +56,10 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	$_tpl->assign("stats", $stats);
 	$_tpl->assign("retail", $retail);
 	$_tpl->display("members/stats_edit.tpl");
+	
+} elseif ($_GET['action'] == "update") {
+	$tStats = new TicketStats;
+	$tStats->updateAll();
 
 } else {
 	$retails = array();

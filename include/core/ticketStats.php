@@ -50,7 +50,7 @@ class TicketStats {
 	}
 	
 	public function updateForRetail($date, $ticketType, $retail, $number) {
-		$ticketTypes = OrderManager::getTicketTypes();
+		$ticketTypes = OrderManager::getTicketTypes(OrderType::Retail);
 		$this->updateValueWithPrice($date, $ticketType, OrderType::Retail, $retail, $number, $ticketTypes[$ticketType]['price']);
 		$this->updateSubTotals($date, $ticketType, OrderType::Retail, $retail);
 	}
@@ -152,17 +152,20 @@ class TicketStats {
 	}
 	
 	public function updateAll() {
-		foreach (OrderManager::getDates() as $date => $dummy) {
-			foreach (OrderManager::getTicketTypes() as $ticketType => $price) {
-			
-				for ($i = OrderType::Online; $i < OrderType::Retail; $i++) {
-					$this->calculateAndUpdate($date, $ticketType, $price['price'], $i);
-				}
+		for ($orderType = OrderType::Online; $orderType < OrderType::Retail; $orderType++) {
+			foreach (OrderManager::getDates() as $date => $dummy) {
+				foreach (OrderManager::getTicketTypes($orderType) as $ticketType => $price) {
 				
-				foreach (OrderManager::getRetails() as $retail => $dummy2) {
-					$this->updateSubTotals($date, $ticketType, OrderType::Retail, $retail);
+					if ($orderType == OrderType::Retail) {
+						foreach (OrderManager::getRetails() as $retail => $dummy2) {
+							$this->updateSubTotals($date, $ticketType, OrderType::Retail, $retail);
+						}
+					
+					} else {
+						$this->calculateAndUpdate($date, $ticketType, $price['price'], $orderType);
+					}
+					
 				}
-				
 			}
 		}
 		
