@@ -17,12 +17,12 @@
 	</div>
 	{include file="members/orders_table.tpl" title="Zu überprüfende Bestellungen" aName="waitingForApproval" orders=$ordersCheck important=true}
 	{include file="members/orders_table.tpl" title="Unbezahlte Bestellungen" aName="unpaid" orders=$ordersPay important=true unpaid=true}
-	<div class="box charges{if $charges} important{/if}">
+	<div class="box charges{if $charges['number']} important{/if}">
 		<div class="top">
 			Ausstehende Lastschriften
 		</div>
 		<div class="con">
-			{($charges > 0) ? $charges : "Keine"} Lastschrift{if $charges != 1}en{/if} ausstehend.{if $charges} <a href="?action=charge">Jetzt einreichen.</a>{/if}
+			{if $charges['number'] < 1}<em class="small">Keine{else}{$charges['number']}{/if} Lastschrift{if $charges['number'] != 1}en{/if}{if $charges['number']} ({$charges['total']} €){/if} ausstehend.{if $charges['number']} <a href="?action=charge">Jetzt einreichen.</a>{else}</em>{/if}
 		</div>
 	</div>
 	<div class="trenner"></div>
@@ -45,7 +45,7 @@
 					<td>{$charge['time']|date_format_x:"%@, %H.%M Uhr"}</td>
 					<td>{$charge['orders']}</td>
 					<td>{$charge['total']} €</td>
-					<td><a href="?action=getChargesSheet&amp;id={$charge['id']}">download</a></td>
+					<td><a href="?action=getChargesSheet&amp;id={$charge['id']}" target="_blank">download</a></td>
 				</tr>
 				{/foreach}
 			</table>

@@ -214,8 +214,6 @@ if (!empty($_GET['order'])) {
 		$pdf->Cell(0, 8, "Ort, Datum, Unterschrift");
 		
 		$pdf->Output("./media/charges/" . $chargeId . ".pdf");
-		
-		redirectTo("?action=getChargesSheet&id=" . $chargeId);
 	}
 	
 	redirectTo("?");
@@ -272,9 +270,8 @@ if (!empty($_GET['order'])) {
 	$_tpl->assign("ordersFinished", getOrdersByStatus(OrderStatus::Approved, "id DESC", ">="));
 	
 	// charges
-	$result = $_db->query('SELECT COUNT(*) as number FROM orders WHERE status = ?', array(OrderStatus::Approved));
-	$charges = $result->fetch();
-	$_tpl->assign("charges", $charges['number']);
+	$result = $_db->query('SELECT COUNT(*) AS number, SUM(total) AS total FROM orders WHERE status = ?', array(OrderStatus::Approved));
+	$_tpl->assign("charges", $result->fetch());
 	
 	$result = $_db->query('	SELECT		c.id,
 										COUNT(o.id) AS orders,
