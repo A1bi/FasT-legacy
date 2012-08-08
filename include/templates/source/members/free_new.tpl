@@ -14,7 +14,7 @@
 			<table>
 				<tr>
 					<td>Aufführung:</td>
-					<td><select name="date">{foreach OrderManager::$theater['dates'] as $date}<option value="{$date@key}">{OrderManager::getStringForDate($date)}</option>{/foreach}</select></td>
+					<td><select name="date">{foreach OrderManager::getDates() as $date}<option value="{$date@key}">{OrderManager::getStringForDate($date)}</option>{/foreach}</select></td>
 				</tr>
 				<tr>
 					<td>Anzahl Freikarten:</td>

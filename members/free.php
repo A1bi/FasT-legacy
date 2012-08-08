@@ -3,9 +3,6 @@ include('../include/members.php');
 
 limitAccess(array(2));
 
-loadComponent("orderManager");
-OrderManager::init();
-
 if ($_GET['action'] == "new") {
 	if ($_POST['confirm']) {
 	
@@ -19,7 +16,7 @@ if ($_GET['action'] == "new") {
 			$order->setAddress($_POST['address']);
 			$order->setCategory($_POST['category']);
 			
-			foreach (OrderManager::$theater['prices'] as $key => $price) {
+			foreach (OrderManager::getTicketTypes() as $key => $price) {
 				if ($price['type'] == "free") break;
 			}
 			

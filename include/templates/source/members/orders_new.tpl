@@ -14,10 +14,10 @@
 			<table>
 				<tr>
 					<td>Aufführung:</td>
-					<td><select name="date">{foreach OrderManager::$theater['dates'] as $date}<option value="{$date@key}">{OrderManager::getStringForDate($date)}</option>{/foreach}</select></td>
+					<td><select name="date">{foreach OrderManager::getDates() as $date}<option value="{$date@key}">{OrderManager::getStringForDate($date)}</option>{/foreach}</select></td>
 					<td></td>
 				</tr>
-				{foreach OrderManager::$theater['prices'] as $price}
+				{foreach OrderManager::getTicketTypes() as $price}
 				{if $price['type'] == "free"}{continue}{/if}
 				<tr class="type">
 					<td>{$price['desc']}</td>

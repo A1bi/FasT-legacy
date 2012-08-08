@@ -148,7 +148,7 @@ class Order {
 		require_once('/usr/share/php/fpdf/fpdf.php');
 
 		$pdf = new FPDF();
-		$pdf->SetTitle("Eintrittskarten - " . OrderManager::$theater['title'], true);
+		$pdf->SetTitle("Eintrittskarten - " . OrderManager::getTitle(), true);
 		$pdf->SetAuthor(OrderManager::$company['name'], true);
 		
 		$pdf->AddFont("Qlassik", "", "Qlassik_TB.php");
@@ -207,7 +207,7 @@ class Order {
 				$pdf->SetXY($pdf->GetX(), $pdf->GetY() + 2);
 				$pdf->SetFont("Helvetica", "", "11");
 				$pdf->Cell(22, 6, utf8_decode("Aufführung:"), 0, 0);
-				$pdf->Cell(28, 6, utf8_decode(OrderManager::$theater['title']), 0, 2);
+				$pdf->Cell(28, 6, utf8_decode(OrderManager::getTitle()), 0, 2);
 				$pdf->Cell(28, 6, utf8_decode($ticket->getDateString()), 0, 2);
 				$pdf->SetFont("Helvetica", "", "18");
 				$pdf->SetXY($orX + 8, $pdf->GetY() + 3);

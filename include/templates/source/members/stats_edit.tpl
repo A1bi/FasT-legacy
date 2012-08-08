@@ -11,15 +11,15 @@
 			<table>
 				<tr class="title">
 					<td>Aufführung</td>
-{foreach OrderManager::$theater['prices'] as $price}
+{foreach OrderManager::getTicketTypes() as $price}
 {if $price['type'] == "free"}{continue}{/if}
 					<td colspan="2">{$price['desc']}</td>
 {/foreach}
 				</tr>
-				{foreach OrderManager::$theater['dates'] as $date}
+				{foreach OrderManager::getDates() as $date}
 				<tr>
 					<td class="left">{OrderManager::getStringForDate($date)}</td>
-{foreach OrderManager::$theater['prices'] as $price}
+{foreach OrderManager::getTicketTypes() as $price}
 {if $price['type'] == "free"}{continue}{/if}
 {$stat=$stats->getValue($date@key, $price@key, OrderType::Retail, $smarty.get.retail)}
 					<td><input type="tel" name="number[{$date@key}][{$price@key}]" /></td>

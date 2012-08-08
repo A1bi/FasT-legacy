@@ -9,4 +9,7 @@ if ($_SERVER['PHP_SELF'] != "/members/login.php") {
 	// member (1) or board member (2) ?
 	limitAccess(array(1, 2));
 }
+
+loadComponent("orderManager");
+OrderManager::init();
 ?>

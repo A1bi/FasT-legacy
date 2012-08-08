@@ -17,10 +17,10 @@ if ($_GET['ajax']) {
 			
 			$response['info'] = array(
 				"dates" => array(),
-				"prices" => OrderManager::$theater['prices']
+				"prices" => OrderManager::getTicketTypes()
 			);
 			
-			foreach (OrderManager::$theater['dates'] as $key => $date) {
+			foreach (OrderManager::getDates() as $key => $date) {
 				$stat = $stats->getValue($key, -1, -1);
 				$response['info']['dates'][$key] = array(
 					"string" => OrderManager::getStringForDate($date),
@@ -61,7 +61,7 @@ if ($_GET['ajax']) {
 				$error = "accepted";
 				
 			} else {
-				foreach (OrderManager::$theater['prices'] as $type => $price) {
+				foreach (OrderManager::getTicketTypes() as $type => $price) {
 					for ($i = 0; $i < $_POST['order']['number'][$type]; $i++) {
 						if (!$order->addTicket($type, $_POST['order']['date'])) {
 							$error = "ticket";

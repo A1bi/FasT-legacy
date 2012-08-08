@@ -3,9 +3,6 @@ include('../include/members.php');
 
 limitAccess(array(2));
 
-loadComponent("orderManager");
-OrderManager::init();
-
 $order = OrderManager::getInstance()->getOrderById($_GET['id']);
 // not found ?
 if (!$order) redirectTo("/");

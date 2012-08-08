@@ -11,17 +11,17 @@
 			<table>
 				<tr class="title">
 					<td>Aufführung</td>
-{foreach OrderManager::$theater['prices'] as $price}
+{foreach OrderManager::getTicketTypes() as $price}
 {if $price['type'] == "free"}{continue}{/if}
 					<td>{$price['desc']}</td>
 {/foreach}
 					<td>Gesamt</td>
 					<td>Umsatz</td>
 				</tr>
-				{foreach OrderManager::$theater['dates'] as $date}
+				{foreach OrderManager::getDates() as $date}
 				<tr>
 					<td class="left">{OrderManager::getStringForDate($date)}</td>
-{foreach OrderManager::$theater['prices'] as $price}
+{foreach OrderManager::getTicketTypes() as $price}
 {if $price['type'] == "free"}{continue}{/if}
 					<td class="type"></td>
 {/foreach}
@@ -31,7 +31,7 @@
 				{/foreach}
 				<tr class="total">
 					<td class="left">Gesamt</td>
-{foreach OrderManager::$theater['prices'] as $price}
+{foreach OrderManager::getTicketTypes() as $price}
 {if $price['type'] == "free"}{continue}{/if}
 					<td class="type"></td>
 {/foreach}

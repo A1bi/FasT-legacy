@@ -4,8 +4,6 @@ include('../include/members.php');
 limitAccess(array(2));
 
 loadComponent("ticketStats");
-loadComponent("orderManager");
-OrderManager::init();
 
 function addStat($date, $ticketType, $orderType, $retail, &$tStats, &$stats) {
 	$stat = $tStats->getValue($date, $ticketType, $orderType, $retail);
@@ -17,13 +15,13 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	$stats = array();
 	
 	for ($orderType = -1; $orderType <= OrderType::Retail; $orderType++) {
-		for ($date = -1; $date <= count(OrderManager::$theater['dates']); $date++) {
+		for ($date = -1; $date <= count(OrderManager::getDates()); $date++) {
 			if ($date == 0) continue;
 			
-			foreach (OrderManager::$theater['retails'] as $retail => $dummy) {
+			foreach (OrderManager::getRetails() as $retail => $dummy) {
 				if ($orderType != OrderType::Retail) $retail = -1;
 				
-				for ($ticketType = -1; $ticketType < count(OrderManager::$theater['prices']); $ticketType++) {
+				for ($ticketType = -1; $ticketType < count(OrderManager::getTicketTypes()); $ticketType++) {
 					addStat($date, $ticketType, $orderType, $retail, $tStats, $stats);
 				}
 			}
@@ -33,14 +31,15 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 	echo json_encode($stats);
 	
 } elseif ($_GET['action'] == "editRetail") {
-	$retail = OrderManager::$theater['retails'][$_GET['retail']];
+	$retails = OrderManager::getRetails();
+	$retail = $retails[$_GET['retail']];
 	if (!$retail) redirectTo("?");
 	
 	$stats = new TicketStats;
 	
 	if ($_POST['edit']) {
-		foreach (OrderManager::$theater['prices'] as $ticketType => $dummy) {
-			foreach (OrderManager::$theater['dates'] as $date => $dummy2) {
+		foreach (OrderManager::getTicketTypes() as $ticketType => $dummy) {
+			foreach (OrderManager::getDates() as $date => $dummy2) {
 				$add = intval($_POST['number'][$date][$ticketType]);
 				if ($add != 0) {
 					$current = $stats->getValue($date, $ticketType, OrderType::Retail, $_GET['retail']);
@@ -59,7 +58,7 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 
 } else {
 	$retails = array();
-	foreach (OrderManager::$theater['retails'] as $key => $retail) {
+	foreach (OrderManager::getRetails() as $key => $retail) {
 		$retails[OrderType::Retail.",".$key] = $retail;
 	}
 	

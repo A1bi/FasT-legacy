@@ -50,7 +50,8 @@ class Ticket {
 	}
 	
 	public function setType($type) {
-		if (!OrderManager::$theater['prices'][$type]) return false;
+		$types = OrderManager::getTicketTypes();
+		if (!$types[$type]) return false;
 		
 		$this->type = $type;
 		
@@ -62,7 +63,8 @@ class Ticket {
 	}
 	
 	public function setDate($date) {
-		if (!OrderManager::$theater['dates'][$date]) return false;
+		$dates = OrderManager::getDates();
+		if (!OrderManager::$dates[$date]) return false;
 		
 		$this->date = $date;
 		
@@ -74,15 +76,18 @@ class Ticket {
 	}
 
 	public function getDateString() {
-		return OrderManager::getStringForDate(OrderManager::$theater['dates'][$this->date]);
+		$dates = OrderManager::getDates();
+		return OrderManager::getStringForDate($dates[$this->date]);
 	}
 	
 	public function getPrice() {
-		return OrderManager::$theater['prices'][$this->type]['price'];
+		$types = OrderManager::getTicketTypes();
+		return $types[$this->type]['price'];
 	}
 	
 	public function getDesc() {
-		return OrderManager::$theater['prices'][$this->type]['desc'];
+		$types = OrderManager::getTicketTypes();
+		return $types[$this->type]['desc'];
 	}
 	
 	public function isCancelled() {

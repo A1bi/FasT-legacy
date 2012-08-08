@@ -3,9 +3,6 @@ include('../include/members.php');
 
 limitAccess(array(2));
 
-loadComponent("orderManager");
-OrderManager::init();
-
 function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
 	global $_db;
 	
@@ -234,7 +231,7 @@ if (!empty($_GET['order'])) {
 			$order->setPayment(array("method" => OrderPayMethod::Transfer));
 			$order->setAddress($_POST['address']);
 				
-			foreach (OrderManager::$theater['prices'] as $type => $price) {
+			foreach (OrderManager::getTicketTypes() as $type => $price) {
 				for ($i = 0; $i < $_POST['number'][$type]; $i++) {
 					if (!$order->addTicket($type, $_POST['date'])) {
 						break;

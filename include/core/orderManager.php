@@ -4,16 +4,16 @@ loadComponent("order");
 
 class OrderManager {
 	
-	static $instance = null;
-	static $theater, $company;
-	static $orders = array();
+	private static $instance = null;
+	private static $event, $company;
+	private static $orders = array();
 	
 	private function __construct() {
-		self::$theater = getData("theater_montevideo");
+		self::$event = getData("theater_montevideo");
 		self::$company = getData("company");
 		
 		// add free ticket type
-		self::$theater['prices'][] = array(
+		self::$event['ticketTypes'][] = array(
 			"type" => "free",
 			"price" => 0,
 			"desc" => "Freikarte"
@@ -66,6 +66,22 @@ class OrderManager {
 		}
 		
 		return $cats;
+	}
+	
+	static function getDates() {
+		return self::$event['dates'];
+	}
+	
+	static function getTicketTypes() {
+		return self::$event['ticketTypes'];
+	}
+	
+	static function getRetails() {
+		return self::$event['retails'];
+	}
+	
+	static function getTitle() {
+		return self::$event['title'];
 	}
 }
 

@@ -50,7 +50,8 @@ class TicketStats {
 	}
 	
 	public function updateForRetail($date, $ticketType, $retail, $number) {
-		$this->updateValueWithPrice($date, $ticketType, OrderType::Retail, $retail, $number, OrderManager::$theater['prices'][$ticketType]['price']);
+		$ticketTypes = OrderManager::getTicketTypes();
+		$this->updateValueWithPrice($date, $ticketType, OrderType::Retail, $retail, $number, $ticketTypes[$ticketType]['price']);
 		$this->updateSubTotals($date, $ticketType, OrderType::Retail, $retail);
 	}
 	
@@ -151,14 +152,14 @@ class TicketStats {
 	}
 	
 	public function updateAll() {
-		foreach (OrderManager::$theater['dates'] as $date => $dummy) {
-			foreach (OrderManager::$theater['prices'] as $ticketType => $price) {
+		foreach (OrderManager::getDates() as $date => $dummy) {
+			foreach (OrderManager::getTicketTypes() as $ticketType => $price) {
 			
 				for ($i = OrderType::Online; $i < OrderType::Retail; $i++) {
 					$this->calculateAndUpdate($date, $ticketType, $price['price'], $i);
 				}
 				
-				foreach (OrderManager::$theater['retails'] as $retail => $dummy2) {
+				foreach (OrderManager::getRetails() as $retail => $dummy2) {
 					$this->updateSubTotals($date, $ticketType, OrderType::Retail, $retail);
 				}
 				
