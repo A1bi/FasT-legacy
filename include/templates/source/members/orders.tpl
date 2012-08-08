@@ -50,7 +50,7 @@
 				{/foreach}
 			</table>
 			{else}
-			Es wurden noch keine Lastschriften eingereicht.
+			<em class="small">Es wurden noch keine Lastschriften eingereicht.</em>
 			{/if}
 		</div>
 	</div>

@@ -44,7 +44,7 @@
 		</div>
 		{/if}
 		{else}
-		Keine Bestellungen vorhanden.
+		<em class="small">Keine Bestellungen vorhanden.</em>
 		{/if}
 	</div>
 </div>
