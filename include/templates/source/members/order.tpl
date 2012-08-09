@@ -23,11 +23,9 @@
 {$types[OrderType::Online]="Online-Bestellung"}
 {$types[OrderType::Manual]="Normale Bestellung (Telefon, etc.)"}
 {$types[OrderType::Free]="Freikarten-Reservierung"}
-{include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders" pageBelongsTo="{if $isFree}free{else}orders{/if}"}
+{include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders" cssfiles=["members/order"] pageBelongsTo="{if $isFree}free{else}orders{/if}"}
 
 <div class="hl section">{$terminus}sdetails</div>
-
-<div class="orderDetails">
 
 <div class="back"><a href="{if $isFree}freikarten{else}bestellungen{/if}">Zurück zur Übersicht</a></div>
 
@@ -217,6 +215,5 @@
 		<em>Für diese {$terminus} liegt bisher kein Eintrag im Protokoll vor.</em>
 		{/if}
 	</div>
-</div>
 </div>
 {include file="foot.tpl"}

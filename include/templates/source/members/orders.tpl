@@ -1,8 +1,8 @@
-{include file="members/head.tpl" title="Ticketbestellungen" jsfile="members/orders"}
+{include file="members/head.tpl" title="Ticketbestellungen" cssfiles=["members/orders"] jsfile="members/orders"}
 <div class="hl section">
 	Ticketbestellungen
 </div>
-<div class="tickets">
+<div class="orders">
 	<div class="box new">
 		<div class="top">
 			<a href="?action=new">Neue Bestellung aufnehmen</a>

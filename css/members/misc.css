@@ -1,0 +1,19 @@
+/* -- login -- */
+.login td {
+	vertical-align: middle;
+}
+
+
+/* -- settings -- */
+.settings .inner {
+	width: 80%;
+}
+.settings .hcen {
+	margin: 20px;
+}
+.settings .caption {
+	width: 45%;
+}
+.settings input[type=password] {
+	width: 70%;
+}

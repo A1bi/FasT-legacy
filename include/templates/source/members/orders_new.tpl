@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen" jsfile="members/orders_new"}
+{include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen" jsfile="members/orders_new" cssfiles=["members/orders"]}
 <div class="hl section">Bestellung aufnehmen</div>
 
 <div class="back"><a href="?">Zurück zur Übersicht</a></div>
@@ -70,9 +70,7 @@
 			<table>
 				<tr>
 					<td>e-mail-Adresse:</td>
-					<td>
-						<input type="text" name="address[email]" value="" class="field" />
-					</td>
+					<td><input type="text" name="address[email]" value="" class="field" /></td>
 				</tr>
 			</table>
 			<div class="small">Keine dieser Angaben sind verpflichtend, Felder können also auch freigelassen werden.</div>

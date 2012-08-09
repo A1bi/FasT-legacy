@@ -1,0 +1,23 @@
+.stats .edit {
+	margin-top: 10px;
+	text-align: right;
+	display: none;
+}
+.stats input[type=tel] {
+	width: 30px;
+}
+.stats .btn {
+	margin-top: 10px;
+}
+.stats td {
+	text-align: center;
+}
+.stats td.left {
+	text-align: left;
+}
+.stats .total td {
+	border-top: 1px dashed #cccccc;
+	padding-top: 5px;
+	font-size: 14px;
+	font-weight: bold;
+}

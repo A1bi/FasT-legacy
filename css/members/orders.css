@@ -1,0 +1,64 @@
+/* -- orders list --*/
+.orders {
+	position: relative;
+}
+.orders .box {
+	margin-bottom: 10px;
+}
+.orders .box.important .top {
+	text-shadow: 1px 1px 3px white;
+	color: red;
+}
+.orders .more div {
+	letter-spacing: 5px;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+.orders .more a {
+	font-size: 14px;
+}
+.orders .search {
+	margin-bottom: 30px;
+}
+.orders .search > div {
+	padding: 3px 8px;
+	font-size: 14px;
+}
+.orders .search input[type=tel] {
+	border-radius: 5px;
+	border: none;
+	height: 17px;
+	width: 70px;
+	padding: 2px;
+	font-size: 16px;
+	box-shadow: inset 1px 1px 2px #cccccc;
+}
+.orders .search input {
+	vertical-align: middle;
+}
+
+/* -- new order -- */
+.newOrder table {
+	border-collapse: collapse;
+}
+.newOrder tr td:first-child {
+	width: 30%;
+}
+.newOrder td {
+	padding: 5px;
+	vertical-align: middle;
+}
+.newOrder td .small {
+	margin-top: 5px;
+}
+
+/* -- free tickets -- */
+.free {
+	position: relative;
+}
+.free .category td {
+	font-size: 16px;
+	padding-top: 15px;
+	padding-left: 15px;
+	font-weight: bold;
+}

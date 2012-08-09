@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Freikarten"}
+{include file="members/head.tpl" title="Freikarten" cssfiles=["members/orders"]}
 {$gender=["", "Frau", "Herr"]}
 <div class="hl section">Freikarten</div>
 

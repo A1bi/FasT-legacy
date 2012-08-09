@@ -1,4 +1,5 @@
 {if $jsfile != ""}{$jsfiles = [[$jsfile, 0]]}{/if}
+{if $cssfile != ""}{$cssfiles = [$cssfile]}{/if}
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +13,9 @@
 	<script src="{"/gfx/cache/slides.js"|append_version}"></script>
 	<script src="{"/js/main.js"|append_version}"></script>
 
-{if $cssfile != ""}
+{foreach $cssfiles as $cssfile}
 	<link rel="stylesheet" type="text/css" href="{"/css/{$cssfile}.css"|append_version}" />
-{/if}
+{/foreach}
 {foreach $jsfiles as $jsfile}
 {if $jsfile[1] == 0}
 {$file = {"/js/{$jsfile[0]}.js"|append_version}}

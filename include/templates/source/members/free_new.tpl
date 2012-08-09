@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Freikarten - Reservierung"}
+{include file="members/head.tpl" title="Freikarten - Reservierung" cssfiles=["members/orders"]}
 <div class="hl section">Freikarten reservieren</div>
 
 <div class="back"><a href="?">Zurück zur Übersicht</a></div>

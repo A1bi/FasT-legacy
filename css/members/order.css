@@ -1,0 +1,72 @@
+.topRow {
+	overflow: auto;
+	padding: 0px 5px;
+	width: 100%;
+}
+.overview {
+	width: 60%;
+	float: left;
+}
+.overview .type {
+	text-align: center;
+	margin-bottom: 5px;
+	font-size: 14px;
+	background-color: #def5ff;
+	padding: 3px;
+	font-weight: bold;
+}
+.overview .newSection td {
+	padding-top: 5px;
+	border-top: 1px solid #cccccc;
+}
+.overview td.left {
+	width: 40%;
+}
+.overview td.right {
+	width: 60%;
+}
+.overview .btn {
+	margin-top: 15px;
+	height: 23px;
+	font-size: 12px;
+}
+.actions {
+	width: 35%;
+	float: left;
+	margin-left: 20px;
+	font-size: 14px;
+}
+.actions ul {
+	margin: 0px 10px;
+	padding: 0px;
+}
+.actions ul li {
+	list-style: none;
+	margin: 5px 0px;
+}
+.cancel {
+	display: none;
+}
+.cancel input[name=reason] {
+	width: 97%;
+	margin-top: 10px;
+}
+.cancel .hcen {
+	margin-top: 10px;
+}
+.overview .cancelled, .overview .finished {
+	font-weight: bold;
+}
+.overview .cancelled {
+	color: red;
+}
+.overview .finished {
+	color: green;
+}
+#tickets .cancelled {
+	text-decoration: line-through;
+	color: #cccccc;
+}
+#tickets .highlighted td {
+	background: #ffb0b0;
+}

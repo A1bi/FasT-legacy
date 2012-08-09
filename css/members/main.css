@@ -30,6 +30,21 @@ table td.sId {
 .msg {
 	color: red;
 }
+.new {
+	position: absolute;
+	right: 1%;
+	top: -68px;
+	width: auto;
+}
+.new a {
+	font-size: 14px;
+	color: white;
+	text-decoration: none;
+}
+.back {
+	font-size: 13px;
+	margin-left: 20px;
+}
 
 
 /* -- navigation bar -- */
@@ -85,203 +100,4 @@ table td.sId {
 .navbar .sections a.current {
 	text-decoration: none;
 	font-weight: bold;
-}
-
-
-/* -- login -- */
-.login td {
-	vertical-align: middle;
-}
-
-
-/* -- settings -- */
-.settings .inner {
-	width: 80%;
-}
-.settings .hcen {
-	margin: 20px;
-}
-.settings .caption {
-	width: 45%;
-}
-.settings input[type=password] {
-	width: 70%;
-}
-
-/* -- tickets overview -- */
-.tickets {
-	position: relative;
-}
-.tickets .box {
-	margin-bottom: 10px;
-}
-.tickets .box.important .top {
-	text-shadow: 1px 1px 3px white;
-	color: red;
-}
-.tickets .stats td {
-	text-align: center;
-}
-.tickets .stats td.left {
-	text-align: left;
-}
-.tickets .stats .total td {
-	border-top: 1px dashed #cccccc;
-	padding-top: 5px;
-	font-size: 14px;
-	font-weight: bold;
-}
-.tickets .more div {
-	letter-spacing: 5px;
-	font-size: 20px;
-	margin-bottom: 5px;
-}
-.tickets .more a {
-	font-size: 14px;
-}
-.tickets .search {
-	margin-bottom: 30px;
-}
-.tickets .search > div {
-	padding: 3px 8px;
-	font-size: 14px;
-}
-.tickets .search input[type=tel] {
-	border-radius: 5px;
-	border: none;
-	height: 17px;
-	width: 70px;
-	padding: 2px;
-	font-size: 16px;
-	box-shadow: inset 1px 1px 2px #cccccc;
-}
-.tickets .search input {
-	vertical-align: middle;
-}
-.new {
-	position: absolute;
-	right: 1%;
-	top: -68px;
-	width: auto;
-}
-.new a {
-	font-size: 14px;
-	color: white;
-	text-decoration: none;
-}
-
-/* -- order details -- */
-.back {
-	font-size: 13px;
-	margin-left: 20px;
-}
-.orderDetails .topRow {
-	overflow: auto;
-	padding: 0px 5px;
-	width: 100%;
-}
-.orderDetails .overview {
-	width: 60%;
-	float: left;
-}
-.orderDetails .overview .type {
-	text-align: center;
-	margin-bottom: 5px;
-	font-size: 14px;
-	background-color: #def5ff;
-	padding: 3px;
-	font-weight: bold;
-}
-.orderDetails .overview .newSection td {
-	padding-top: 5px;
-	border-top: 1px solid #cccccc;
-}
-.orderDetails .overview td.left {
-	width: 40%;
-}
-.orderDetails .overview td.right {
-	width: 60%;
-}
-.orderDetails .overview .btn {
-	margin-top: 15px;
-	height: 23px;
-	font-size: 12px;
-}
-.orderDetails .actions {
-	width: 35%;
-	float: left;
-	margin-left: 20px;
-	font-size: 14px;
-}
-.orderDetails .actions ul {
-	margin: 0px 10px;
-	padding: 0px;
-}
-.orderDetails .actions ul li {
-	list-style: none;
-	margin: 5px 0px;
-}
-.orderDetails .cancel {
-	display: none;
-}
-.orderDetails .cancel input[name=reason] {
-	width: 97%;
-	margin-top: 10px;
-}
-.orderDetails .cancel .hcen {
-	margin-top: 10px;
-}
-.orderDetails .overview .cancelled, .orderDetails .overview .finished {
-	font-weight: bold;
-}
-.orderDetails .overview .cancelled {
-	color: red;
-}
-.orderDetails .overview .finished {
-	color: green;
-}
-.orderDetails #tickets .cancelled {
-	text-decoration: line-through;
-	color: #cccccc;
-}
-.orderDetails #tickets .highlighted td {
-	background: #ffb0b0;
-}
-
-/* -- new order -- */
-.newOrder table {
-	border-collapse: collapse;
-}
-.newOrder tr td:first-child {
-	width: 30%;
-}
-.newOrder td {
-	padding: 5px;
-}
-.newOrder td .small {
-	margin-top: 5px;
-}
-
-/* -- free tickets -- */
-.free {
-	position: relative;
-}
-.free .category td {
-	font-size: 16px;
-	padding-top: 15px;
-	padding-left: 15px;
-	font-weight: bold;
-}
-
-/* -- stats -- */
-.stats .edit {
-	margin-top: 10px;
-	text-align: right;
-	display: none;
-}
-.stats input[type=tel] {
-	width: 30px;
-}
-.stats .btn {
-	margin-top: 10px;
 }
