@@ -16,6 +16,10 @@ $(function () {
 		{
 			"className": "sendPayReminder",
 			"text": "Möchten Sie dem Käufer wirklich eine Zahlungserinnerung senden?"
+		},
+		{
+			"className": "delete",
+			"text": "Möchten Sie diese Reservierung wirklich löschen?"
 		}
 	];
 	

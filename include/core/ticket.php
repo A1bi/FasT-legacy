@@ -32,6 +32,14 @@ class Ticket {
 		$_db->query('UPDATE orders_tickets SET cancelled = 1, cancelReason = ? WHERE id = ?', array($reason, $this->id));
 	}
 	
+	public function delete() {
+		global $_db;
+		
+		if ($this->id) {
+			$_db->query('DELETE FROM orders_tickets WHERE id = ?', array($this->id));
+		}
+	}
+	
 	public function setOrder(&$order) {
 		$this->order = $order;
 	}

@@ -30,6 +30,13 @@ if (!empty($_GET['action'])) {
 			$order->cancel($_POST['reason']);
 			break;
 			
+		case "delete":
+			if ($order->getType() == OrderType::Free) {
+				$order->delete();
+			}
+			redirectTo("freikarten");
+			break;
+			
 		case "approve":
 			$order->approve($_GET['undo'] ? false : true);
 			break;

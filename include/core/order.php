@@ -307,6 +307,18 @@ class Order {
 		return true;
 	}
 	
+	public function delete() {
+		global $_db;
+		
+		if ($this->id) {
+			$_db->query('DELETE FROM orders WHERE id = ?', array($this->id));
+		}
+		
+		foreach ($this->getTickets() as $ticket) $ticket->delete();
+		
+		$this->updateStats();
+	}
+	
 	private function logEvent($event, $info = "") {
 		global $_db, $_user;
 		

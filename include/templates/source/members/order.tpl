@@ -129,8 +129,8 @@
 		</div>
 		<div class="con">
 			<ul>
-				{if $isFree && false}
-				<li><a href="?id={$order->getId()}&amp;action=delete">Reservierung löschen</a></li>
+				{if $isFree}
+				<li><a href="?id={$order->getId()}&amp;action=delete" class="delete">Reservierung löschen</a></li>
 				{else}
 				{if !$order->isCancelled()}
 				{if $order->getStatus() == OrderStatus::WaitingForApproval}
