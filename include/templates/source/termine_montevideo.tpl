@@ -1,5 +1,5 @@
 {$theater = getData("theater_montevideo")}
-{include file="head.tpl" title="Termine - Das Haus in Montevideo" cssfile="termine"}
+{include file="head.tpl" title="Termine - Das Haus in Montevideo" cssfile="termine" jsfiles=[["spons", 0]] head="termine_montevideo_sponsors.tpl"}
 {include file="termine_head.tpl"}
 	Unser <b>Sommernachtstheater 2012 „<a href="/theater/montevideo" class="shadow">Das Haus in Montevideo</a>“</b> von Curt Goetz wird auf der Freilichtbühne im Historischen Ortskern von Kaisersesch an folgenden Tagen aufgeführt:
 	<div class="container">
@@ -64,4 +64,6 @@
 	<div class="hcen hotline">
 		Info-Hotline: <strong>(0 26 53) 28 27 09</strong> <em class="small">(zum Ortstarif)</em>
 	</div>
+	<div class="trenner"></div>
+{include file="termine_sponsors.tpl"}
 {include file="foot.tpl"}

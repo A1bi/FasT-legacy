@@ -1,18 +1,35 @@
-//<![CDATA[
-
 var sponsorsBar = new function () {
 	
-	var space = 50;
 	var sponsorsBox;
+	var cur = -1;
 	
-	var move = function (logo) {
-		logo.animate({"left": -logo.width()}, (parseInt(logo.css("left"))+logo.width())*15, "linear", function () {
-			var prev = $(this).prev();
-			if (prev.length < 1) {
-				prev = $(this).nextAll().last();
-			}
-			$(this).css({"left": parseInt(prev.css("left"))+prev.width()+space});
-			move(logo);
+	var moveNext = function () {
+		var logos = $("div", sponsorsBox);
+		var start = 0;
+		if (cur != -1) {
+			var curBox = logos.eq(cur);
+			start = curBox.position().left + curBox.outerWidth();
+		}
+		if (cur >= logos.length - 1) {
+			cur = -1;
+		}
+		
+		var nextBox = logos.eq(++cur);
+		nextBox.css("left", start).show();
+		var end = nextBox.outerWidth() * -1;
+		
+		nextBox.animate({left: end}, {
+			step: function () {
+				if (!$(this).is(".complete") && $(this).position().left + $(this).outerWidth() <= sponsorsBox.width()) {
+					$(this).addClass("complete");
+					moveNext();
+				}
+			},
+			complete: function () {
+				$(this).removeClass("complete");
+			},
+			duration: (nextBox.position().left + nextBox.outerWidth()) * 15,
+			easing: "linear"
 		});
 	}
 	
@@ -24,25 +41,14 @@ var sponsorsBar = new function () {
 				sponsorsBox.append(
 					$("<div>").append(
 						$("<img>").attr("src", "/gfx/termine/spons/"+this[0]+".png").attr("alt", this[1])
-					)
+					).hide()
 				);
 			});
+			
+			moveNext();
+			
+			sponsorsBox.hide().css({"visibility": "visible"}).fadeIn(2500);
 		});
 	}
 	
-	$(window).load(function () {
-		var left = 0;
-		
-		$("div", sponsorsBox).each(function () {
-			var _this = $(this);
-			_this.css({"left": left});
-			left = left + _this.width() + space;
-			move(_this);
-		});
-		
-		sponsorsBox.hide().css({"visibility": "visible"}).fadeIn(2500);
-	});
-	
 }
-
-//]]>
