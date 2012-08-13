@@ -1,4 +1,3 @@
-{$theater = getData("theater_montevideo")}
 {include file="head.tpl" title="Termine - Das Haus in Montevideo" cssfile="termine" jsfiles=[["spons", 0]] head="termine_montevideo_sponsors.tpl"}
 {include file="termine_head.tpl"}
 	Unser <b>Sommernachtstheater 2012 „<a href="/theater/montevideo" class="shadow">Das Haus in Montevideo</a>“</b> von Curt Goetz wird auf der Freilichtbühne im Historischen Ortskern von Kaisersesch an folgenden Tagen aufgeführt:
@@ -11,16 +10,20 @@
 				Termine
 			</div>
 			<div class="con">
-				<table>
-					{foreach $theater['dates'] as $date}
-					<tr>
-						<td class="point"></td>
-						<td class="day">{$date|date_format:"%A"},</td>
-						<td class="date">{$date|date_format:"%d. %B"}</td>
-						<td class="date">{$date|date_format:"%H"} Uhr</td>
-					</tr>
-					{/foreach}
-				</table>
+				{foreach $dates as $date}
+				<div class="date{if !$date['ticketsLeft']} soldOut{/if}">
+					<table>
+						<tr>
+							<td class="point"></td>
+							<td class="day">{$date['time']|date_format:"%A"},</td>
+							<td class="date">{$date['time']|date_format:"%d. %B"}</td>
+							<td class="time">{$date['time']|date_format:"%H"} Uhr</td>
+						</tr>
+					</table>
+					{if !$date['ticketsLeft']}<div class="info">ausverkauft!</div>{/if}
+				</div>
+				{/foreach}
+				<div class="small">Für ausverkaufte Aufführungen sind lediglich an der Abendkasse noch wenige Restkarten erhältlich.</div>
 			</div>
 		</div>
 	</div>

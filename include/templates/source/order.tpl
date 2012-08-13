@@ -16,6 +16,9 @@
 	<div class="stepCon date">
 		Bitte wählen Sie Ihre gewünschte Aufführung:
 		<ul class="inner"></ul>
+		<div class="soldOut small">
+			Für ausverkaufte Aufführungen sind lediglich an der Abendkasse noch wenige Restkarten erhältlich.
+		</div>
 		<div class="number">
 			Bitte wählen Sie die gewünschte Anzahl an Karten:
 			<table class="inner rTable">

@@ -20,14 +20,6 @@
 	position: absolute;
 	top: 0px;
 }
-.termine .point {
-	background: url(/gfx/point.png) no-repeat;
-	width: 25px;
-	height: 25px;
-}
-.termine table {
-	font-weight: bold;
-}
 .container {
 	margin: 20px 0px;
 	position: relative;
@@ -39,10 +31,62 @@
 	margin-left: 10px;
 	text-align: center;
 }
-.container .termine {
+.termine {
 	width: 47%;
 	float: right;
 	margin: 10px;
+}
+.termine div.date {
+	position: relative;
+}
+.termine table {
+	font-weight: bold;
+}
+.termine .point {
+	background: url(/gfx/point.png) no-repeat;
+	width: 25px;
+	height: 25px;
+}
+.termine .day {
+	width: 29%;
+}
+.termine td.date {
+	width: 42%;
+}
+.termine .date.soldOut td {
+	color: #cccccc;
+	-moz-transition: color .2s;
+	-webkit-transition: color .2s;
+	-o-transition: color .2s;
+	-ms-transition: color .2s;
+}
+.termine .date.soldOut:hover td {
+	color: black;
+}
+.termine .date.soldOut .info {
+	position: absolute;
+	top: 4px;
+	left: 30%;
+	color: red;
+	font-size: 17px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	text-shadow: 1px 1px 3px #696969;
+	-moz-transform: rotate(-3deg);
+	-moz-transition: opacity .2s;
+	-webkit-transform: rotate(-3deg);
+	-webkit-transition: opacity .2s;
+	-o-transform: rotate(-3deg);
+	-o-transition: opacity .2s;
+	-ms-transform: rotate(-3deg);
+	-ms-transition: opacity .2s;
+}
+.termine .date.soldOut:hover .info {
+	opacity: .4;
+}
+.termine .small {
+	text-align: right;
+	margin: 5px;
 }
 .premium {
 	color: #c4a672;

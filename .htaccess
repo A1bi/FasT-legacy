@@ -12,4 +12,5 @@ RewriteRule ^mitglieder/statistik /members/stats.php
 RewriteRule ^mitglieder/freikarten /members/free.php
 RewriteRule ^mitglieder/(.+) /members/$1.php
 RewriteRule ^mitglieder /members/index.php
+RewriteRule ^termine /event.php
 RewriteRule ^([a-z]+)$ /index.php?page=$1
