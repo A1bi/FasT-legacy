@@ -1,4 +1,4 @@
-{include file="head.tpl" cssfile="montevideo" title="Das Haus in Montevideo - eine Komödie von Curt Goetz"}
+{include file="head.tpl" cssfile="montevideo" jsfiles=[["montevideo", 0]] title="Das Haus in Montevideo - eine Komödie von Curt Goetz"}
 	<div class="info">
 		Die „Freilichtbühne am schiefen Turm“ präsentiert im Jahr 2012 den immer jungen Lacherfolg:
 		<br />„<em>Das Haus in Montevideo</em>“ von Curt Goetz.
@@ -13,115 +13,189 @@
 		<p>Über die Komödie „Das Haus in Montevideo“ von Curt Goetz lacht das Publikum seit nunmehr 60 Jahren. Und das aus gutem Grund. Wenn einem Moralapostel wie dem despotischen Professor Nägler seine vermeintlichen Tugenden über die Habgier und intellektuelle Haarspalterei verloren gehen, so ist das Stoff genug für eine beißende Gesellschaftskomödie, die auch heute nichts von ihrem Witz und ihrer Ironie verloren hat.</p>
 		<p>Der moralisch integre Professor lebt mit Frau und zwölf Kindern in bescheidenen Verhältnissen. Vor Jahren verstieß er hartherzig seine jüngere Schwester, die ein uneheliches Kind erwartete. In deren Testament wird nun seine Tochter Atlanta großzügig bedacht, allerdings nur mit Auflagen, die den sittenstrengen Vater in arge Gewissensnöte stürzen.</p>
 		<h2>Besetzung</h2>
-		<table class="cast">
-			<tr>
-				<td class="role">Professor Traugott Hermann Nägler</td>
-				<td class="actor">Stephan Hilken</td>
-			</tr>
-			<tr>
-				<td class="role">Marianne Nägler</td>
-				<td class="actor">Simone Spies / Kirsten Roscher</td>
-			</tr>
-			<tr class="newSection">
-				<td class="role">Kinder der Familie Nägler</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td class="role">Atlanta</td>
-				<td class="actor">Lena Schmitz</td>
-			</tr>
-			<tr>
-				<td class="role">Fricka</td>
-				<td class="actor">Hjördis Gödelt</td>
-			</tr>
-			<tr>
-				<td class="role">Parsifal</td>
-				<td class="actor">Robby Sauer</td>
-			</tr>
-			<tr>
-				<td class="role">Gudrun</td>
-				<td class="actor">Lina Ramler</td>
-			</tr>
-			<tr>
-				<td class="role">Brunhild</td>
-				<td class="actor">Theresa Göbel</td>
-			</tr>
-			<tr>
-				<td class="role">Wotan</td>
-				<td class="actor">Morten Roscher</td>
-			</tr>
-			<tr>
-				<td class="role">Edda</td>
-				<td class="actor">Melina Bons</td>
-			</tr>
-			<tr>
-				<td class="role">Oktavia</td>
-				<td class="actor">Hannah Regnier</td>
-			</tr>
-			<tr>
-				<td class="role">Nona</td>
-				<td class="actor">Nele Fuhrmann</td>
-			</tr>
-			<tr>
-				<td class="role">Freya</td>
-				<td class="actor">Sophie Meiers</td>
-			</tr>
-			<tr>
-				<td class="role">Lohengrin</td>
-				<td class="actor">Saskia Beicht</td>
-			</tr>
-			<tr>
-				<td class="role">Decimus</td>
-				<td class="actor">Annalena Keller / Cécile Lares</td>
-			</tr>
-			<tr class="newSection">
-				<td class="role">Pastor</td>
-				<td class="actor">Jürgen Knaup</td>
-			</tr>
-			<tr>
-				<td class="role">Martha</td>
-				<td class="actor">Sabine Lübke</td>
-			</tr>
-			<tr>
-				<td class="role">Herbert</td>
-				<td class="actor">Mario Haas</td>
-			</tr>
-			<tr>
-				<td class="role">Bürgermeister</td>
-				<td class="actor">Otto Krechel / Eugen Weiten</td>
-			</tr>
-			<tr>
-				<td class="role">Madame de la Rocco</td>
-				<td class="actor">Maria Oster / Claudia Scholz</td>
-			</tr>
-			<tr>
-				<td class="role">Belinda</td>
-				<td class="actor">Nina Lübke / Christiane Lares</td>
-			</tr>
-			<tr>
-				<td class="role">Anwalt</td>
-				<td class="actor">Dieter Stein / Gerd Röser</td>
-			</tr>
-			<tr>
-				<td class="role">Mädchen in Montevideo</td>
-				<td class="actor">
+		<div class="cast">
+			<div class="row">
+				<div class="role">Professor Traugott Hermann Nägler</div>
+				<div class="actor">Stephan Hilken</div>
+			</div>
+			<div class="double">
+				<div class="row">
+					<div class="role">Marianne Nägler</div>
+					<div class="actor">
+						Simone Spies / Kirsten Roscher
+						<div class="small">Doppelbesetzung anzeigen</div>
+					</div>
+				</div>
+				<div class="alt">
+					<div class="row">
+						<div class="role">Simone Spies</div>
+						<div class="actor"><span>17.08.</span> | <span>18.08.</span> | <span>19.08.</span></div>
+					</div>
+					<div class="row">
+						<div class="role">Kirsten Roscher</div>
+						<div class="actor"><span>24.08.</span> | <span>31.08.</span> | <span>01.09.</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row newSection">
+				<div class="role">Kinder der Familie Nägler</div>
+			</div>
+			<div class="row">
+				<div class="role">Atlanta</div>
+				<div class="actor">Lena Schmitz</div>
+			</div>
+			<div class="row">
+				<div class="role">Fricka</div>
+				<div class="actor">Hjördis Gödelt</div>
+			</div>
+			<div class="row">
+				<div class="role">Parsifal</div>
+				<div class="actor">Robby Sauer</div>
+			</div>
+			<div class="row">
+				<div class="role">Gudrun</div>
+				<div class="actor">Lina Ramler</div>
+			</div>
+			<div class="row">
+				<div class="role">Brunhild</div>
+				<div class="actor">Theresa Göbel</div>
+			</div>
+			<div class="row">
+				<div class="role">Wotan</div>
+				<div class="actor">Morten Roscher</div>
+			</div>
+			<div class="row">
+				<div class="role">Edda</div>
+				<div class="actor">Melina Bons</div>
+			</div>
+			<div class="row">
+				<div class="role">Oktavia</div>
+				<div class="actor">Hannah Regnier</div>
+			</div>
+			<div class="row">
+				<div class="role">Nona</div>
+				<div class="actor">Nele Fuhrmann</div>
+			</div>
+			<div class="row">
+				<div class="role">Freya</div>
+				<div class="actor">Sophie Meiers</div>
+			</div>
+			<div class="row">
+				<div class="role">Lohengrin</div>
+				<div class="actor">Saskia Beicht</div>
+			</div>
+			<div class="double">
+				<div class="row">
+					<div class="role">Decimus</div>
+					<div class="actor">
+						Annalena Keller / Cécile Lares
+						<div class="small">Doppelbesetzung anzeigen</div>
+					</div>
+				</div>
+				<div class="alt">
+					<div class="row">
+						<div class="role">Annalena Keller</div>
+						<div class="actor"><span>17.08.</span> | <span>18.08.</span> | <span>19.08.</span></div>
+					</div>
+					<div class="row">
+						<div class="role">Cécile Lares</div>
+						<div class="actor"><span>24.08.</span> | <span>31.08.</span> | <span>01.09.</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row newSection">
+				<div class="role">Pastor</div>
+				<div class="actor">Jürgen Knaup</div>
+			</div>
+			<div class="row">
+				<div class="role">Martha</div>
+				<div class="actor">Nina Lübke</div>
+			</div>
+			<div class="row">
+				<div class="role">Herbert</div>
+				<div class="actor">Mario Haas</div>
+			</div>
+			<div class="double">
+				<div class="row">
+					<div class="role">Bürgermeister</div>
+					<div class="actor">
+						Otto Krechel / Eugen Weiten
+						<div class="small">Doppelbesetzung anzeigen</div>
+					</div>
+				</div>
+				<div class="alt">
+					<div class="row">
+						<div class="role">Otto Krechel</div>
+						<div class="actor"><span>18.08.</span> | <span>24.08.</span> | <span>01.09.</span></div>
+					</div>
+					<div class="row">
+						<div class="role">Eugen Weiten</div>
+						<div class="actor"><span>17.08.</span> | <span>19.08.</span> | <span>31.08.</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="double">
+				<div class="row">
+					<div class="role">Madame de la Rocco</div>
+					<div class="actor">
+						Maria Oster / Claudia Scholz
+						<div class="small">Doppelbesetzung anzeigen</div>
+					</div>
+				</div>
+				<div class="alt">
+					<div class="row">
+						<div class="role">Maria Oster</div>
+						<div class="actor"><span>17.08.</span> | <span>18.08.</span> | <span>19.08.</span></div>
+					</div>
+					<div class="row">
+						<div class="role">Claudia Scholz</div>
+						<div class="actor"><span>24.08.</span> | <span>31.08.</span> | <span>01.09.</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="double">
+				<div class="row">
+					<div class="role">Anwalt</div>
+					<div class="actor">
+						Dieter Stein / Gerd Röser
+						<div class="small">Doppelbesetzung anzeigen</div>
+					</div>
+				</div>
+				<div class="alt">
+					<div class="row">
+						<div class="role">Dieter Stein</div>
+						<div class="actor"><span>18.08.</span> | <span>19.08.</span> | <span>31.08.</span></div>
+					</div>
+					<div class="row">
+						<div class="role">Gerd Röser</div>
+						<div class="actor"><span>17.08.</span> | <span>24.08.</span> | <span>01.09.</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="role">Belinda</div>
+				<div class="actor">Christiane Lares</div>
+			</div>
+			<div class="row">
+				<div class="role">Mädchen in Montevideo</div>
+				<div class="actor">
 					Sirin Roscher
 					<p>Sarah-Céline Schubert</p>
 					<p>Marie Fuhrmann</p>
 					Kira Roscher
-				</td>
-			</tr>
-			<tr>
-				<td class="role">Taxifahrer</td>
-				<td class="actor">Thomas Ellerich</td>
-			</tr>
-			<tr>
-				<td class="role">Postbote</td>
-				<td class="actor">Werner Lutz</td>
-			</tr>
-			<tr class="newSection">
-				<td class="role">weitere Darsteller</td>
-				<td class="actor">
+				</div>
+			</div>
+			<div class="row">
+				<div class="role">Taxifahrer</div>
+				<div class="actor">Thomas Ellerich</div>
+			</div>
+			<div class="row">
+				<div class="role">Postbote</div>
+				<div class="actor">Werner Lutz</div>
+			</div>
+			<div class="row newSection">
+				<div class="role">weitere Darsteller</div>
+				<div class="actor">
 					Liesel Hesse
 					<p>Margret Zeimetz</p>
 					<p>Susanne Schubert</p>
@@ -133,9 +207,9 @@
 					<p>Blanka Sauer</p>
 					<p>Anja Fuhrmann</p>
 					Mitglieder der Blaskapelle und des Schützenvereins Kaisersesch
-				</td>
-			</tr>
-		</table>
+				</div>
+			</div>
+		</div>
 		<h2>Termine und Kartenvorverkauf</h2>
 		<p>Jetzt <a href="/termine">Termine</a> anschauen und Ihre Karten schnell und bequem online bestellen.</p>
 	</div>
