@@ -95,11 +95,11 @@
 				<div class="alt">
 					<div class="row">
 						<div class="role">Annalena Keller</div>
-						<div class="actor"><span>17.08.</span> | <span>18.08.</span> | <span>19.08.</span></div>
+						<div class="actor"><span>24.08.</span> | <span>31.08.</span> | <span>01.09.</span></div>
 					</div>
 					<div class="row">
 						<div class="role">Cécile Lares</div>
-						<div class="actor"><span>24.08.</span> | <span>31.08.</span> | <span>01.09.</span></div>
+						<div class="actor"><span>17.08.</span> | <span>18.08.</span> | <span>19.08.</span></div>
 					</div>
 				</div>
 			</div>
