@@ -1,3 +1,6 @@
+{$payMethods[OrderPayMethod::Transfer]="Überweisung"}
+{$payMethods[OrderPayMethod::CashUpFront]="Bar im Voraus"}
+{$payMethods[OrderPayMethod::CashLater]="Bar an der Abendkasse"}
 {include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen" jsfile="members/orders_new" cssfiles=["members/orders"]}
 <div class="hl section">Bestellung aufnehmen</div>
 
@@ -82,7 +85,7 @@
 			Bezahlung
 		</div>
 		<div class="con">
-			Per Überweisung. Angaben erscheinen nach Bestätigung der Bestellung.
+			{html_options name="payment[method]" options=$payMethods} <label><input type="checkbox" name="paid" /> bereits bezahlt</label>
 		</div>
 	</div>
 	

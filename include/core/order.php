@@ -5,7 +5,7 @@ loadComponent("ticket");
 loadComponent("ticketStats");
 
 class OrderStatus {
-	const Placed = 0, WaitingForApproval = 1, WaitingForPayment = 2, Approved = 3, Finished = 4, Cancelled = 5;
+	const Placed = 0, WaitingForApproval = 1, WaitingForPayment = 2, Approved = 3, Finished = 4, Cancelled = 5, WaitingForPaymentLater = 6;
 }
 
 class OrderEvent {
@@ -13,7 +13,7 @@ class OrderEvent {
 }
 
 class OrderPayMethod {
-	const Charge = 1, Transfer = 2;
+	const Charge = 1, Transfer = 2, CashUpFront = 3, CashLater = 4;
 }
 
 class OrderType {
@@ -239,18 +239,11 @@ class Order {
 		global $_db;
 		
 		if (!$this->id) {
-			// initial status
-			if ($this->payment['method'] == OrderPayMethod::Charge) {
-				$status = OrderStatus::WaitingForApproval;
-			} else {
-				$status = OrderStatus::WaitingForPayment;
-			}
-			
 			// save everything to db
 			$_db->query('	INSERT INTO	orders
-										(sId, type, category, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, status)
-							VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-						', array($this->getSId(), $this->type, $this->category['id'], $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $status));
+										(sId, type, category, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip)
+							VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+						', array($this->getSId(), $this->type, $this->category['id'], $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR']));
 			
 			$this->id = $_db->id();
 			
@@ -259,6 +252,7 @@ class Order {
 				$ticket->save();
 			}
 			
+			$this->updateStatus();
 			$this->updateStats();
 			
 			$this->logEvent(OrderEvent::Placed);
@@ -266,9 +260,9 @@ class Order {
 		// only update db entry
 		} else {
 			$_db->query('	UPDATE	orders
-							SET		category = ?, firstname = ?, lastname = ?, affiliation = ?, plz = ?, fon = ?, email = ?, kName = ?, kNo = ?, blz = ?, bank = ?
+							SET		category = ?, firstname = ?, lastname = ?, affiliation = ?, plz = ?, fon = ?, email = ?, payMethod = ?, kName = ?, kNo = ?, blz = ?, bank = ?
 							WHERE id = ?',
-							array($this->category['id'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->id));
+							array($this->category['id'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->id));
 		}
 	}
 	
@@ -288,10 +282,9 @@ class Order {
 		
 		$this->cancelled['cancelled'] = true;
 		$this->cancelled['reason'] = $reason;
-		$this->status = OrderStatus::Cancelled;
 		
 		// cancel order in db
-		$_db->query('UPDATE orders SET cancelled = 1, status = ?, cancelReason = ? WHERE id = ?', array($this->status, $reason, $this->id));
+		$_db->query('UPDATE orders SET cancelled = 1, cancelReason = ? WHERE id = ?', array($reason, $this->id));
 		
 		// cancel each ticket
 		foreach ($this->getTickets() as $ticket) {
@@ -301,7 +294,7 @@ class Order {
 		$this->mailCancellation();
 		
 		$this->updateStats();
-		
+		$this->updateStatus();
 		$this->logEvent(OrderEvent::Cancelled);
 		
 		return true;
@@ -432,7 +425,12 @@ class Order {
 	}
 	
 	public function setPayment($payment) {
+		$tmp = $this->payment;
 		$this->payment = $payment;
+		
+		if ($tmp['method'] != $payment['method']) {
+			$this->updateStatus();
+		}
 	}
 	
 	public function getPayment() {
@@ -477,8 +475,30 @@ class Order {
 	private function setStatus($status) {
 		global $_db;
 		
-		$this->status = $status;
-		$_db->query('UPDATE orders SET status = ? WHERE id = ?', array($status, $this->id));
+		if ($this->status != $status && $this->id) {
+			$this->status = $status;
+			$_db->query('UPDATE orders SET status = ? WHERE id = ?', array($status, $this->id));
+		}
+	}
+	
+	private function updateStatus() {
+		if ($this->type == OrderType::Free) {
+			$status = OrderStatus::Finished;
+		} else {
+			if ($this->isCancelled()) {
+				$status = OrderStatus::Cancelled;
+			} elseif ($this->isPaid()) {
+				$status = OrderStatus::Finished;
+			} elseif ($this->payment['method'] == OrderPayMethod::Charge) {
+				$status = OrderStatus::WaitingForApproval;
+			} elseif ($this->payment['method'] == OrderPayMethod::CashLater) {
+				$status = OrderStatus::WaitingForPaymentLater;
+			} else {
+				$status = OrderStatus::WaitingForPayment;
+			}
+		}
+		
+		$this->setStatus($status);
 	}
 	
 	public function approve($toggle = true) {
@@ -489,13 +509,9 @@ class Order {
 			$status = OrderStatus::WaitingForApproval;
 			$event = OrderEvent::Disapproved;
 		}
-		if ($this->status == $status) return;
 		
-		$this->setStatus($status);
-		
+		$this->setStatus($status);	
 		$this->logEvent($event);
-		
-		return true;
 	}
 	
 	public function markPaid($log = true) {
@@ -505,7 +521,7 @@ class Order {
 		
 		$this->paid = true;
 		$_db->query('UPDATE orders SET paid = 1 WHERE id = ?', array($this->id));
-		$this->setStatus(OrderStatus::Finished);
+		$this->updateStatus();
 		
 		if ($log) $this->logEvent(OrderEvent::MarkedAsPaid);
 		

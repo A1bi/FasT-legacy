@@ -2,12 +2,12 @@
 {$cat=$order->getCategory()}
 {$payment=$order->getPayment()}
 {$tickets=$order->getTickets()}
-{$payMethods=[OrderPayMethod::Charge => "Lastschrift", OrderPayMethod::Transfer => "Überweisung"]}
 {$isFree=$order->getType() == OrderType::Free}
 {if $isFree}{$terminus="Reservierung"}{else}{$terminus="Bestellung"}{/if}
 {$statuses[OrderStatus::Placed]="{$terminus} aufgenommen"}
 {$statuses[OrderStatus::WaitingForApproval]="Warte auf Freischaltung.."}
 {$statuses[OrderStatus::WaitingForPayment]="Warte auf Zahlung.."}
+{$statuses[OrderStatus::WaitingForPaymentLater]="Warte auf Zahlung an der Abendkasse.."}
 {$statuses[OrderStatus::Approved]="Überprüft, Lastschrift ausstehend.."}
 {$statuses[OrderStatus::Finished]="<span class=\"finished\">Abgeschlossen</span>"}
 {$statuses[OrderStatus::Cancelled]="<span class=\"cancelled\">Storniert</span>"}
@@ -23,6 +23,10 @@
 {$types[OrderType::Online]="Online-Bestellung"}
 {$types[OrderType::Manual]="Normale Bestellung (Telefon, etc.)"}
 {$types[OrderType::Free]="Freikarten-Reservierung"}
+{$payMethods[OrderPayMethod::Charge]="Lastschrift"}
+{$payMethods[OrderPayMethod::Transfer]="Überweisung"}
+{$payMethods[OrderPayMethod::CashUpFront]="Bar im Voraus"}
+{$payMethods[OrderPayMethod::CashLater]="Bar an der Abendkasse"}
 {include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders" cssfiles=["members/order"] pageBelongsTo="{if $isFree}free{else}orders{/if}"}
 
 <div class="hl section">{$terminus}sdetails</div>
@@ -89,7 +93,13 @@
 				{if !$isFree}
 				<tr class="newSection">
 					<td>Zahlungsmethode:</td>
-					<td><b>{$payMethods[$payment['method']]}</b></td>
+					<td>
+						{if $smarty.get.edit}
+						{html_options name="payment[method]" options=$payMethods selected=$payment['method']}
+						{else}
+						<b>{$payMethods[$payment['method']]}</b>
+						{/if}
+					</td>
 				</tr>
 				{if $payment['method'] == OrderPayMethod::Charge}
 				{foreach [["name", "Kontoinhaber"], ["number", "Kontonummer"], ["blz", "BLZ"], ["bank", "Bankname"]] as $field}
@@ -136,7 +146,7 @@
 				{if $order->getStatus() == OrderStatus::WaitingForApproval}
 				<li><a href="?id={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>
 				{/if}
-				{if $order->getStatus() == OrderStatus::WaitingForPayment}
+				{if $order->getStatus() == OrderStatus::WaitingForPayment || $order->getStatus() == OrderStatus::WaitingForPaymentLater}
 				<li><a href="?id={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
 				{if $address['email']}
 				<li><a href="?id={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>

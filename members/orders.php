@@ -230,7 +230,7 @@ if (!empty($_GET['order'])) {
 		
 			$order = new Order();
 			$order->create(OrderType::Manual);
-			$order->setPayment(array("method" => OrderPayMethod::Transfer));
+			$order->setPayment($_POST['payment']);
 			$order->setAddress($_POST['address']);
 				
 			foreach (OrderManager::getTicketTypes(OrderType::Manual) as $type => $price) {
@@ -246,6 +246,10 @@ if (!empty($_GET['order'])) {
 			
 			} else {
 				$order->save();
+				
+				if ($_POST['paid']) {
+					$order->markPaid();
+				}
 				
 				redirectTo("?action=new&finished=" . $order->getId());
 			}
