@@ -39,7 +39,7 @@
 					<td class="total"><span>0</span> €</td>
 				</tr>
 			</table>
-			<div class="inner rTable tooMany">
+			<div class="inner rTable blocker tooMany">
 				Leider sind für die gewünschte Aufführung nur noch <span>3</span> Karten verfügbar.
 			</div>
 		</div>
@@ -110,6 +110,9 @@
 				</td>
 			</tr>
 		</table>
+		<div class="inner rTable blocker transferDisabled">
+			Überweisungen akzeptieren wir nur bis spätestens <b>drei Tage vor der Aufführung</b>. Da dies bei Ihrer gewünschten Aufführung nicht mehr möglich ist, bitten wir Sie, stattdessen das Lastschriftverfahren zu wählen.
+		</div>
 		<div class="charge">
 			<div>
 				Bitte geben für das Lastschriftverfahren Ihre Bankdaten an:

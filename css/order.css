@@ -285,6 +285,11 @@ table td {
 .stepCon .accept {
 	margin: 20px 10px;
 }
+.stepCon .blocker {
+	border-color: red;
+	padding: 10px;
+	display: none;
+}
 
 .stepCon.date ul {
 	list-style-type: none;
@@ -321,11 +326,6 @@ table td {
 	margin-bottom: 20px;
 }
 .stepCon.date div.number {
-	display: none;
-}
-.stepCon.date div.number .tooMany {
-	border-color: red;
-	padding: 10px;
 	display: none;
 }
 .stepCon.date div.number .tooMany span {

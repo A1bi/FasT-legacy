@@ -182,6 +182,9 @@ var order = new function () {
 						ok = false;
 						error = "Bitte akzeptieren Sie die Abbuchung von Ihrem Konto.";
 					}
+				} else if (!checkTransferEnabled()) {
+					ok = false;
+					error = "Bitte beachten Sie den Hinweis!";
 				}
 				break;
 				
@@ -251,6 +254,8 @@ var order = new function () {
 		
 		$(".tooMany span").html(info.dates[order.date]['ticketsLeft']);
 		updateTicketsLeft();
+		
+		$(".stepCon.payment .transferDisabled").toggle(order.payment.method == "transfer" && !checkTransferEnabled());
 	}
 	
 	var choseNumber = function () {
@@ -295,6 +300,10 @@ var order = new function () {
 		slideToggle($(".tooMany"), !checkTicketsLeft());
 	}
 	
+	var checkTransferEnabled = function () {
+		return info.dates[order.date].transferEnabled;
+	}
+	
 	var updateAddress = function () {
 		var field = $(this).attr("name");
 		var val = $(this).val();
@@ -307,6 +316,7 @@ var order = new function () {
 		order.payment.method = $(this).val();
 		var charge = order.payment.method == "charge";
 		slideToggle($(".stepCon.payment .charge"), charge);
+		slideToggle($(".stepCon.payment .transferDisabled"), order.payment.method == "transfer" && !checkTransferEnabled());
 		
 		var confirmBox = $(".stepCon.confirm .payment, .stepCon.finish .payment");
 		confirmBox.find(".charge").toggle(charge);

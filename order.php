@@ -24,7 +24,8 @@ if ($_GET['ajax']) {
 				$stat = $stats->getValue($key, -1, -1);
 				$response['info']['dates'][$key] = array(
 					"string" => OrderManager::getStringForDate($date),
-					"ticketsLeft" => 310 - $stat['number']
+					"ticketsLeft" => 310 - $stat['number'],
+					"transferEnabled" => $date - 259200 > time()
 				);
 			}
 
