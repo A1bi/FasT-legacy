@@ -36,53 +36,7 @@ function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
 	);
 }
 
-if (!empty($_GET['order'])) {
-	$order = OrderManager::getInstance()->getOrderById($_GET['order']);
-	// not found ?
-	if (!$order) {
-		redirectTo("?");
-	}
-	
-	if ($_GET['action'] == "showDetails") {
-		$_tpl->assign("order", $order);
-		$_tpl->display("members/orders_details.tpl");
-			
-	} else {
-		loadComponent("queue");
-		$queue = new Queue();
-		
-		switch ($_GET['action']) {
-			case "markPaid":
-				if ($order->markPaid()) {
-					if ($order->getType() != OrderType::Online) break;
-					
-					$payment = $order->getPayment();
-					if ($payment['method'] == OrderPayMethod::Transfer) {
-						$queue->beginNewBatch();
-						$queue->addJob("createPdf", $order->getId());
-						$queue->addJob("mailTickets", $order->getId());
-						$queue->exec("./include/queue");
-					}
-				}
-				break;
-				
-			case "cancel":
-				$order->cancel($_POST['reason']);
-				break;
-				
-			case "approve":
-				$order->approve($_GET['undo'] ? false : true);
-				break;
-				
-			case "sendPayReminder":
-				$order->mailPayReminder();
-				break;
-		}
-		
-		redirectTo("?" . (($_GET['goto'] != "overview") ? "action=showDetails&order=".$order->getId() : ""));
-	}
-
-} elseif ($_GET['action'] == "search") {
+if ($_GET['action'] == "search") {
 	if ($_POST['order']) {
 		$result = $_db->query('SELECT id FROM orders WHERE sId = ?', array($_POST['order']));
 	
