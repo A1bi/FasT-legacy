@@ -47,7 +47,7 @@ if ($_GET['action'] == "search") {
 	
 	$order = $result->fetch();
 	if ($order['id']) {
-		redirectTo("?action=showDetails&order=" . $order['id'] . (($_POST['ticket']) ? "&ticket=" . $order['tId'] . "#tickets" : ""));
+		redirectTo("bestellung?id=" . $order['id'] . (($_POST['ticket']) ? "&ticket=" . $order['tId'] . "#tickets" : ""));
 	}
 	
 	redirectTo("?");
