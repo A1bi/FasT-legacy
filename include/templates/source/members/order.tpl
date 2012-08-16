@@ -126,6 +126,16 @@
 						{/if}
 					</td>
 				</tr>
+				<tr>
+					<td>Notizen:</td>
+					<td>
+						{if $smarty.get.edit}
+						<textarea name="notes">{$order->getNotes()|escape}</textarea>
+						{else}
+						{$order->getNotes()|escape|nl2br|default:"<em class=\"small\">nichts notiert</em>"}
+						{/if}
+					</td>
+				</tr>
 			</table>
 			{if $smarty.get.edit}
 			<div class="hcen"><input type="submit" name="edit" value="speichern" class="btn" /></div>

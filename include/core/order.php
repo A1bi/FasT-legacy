@@ -22,7 +22,7 @@ class OrderType {
 
 class Order {
 	
-	private $id, $sId, $type, $total = 0, $hash, $time, $status = OrderStatus::Placed, $paid = false,
+	private $id, $sId, $type, $total = 0, $hash, $time, $notes, $status = OrderStatus::Placed, $paid = false,
 			$category = array("id" => 0, "name" => ""),
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "affiliation" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
@@ -49,6 +49,7 @@ class Order {
 		$this->setCategory($orderInfo['category']);
 		$this->time = $orderInfo['time'];
 		$this->total = $orderInfo['total'];
+		$this->notes = $orderInfo['notes'];
 		$this->status = $orderInfo['status'];
 		$this->paid = $orderInfo['paid'];
 		$this->hash = md5($this->sId);
@@ -241,9 +242,9 @@ class Order {
 		if (!$this->id) {
 			// save everything to db
 			$_db->query('	INSERT INTO	orders
-										(sId, type, category, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip)
-							VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-						', array($this->getSId(), $this->type, $this->category['id'], $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR']));
+										(sId, type, category, gender, firstname, lastname, affiliation, plz, fon, email, payMethod, kName, kNo, blz, bank, total, ip, notes)
+							VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+						', array($this->getSId(), $this->type, $this->category['id'], $this->address['gender'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->getTotal(), $_SERVER['REMOTE_ADDR'], $this->notes));
 			
 			$this->id = $_db->id();
 			
@@ -260,9 +261,9 @@ class Order {
 		// only update db entry
 		} else {
 			$_db->query('	UPDATE	orders
-							SET		category = ?, firstname = ?, lastname = ?, affiliation = ?, plz = ?, fon = ?, email = ?, payMethod = ?, kName = ?, kNo = ?, blz = ?, bank = ?
+							SET		category = ?, firstname = ?, lastname = ?, affiliation = ?, plz = ?, fon = ?, email = ?, payMethod = ?, kName = ?, kNo = ?, blz = ?, bank = ?, notes = ?
 							WHERE id = ?',
-							array($this->category['id'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->id));
+							array($this->category['id'], $this->address['firstname'], $this->address['lastname'], $this->address['affiliation'], $this->address['plz'], $this->address['fon'], $this->address['email'], $this->payment['method'], $this->payment['name'], $this->payment['number'], $this->payment['blz'], $this->payment['bank'], $this->notes, $this->id));
 		}
 	}
 	
@@ -470,6 +471,14 @@ class Order {
 	
 	public function isPaid() {
 		return $this->paid;
+	}
+	
+	public function setNotes($notes) {
+		$this->notes = $notes;
+	}
+	
+	public function getNotes() {
+		return $this->notes;
 	}
 	
 	private function setStatus($status) {

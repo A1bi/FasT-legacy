@@ -85,7 +85,16 @@
 			Bezahlung
 		</div>
 		<div class="con">
-			{html_options name="payment[method]" options=$payMethods} <label><input type="checkbox" name="paid" /> bereits bezahlt</label>
+			<table>
+				<tr>
+					<td>Zahlungsmethode:</td>
+					<td>{html_options name="payment[method]" options=$payMethods} <label><input type="checkbox" name="paid" /> bereits bezahlt</label></td>
+				</tr>
+				<tr>
+					<td>Notizen:</td>
+					<td><textarea name="notes"></textarea></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	

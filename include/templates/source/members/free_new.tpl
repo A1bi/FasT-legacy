@@ -50,6 +50,10 @@
 					<td>Kategorie:</td>
 					<td>{html_options name="category" options=OrderManager::getCategories()}</td>
 				</tr>
+				<tr>
+					<td>Notizen:</td>
+					<td><textarea name="notes"></textarea></td>
+				</tr>
 			</table>
 		</div>
 	</div>

@@ -50,6 +50,7 @@ if (!empty($_GET['action'])) {
 				$order->setCategory($_POST['category']);
 				$order->setAddress($_POST['address']);
 				$order->setPayment($_POST['payment']);
+				$order->setNotes($_POST['notes']);
 				$order->save();
 			}
 			break;

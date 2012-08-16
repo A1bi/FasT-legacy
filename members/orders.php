@@ -186,6 +186,7 @@ if ($_GET['action'] == "search") {
 			$order->create(OrderType::Manual);
 			$order->setPayment($_POST['payment']);
 			$order->setAddress($_POST['address']);
+			$order->setNotes($_POST['notes']);
 				
 			foreach (OrderManager::getTicketTypes(OrderType::Manual) as $type => $price) {
 				for ($i = 0; $i < $_POST['number'][$type]; $i++) {
@@ -205,7 +206,13 @@ if ($_GET['action'] == "search") {
 					$order->markPaid();
 				}
 				
-				redirectTo("?action=new&finished=" . $order->getId());
+				if ($_POST['payment']['method'] == OrderPayMethod::Transfer) {
+					$redirect = "?action=new&finished";
+				} else {
+					$redirect = "bestellung?id";
+				}
+				
+				redirectTo($redirect . "=" . $order->getId());
 			}
 		}
 		

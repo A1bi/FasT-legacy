@@ -15,6 +15,7 @@ if ($_GET['action'] == "new") {
 			$order->setPayment(array("method" => OrderPayMethod::Transfer));
 			$order->setAddress($_POST['address']);
 			$order->setCategory($_POST['category']);
+			$order->setNotes($_POST['notes']);
 			
 			for ($i = 0; $i < $_POST['number']; $i++) {
 				if (!$order->addTicket(0, $_POST['date'])) break;
