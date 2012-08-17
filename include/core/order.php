@@ -22,7 +22,7 @@ class OrderType {
 
 class Order {
 	
-	private $id, $sId, $type, $total = 0, $hash, $time, $notes, $status = OrderStatus::Placed, $paid = false,
+	private $id, $sId, $type, $total = 0, $hash, $time, $notes, $status = OrderStatus::Placed, $paid = false, $voided = 0,
 			$category = array("id" => 0, "name" => ""),
 			$address = array("gender" => 0, "firstname" => "", "lastname" => "", "affiliation" => "", "plz" => 0, "fon" => "", "email" => ""),
 			$payment = array("method" => 0, "name" => "", "number" => "", "blz" => "", "bank" => "", "accepted" => true),
@@ -52,6 +52,7 @@ class Order {
 		$this->notes = $orderInfo['notes'];
 		$this->status = $orderInfo['status'];
 		$this->paid = $orderInfo['paid'];
+		$this->voided = $orderInfo['paid'];
 		$this->hash = md5($this->sId);
 		
 		// address
@@ -471,6 +472,10 @@ class Order {
 	
 	public function isPaid() {
 		return $this->paid;
+	}
+	
+	public function getVoided() {
+		return $this->voided;
 	}
 	
 	public function setNotes($notes) {
