@@ -22,7 +22,9 @@ if ($_GET['order']) {
 				foreach ($order->getTickets() as $ticket) {
 					$tickets[] = array(
 						"id" => $ticket->getId(),
-						"sId" => $ticket->getSId()
+						"sId" => $ticket->getSId(),
+						"type" => $ticket->getType(),
+						"voided" => $ticket->getVoided()
 					);
 				}
 				
@@ -36,7 +38,8 @@ if ($_GET['order']) {
 					"total" => $order->getTotal(),
 					"address" => array(
 						"firstname" => $address['firstname'],
-						"lastname" => $address['lastname']
+						"lastname" => $address['lastname'],
+						"affiliation" => $address['affiliation']
 					),
 					"payMethod" => $payment['method'],
 					"paid" => (bool)$order->isPaid(),
@@ -44,7 +47,6 @@ if ($_GET['order']) {
 						"cancelled" => (bool)$order->isCancelled(),
 						"cancelReason" => $order->getCancelReason()
 					),
-					"voided" => $order->getVoided(),
 					"notes" => $order->getNotes(),
 					"tickets" => $tickets
 				);

@@ -5,7 +5,7 @@ loadComponent("order");
 
 class Ticket {
 	
-	private $id, $sId, $date, $type, $order;
+	private $id, $sId, $date, $type, $voided, $order;
 	
 	public function create() {
 		$this->sId = createId(6, "orders_tickets", "sId", true);
@@ -16,6 +16,7 @@ class Ticket {
 		$this->sId = $info['sId'];
 		$this->date = $info['date'];
 		$this->type = $info['type'];
+		$this->voided = $info['voided'];
 		$this->cancelled = array("cancelled" => $info['cancelled'], "reason" => $info['cancelReason']);
 	}
 	
@@ -68,6 +69,10 @@ class Ticket {
 	
 	public function getType() {
 		return $this->type;
+	}
+	
+	public function getVoided() {
+		return $this->voided;
 	}
 	
 	public function setDate($date) {

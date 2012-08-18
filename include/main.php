@@ -102,7 +102,7 @@ function limitAccess($groups) {
 
 
 // check if SSL required
-$sslRequired = array("order");
+$sslRequired = array("order", "api");
 
 if ($_vars['sslRequired'] || in_array(substr($_SERVER['PHP_SELF'], 1, -4), $sslRequired)) {
 	if (!$_SERVER['HTTPS']) {
