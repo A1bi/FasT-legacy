@@ -13,7 +13,7 @@ if ($_GET['order']) {
 		case "getOrders":
 			if (!$_GET['date']) $_GET['date'] = 1;
 			
-			$result = $_db->query('SELECT o.id FROM orders AS o, orders_tickets AS t WHERE t.date = ? AND o.id = t.order GROUP BY o.id ORDER BY o.lastname, o.firstname ASC', array($_GET['date']));
+			$result = $_db->query('SELECT o.id FROM orders AS o, orders_tickets AS t WHERE t.date = ? AND o.id = t.order GROUP BY o.id', array($_GET['date']));
 			$orders = array();
 			while ($row = $result->fetch()) {
 				$order = OrderManager::getOrderById($row['id']);
