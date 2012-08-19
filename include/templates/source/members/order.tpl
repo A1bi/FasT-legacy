@@ -198,12 +198,14 @@
 				<td>TN</td>
 				<td>Typ</td>
 				<td>Aufführung</td>
+				<td>Eingelöst</td>
 			</tr>
 			{foreach $tickets as $ticket}
 			<tr class="{if $ticket->isCancelled()}cancelled{/if} {if $ticket->getId() == $smarty.get.ticket}highlighted{/if}">
 				<td class="sId">{$ticket->getSid()}</td>
 				<td>{$ticket->getDesc()}</td>
 				<td>{$ticket->getDateString()}</td>
+				<td>{if $ticket->getVoided()}{$ticket->getVoided()|date_format:"%H.%M Uhr"}{else}<em class="small">noch nicht</em>{/if}</td>
 			</tr>
 			{/foreach}
 		</table>
