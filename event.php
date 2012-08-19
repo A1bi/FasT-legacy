@@ -11,7 +11,7 @@ $tStats = new TicketStats;
 $dates = array();
 foreach (OrderManager::getDates() as $key => $date) {
 	$stat = $tStats->getValue($key, -1, -1);
-	$dates[$key] = array("time" => $date, "ticketsLeft" => $stat['number'] < 310);
+	$dates[$key] = array("time" => $date, "ticketsLeft" => $stat['number'] < 300);
 }
 
 $_tpl->assign("dates", $dates);
