@@ -302,7 +302,7 @@ table td {
 	text-decoration: underline;
 	cursor: pointer;
 }
-.stepCon.date ul li.soldOut .string {
+.stepCon.date ul li.disabled .string {
 	text-decoration: line-through !important;
 	cursor: auto;
 	color: #cccccc;
@@ -317,7 +317,7 @@ table td {
 .stepCon.date ul li .id {
 	display: none;
 }
-.stepCon.date ul li.soldOut .msg {
+.stepCon.date ul li.disabled .msg {
 	color: red;
 	padding-left: 15px;
 }

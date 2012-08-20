@@ -222,8 +222,11 @@ var order = new function () {
 			var dateItem = $("<li>")
 				.append($("<span>").addClass("string").html(date.string))
 				.append($("<span>").addClass("id").html(key));
-			if (date.ticketsLeft < 1) {
-				dateItem.addClass("soldOut").append($("<span>").addClass("msg").html("ausverkauft!"));
+			if (date.ticketsLeft < 1 || date.expired) {
+				dateItem.addClass("disabled");
+				if (date.ticketsLeft < 1) {
+					dateItem.append($("<span>").addClass("msg").html("ausverkauft!"));
+				}
 			}
 			list.append(dateItem);
 		});
@@ -243,7 +246,7 @@ var order = new function () {
 	}
 	
 	var choseDate = function () {
-		if ($(this).is(".soldOut")) return;
+		if ($(this).is(".disabled")) return;
 		
 		$(this).parent().find(".selected").removeClass("selected");
 		$(this).addClass("selected");
