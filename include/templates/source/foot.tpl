@@ -6,11 +6,12 @@
 			</div>
 		</div>
 	</div>
-{if !$_config.dev && $_config.as_site && !$smarty.server.HTTPS}
+{if !$_config.dev && $_config.as_site}
+{$baseUrl="http{if $smarty.server.HTTPS}s{/if}://system.albisigns.de{if $smarty.server.HTTPS}:442{/if}/"}
 
 	<script>var as_site = {$_config.as_site};</script>
-	<script src="http://system.albisigns.de/stats.js"></script>
-	<noscript><img src="http://system.albisigns.de/stats{$_config.as_site}.png" alt="" /></noscript>
+	<script src="{$baseUrl}stats.js"></script>
+	<noscript><img src="{$baseUrl}stats{$_config.as_site}.png" alt="" /></noscript>
 
 {/if}
 </body>
