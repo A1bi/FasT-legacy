@@ -56,12 +56,13 @@ class OrderManager {
 		return self::$orders[$id];
 	}
 	
-	static function getCategories() {
+	static function getCategories($withEmpty = false) {
 		global $_db;
 		
 		$result = $_db->query('SELECT * FROM orders_categories ORDER BY name');
 		
-		$cats = array(0 => "");
+		$cats = array();
+		if ($withEmpty) $cats[0] = "";
 		while ($cat = $result->fetch()) {
 			$cats[$cat['id']] = $cat['name'];
 		}

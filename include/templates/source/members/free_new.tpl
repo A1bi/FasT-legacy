@@ -48,7 +48,7 @@
 				</tr>
 				<tr>
 					<td>Kategorie:</td>
-					<td>{html_options name="category" options=OrderManager::getCategories()}</td>
+					<td>{html_options name="category" options=OrderManager::getCategories(true)}</td>
 				</tr>
 				<tr>
 					<td>Notizen:</td>
