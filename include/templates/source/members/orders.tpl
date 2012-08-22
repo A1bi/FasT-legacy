@@ -1,58 +1,67 @@
-{include file="members/head.tpl" title="Ticketbestellungen" cssfiles=["members/orders"] jsfile="members/orders"}
+{include file="members/head.tpl" title="Ticketbestellungen" cssfiles=["members/orders"] jsfile="members/orders" head="members/orders_head.tpl" pageBelongsTo="ordersAll"}
 <div class="hl section">
-	Ticketbestellungen
+	Alle Buchungen
 </div>
 <div class="orders">
 	<div class="box new">
 		<div class="top">
-			<a href="?action=new">Neue Bestellung aufnehmen</a>
+			<a href="/mitglieder/buchungen/neu">Neue Buchung</a>
 		</div>
 	</div>
 	<div class="box search">
-		<div class="top">
-			<form action="?action=search" method="post">
-			Bestellung suchen anhand ON: <input type="tel" name="order" maxlength="6" /> oder TN: <input type="tel" name="ticket" maxlength="6" /> <input type="submit" name="search" value="suchen" />
-			</form>
-		</div>
-	</div>
-	{include file="members/orders_table.tpl" title="Zu überprüfende Bestellungen" aName="waitingForApproval" orders=$ordersCheck important=true}
-	{include file="members/orders_table.tpl" title="Unbezahlte Bestellungen" aName="unpaid" orders=$ordersPay important=true unpaid=true}
-	<div class="box charges{if $charges['number']} important{/if}">
-		<div class="top">
-			Ausstehende Lastschriften
-		</div>
+		<div class="top">Suche</div>
 		<div class="con">
-			{if $charges['number'] < 1}<em class="small">Keine{else}{$charges['number']}{/if} Lastschrift{if $charges['number'] != 1}en{/if}{if $charges['number']} ({$charges['total']} €){/if} ausstehend.{if $charges['number']} <a href="?action=charge">Jetzt einreichen.</a>{else}</em>{/if}
-		</div>
-	</div>
-	<div class="trenner"></div>
-	{include file="members/orders_table.tpl" title="Vergangene Bestellungen" aName="finished" orders=$ordersFinished}
-	<div class="box">
-		<div class="top">
-			Vergangene Einreichungen von Lastschriften
-		</div>
-		<div class="con">
-			{if $oldCharges|@count}
 			<table>
-				<tr class="title">
-					<td>Zeitpunkt</td>
-					<td>Enthaltene Lastschriften</td>
-					<td>Gesamtbetrag</td>
-					<td>Begleitzettel</td>
-				</tr>
-				{foreach $oldCharges as $charge}
 				<tr>
-					<td>{$charge['time']|date_format_x:"%@, %H.%M Uhr"}</td>
-					<td>{$charge['orders']}</td>
-					<td>{$charge['total']} €</td>
-					<td><a href="?action=getChargesSheet&amp;id={$charge['id']}" target="_blank">download</a></td>
+					<td>Name oder Gruppe:</td>
+					<td><input type="text" name="name" /></td>
 				</tr>
-				{/foreach}
+				<tr>
+					<td>Kategorie:</td>
+					<td>{html_checkboxes name="categories" options=OrderManager::getCategories() separator="<br />"}</td>
+				</tr>
 			</table>
-			{else}
-			<em class="small">Es wurden noch keine Lastschriften eingereicht.</em>
-			{/if}
+			<div class="showMore">weitere Suchkriterien</div>
+			<div class="more">
+				<table>
+					<tr>
+						<td>ON:</td>
+						<td><input type="tel" name="on" class="sId" /></td>
+					</tr>
+					<tr>
+						<td>TN:</td>
+						<td><input type="tel" name="tn" class="sId" /></td>
+					</tr>
+					<tr>
+						<td>Datum:</td>
+						<td>
+							{$dates=[]}
+							{foreach OrderManager::getDates() as $date}
+							{$dates[$date@key] = OrderManager::getStringForDate($date)}
+							{/foreach}
+							{html_checkboxes name="dates" options=$dates separator="<br />"}
+						</td>
+					</tr>
+					<tr>
+						<td>Buchungstyp:</td>
+						<td>{html_checkboxes name="types" options=["Online", "Normal", "Freikarten"]}</td>
+					</tr>
+					<tr>
+						<td>Zahlungsmethode:</td>
+						<td>{html_checkboxes name="payMethods" output=["Lastschrift", "Überweisung", "Bar im Voraus", "Bar an der Abendkasse"] values=[1, 2, 3, 4] separator="<br />"}</td>
+					</tr>
+					<tr>
+						<td>Karten eingelöst:</td>
+						<td>{html_checkboxes name="voided" options=["ja", "nein"]}</td>
+					</tr>
+					<tr>
+						<td>Anzahl Karten:</td>
+						<td>{html_options name="comparator" output=["größer", "kleiner", "gleich"] values=[0, 1, 2]} <input type="tel" name="ticketNumber" value="0" /></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
+	{include file="members/orders_results.tpl" title="Alle Buchungen"}
 </div>
 {include file="foot.tpl"}

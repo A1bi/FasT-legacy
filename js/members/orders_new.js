@@ -8,4 +8,9 @@ $(function () {
 		
 		$(".total").html(total);
 	});
+	
+	$("input[name=free]").change(function () {
+		$(".free").slideToggle();
+		$(".nonFree").slideToggle();
+	});
 });

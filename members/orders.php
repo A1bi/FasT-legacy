@@ -3,54 +3,129 @@ include('../include/members.php');
 
 limitAccess(array(2));
 
-function getOrdersByStatus($status, $orderBy = "sId ASC", $operator = "=") {
-	global $_db;
-	
-	$maxEntries = 10;
-	
-	// construct query
-	$cond = ' FROM orders WHERE	type IN (?, ?) AND status '.$operator.' ?';
-	$order = ' ORDER BY	'.$orderBy;
-	$args = array(OrderType::Online, OrderType::Manual, $status);
-	if (!$_GET['showAll']) {
-		$limit .= ' LIMIT 0, '.$maxEntries;
-	
-		// get number of entries
-		$query = 'SELECT COUNT(*) AS number' . $cond;
-		$result = $_db->query($query, $args);
-		$count = $result->fetch();
-	}
 
-	// get entries
-	$query = 'SELECT id' . $cond . $order . $limit;
-	$result = $_db->query($query, $args);
-	
-	$orders = array();
-	while ($id = $result->fetch()) {
-		$orders[] = OrderManager::getOrderById($id['id']);
-	}
-	
-	return array(
-		"more" => count($orders) < $count['number'],
-		"orders" => $orders
-	);
-}
-
-if ($_GET['action'] == "search") {
-	if ($_POST['order']) {
-		$result = $_db->query('SELECT id FROM orders WHERE sId = ?', array($_POST['order']));
-	
-	} else {
-		$result = $_db->query('SELECT o.id, t.id AS tId FROM orders AS o, orders_tickets AS t WHERE t.sId = ? AND o.id = t.order', array($_POST['ticket']));
+function whereIn($column, $values) {
+	for ($i = 0; $i < count($values); $i++) {
+		$in .= "?";
+		if ($i != count($values) - 1) {
+			$in .= ",";
+		}
 		
 	}
 	
-	$order = $result->fetch();
-	if ($order['id']) {
-		redirectTo("bestellung?id=" . $order['id'] . (($_POST['ticket']) ? "&ticket=" . $order['tId'] . "#tickets" : ""));
+	return array(
+		$column . " IN (" . $in . ")",
+		$values
+	);
+}
+
+function whereArray($column, $array) {
+	global $wheres;
+	
+	if (is_array($array)) {
+		$values = array();
+		foreach ($array as $value) {
+			if (intval($value)) {
+				$values[] = $value;
+			}
+		}
+		
+		$wheres[] = whereIn($column, $values);
+	}
+}
+
+if ($_GET['action'] == "search") {
+	$wheres = array();
+	$search = $_GET['search'];
+	
+	if (!empty($search['name'])) {
+		$search['name'] = "%" . $search['name'] . "%";
+		$wheres[] = array(
+			"(o.firstname LIKE ? OR o.lastname LIKE ? OR o.affiliation LIKE ?)",
+			array($search['name'], $search['name'], $search['name'])
+		);
 	}
 	
-	redirectTo("?");
+	if (!empty($search['on'])) {
+		$wheres[] = array(
+			"o.sId = ?",
+			array($search['on'])
+		);
+	}
+	
+	if (!empty($search['tn'])) {
+		$wheres[] = array(
+			"t.sId = ?",
+			array($search['tn'])
+		);
+	}
+	
+	if (!empty($search['status'])) {
+		$wheres[] = array(
+			"o.status = ?",
+			array($search['status'])
+		);
+	}
+	
+	whereArray("o.category", $search['categories']);
+	whereArray("t.date", $search['dates']);
+	whereArray("o.type", $search['types']);
+	whereArray("o.payMethod", $search['payMethods']);
+	
+	if (count($search['voided']) == 1) {
+		if ($search['voided'][0]) {
+			$wheres[] = array(
+				"t.voided = 0",
+				array()
+			);
+		} else {
+			$wheres[] = array(
+				"t.voided > 0",
+				array()
+			);
+		}
+	}
+	
+	if (!empty($search['ticketNumber'])) {
+		$comparator = ($search['comparator'] == 2) ? "=" : (($search['comparator'] == 1) ? "<" : ">");
+		$having = "HAVING COUNT(t.id) " . $comparator . " " . intval($search['ticketNumber']);
+	}
+	
+	
+	$values = array();
+	$i = 0;
+	$number = count($wheres);
+	foreach ($wheres as $expression) {
+		$whereExpression .= $expression[0];
+		foreach ($expression[1] as $value) {
+			$values[] = $value;
+		}
+		$i++;
+		if ($i != $number) {
+			$whereExpression .= " AND ";
+		}
+	}
+	
+	
+	if ($whereExpression) {
+		$whereExpression .= " AND";
+	}
+	$result = $_db->query('SELECT o.id AS id FROM orders AS o, orders_tickets AS t WHERE ' . $whereExpression . ' o.id = t.`order` GROUP BY o.id ' . $having . ' ORDER BY id DESC', $values);
+	while ($row = $result->fetch()) {
+		$_tpl->assign("order", OrderManager::getOrderById($row['id']));
+		$code .= $_tpl->fetch("members/orders_row.tpl");
+		
+	}
+	
+	$response = array(
+		"ok" => true,
+		"page" => 1,
+		"pages" => 10,
+		"results" => $code
+	);
+	
+	echo json_encode($response);
+	
 
 } elseif ($_GET['action'] == "getChargesSheet") {
 	$file = "./media/charges/" . $_GET['id'] . ".pdf";
@@ -181,14 +256,17 @@ if ($_GET['action'] == "search") {
 		
 	} else {
 		if ($_POST['confirm']) {
+			$orderType = ($_POST['free']) ? OrderType::Free : OrderType::Manual;
 		
 			$order = new Order();
-			$order->create(OrderType::Manual);
-			$order->setPayment($_POST['payment']);
+			$order->create($orderType);
+			if ($orderType == OrderType::Manual) {
+				$order->setPayment($_POST['payment']);
+			}
 			$order->setAddress($_POST['address']);
 			$order->setNotes($_POST['notes']);
 				
-			foreach (OrderManager::getTicketTypes(OrderType::Manual) as $type => $price) {
+			foreach (OrderManager::getTicketTypes($orderType) as $type => $price) {
 				for ($i = 0; $i < $_POST['number'][$type]; $i++) {
 					if (!$order->addTicket($type, $_POST['date'])) {
 						break;
@@ -196,43 +274,33 @@ if ($_GET['action'] == "search") {
 				}
 			}
 			
-			if ($order->getTotal() == 0) {
+			if ($orderType == OrderType::Manual && $order->getTotal() == 0) {
 				$_tpl->assign("error", "Bitte wählen Sie mindestens eine Karte aus!");
 			
 			} else {
 				$order->save();
 				
-				if ($_POST['paid']) {
-					$order->markPaid();
+				if ($orderType == OrderType::Manual) {
+					if ($_POST['paid']) {
+						$order->markPaid();
+					}
+					
+					if ($_POST['payment']['method'] == OrderPayMethod::Transfer) {
+						$redirect = "?finished=";
+					} else {
+						$redirect = "/mitglieder/buchungen/";
+					}
 				}
 				
-				if ($_POST['payment']['method'] == OrderPayMethod::Transfer) {
-					$redirect = "?action=new&finished";
-				} else {
-					$redirect = "bestellung?id";
-				}
-				
-				redirectTo($redirect . "=" . $order->getId());
+				redirectTo($redirect . $order->getId());
 			}
 		}
 		
 		$_tpl->display("members/orders_new.tpl");
 	}
+	
 
-
-// nothing chosen -> show overview
-} else {
-	// orders to check
-	$_tpl->assign("ordersCheck", getOrdersByStatus(OrderStatus::WaitingForApproval));
-	
-	
-	// orders to pay
-	$_tpl->assign("ordersPay", getOrdersByStatus(OrderStatus::WaitingForPayment));
-	
-	
-	// finished or closed orders
-	$_tpl->assign("ordersFinished", getOrdersByStatus(OrderStatus::Approved, "id DESC", ">="));
-	
+} elseif ($_GET['action'] == "showOpen") {
 	// charges
 	$result = $_db->query('SELECT COUNT(*) AS number, SUM(total) AS total FROM orders WHERE status = ?', array(OrderStatus::Approved));
 	$_tpl->assign("charges", $result->fetch());
@@ -249,6 +317,10 @@ if ($_GET['action'] == "search") {
 							');
 	$_tpl->assign("oldCharges", $result->fetchAll());
 	
+	$_tpl->display("members/orders_open.tpl");
+
+
+} else {
 	$_tpl->display("members/orders.tpl");
 }
 ?>

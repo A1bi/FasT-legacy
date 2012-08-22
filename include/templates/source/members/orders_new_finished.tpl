@@ -1,7 +1,7 @@
 {include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen"}
 <div class="hl section">Bestellung aufnehmen</div>
 
-<div class="back"><a href="?">Zurück zur Übersicht</a></div>
+<div class="back"><a href="/mitglieder/bestellungen">Zurück zur Übersicht</a></div>
 
 <div class="box">
 	<div class="top">
@@ -37,7 +37,7 @@
 			</tr>
 		</table>
 		<div class="hcen">
-			<a href="bestellung?id={$order->getId()}">Zu den Details dieser Bestellung</a>
+			<a href="/mitglieder/buchungen/{$order->getId()}">Zu den Details dieser Bestellung</a>
 		</div>
 	</div>
 </div>

@@ -120,7 +120,7 @@
 					<td>Kategorie:</td>
 					<td>
 						{if $smarty.get.edit}
-						{html_options name="category" options=OrderManager::getCategories() selected=$cat['id']}
+						{html_options name="category" options=OrderManager::getCategories(true) selected=$cat['id']}
 						{else}
 						{$cat['name']|escape|default:"<em class=\"small\">nicht zugeordnet</em>"}
 						{/if}
