@@ -5,7 +5,7 @@
 <div class="orders">
 	<div class="box new">
 		<div class="top">
-			<a href="?action=new">Neue Bestellung aufnehmen</a>
+			<a href="/mitglieder/buchungen/neu">Neue Buchung</a>
 		</div>
 	</div>
 	{include file="members/orders_results.tpl" title="Zu überprüfende Bestellungen"}

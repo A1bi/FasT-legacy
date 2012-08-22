@@ -256,14 +256,17 @@ if ($_GET['action'] == "search") {
 		
 	} else {
 		if ($_POST['confirm']) {
+			$orderType = ($_POST['free']) ? OrderType::Free : OrderType::Manual;
 		
 			$order = new Order();
-			$order->create(OrderType::Manual);
-			$order->setPayment($_POST['payment']);
+			$order->create($orderType);
+			if ($orderType == OrderType::Manual) {
+				$order->setPayment($_POST['payment']);
+			}
 			$order->setAddress($_POST['address']);
 			$order->setNotes($_POST['notes']);
 				
-			foreach (OrderManager::getTicketTypes(OrderType::Manual) as $type => $price) {
+			foreach (OrderManager::getTicketTypes($orderType) as $type => $price) {
 				for ($i = 0; $i < $_POST['number'][$type]; $i++) {
 					if (!$order->addTicket($type, $_POST['date'])) {
 						break;
@@ -271,23 +274,25 @@ if ($_GET['action'] == "search") {
 				}
 			}
 			
-			if ($order->getTotal() == 0) {
+			if ($orderType == OrderType::Manual && $order->getTotal() == 0) {
 				$_tpl->assign("error", "Bitte wählen Sie mindestens eine Karte aus!");
 			
 			} else {
 				$order->save();
 				
-				if ($_POST['paid']) {
-					$order->markPaid();
+				if ($orderType == OrderType::Manual) {
+					if ($_POST['paid']) {
+						$order->markPaid();
+					}
+					
+					if ($_POST['payment']['method'] == OrderPayMethod::Transfer) {
+						$redirect = "?finished=";
+					} else {
+						$redirect = "/mitglieder/buchungen/";
+					}
 				}
 				
-				if ($_POST['payment']['method'] == OrderPayMethod::Transfer) {
-					$redirect = "?action=new&finished";
-				} else {
-					$redirect = "bestellung?id";
-				}
-				
-				redirectTo($redirect . "=" . $order->getId());
+				redirectTo($redirect . $order->getId());
 			}
 		}
 		

@@ -13,7 +13,7 @@
 	<td>{$order->getTotal()} €</td>
 	{if $unpaid}{$difference={$order->getTime()|time_difference}}<td>seit {$difference} Tag{if $difference != 1}en{/if}</td>{/if}
 	<td class="actions">
-		{if $unpaid}<a href="bestellung?id={$order->getId()}&amp;action=markPaid&amp;goto=orders" class="markPaid"><img src="/gfx/members/unpaid.png" alt="markieren als bezahlt" title="markieren als bezahlt" /></a> &nbsp;{/if}
-		<a href="bestellung?id={$order->getId()}"><img src="/gfx/members/details.png" alt="Details anzeigen" title="Details anzeigen" /></a>
+		{if $unpaid}<a href="buchungen/{$order->getId()}&amp;action=markPaid&amp;goto=orders" class="markPaid"><img src="/gfx/members/unpaid.png" alt="markieren als bezahlt" title="markieren als bezahlt" /></a> &nbsp;{/if}
+		<a href="/mitglieder/buchungen/{$order->getId()}"><img src="/gfx/members/details.png" alt="Details anzeigen" title="Details anzeigen" /></a>
 	</td>
 </tr>
