@@ -14,5 +14,6 @@
 				<td></td>
 			</tr>
 		</table>
+		<div class="pageNav">Seite: <span class="pages"></span></div>
 	</div>
 </div>

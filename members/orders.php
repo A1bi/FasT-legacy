@@ -35,6 +35,8 @@ function whereArray($column, $array) {
 if ($_GET['action'] == "search") {
 	$wheres = array();
 	$search = $_GET['search'];
+	$page = ($_GET['page']) ? intval($_GET['page']) : 1;
+	$limit = 10;
 	
 	if (!empty($search['name'])) {
 		$search['name'] = "%" . $search['name'] . "%";
@@ -94,31 +96,41 @@ if ($_GET['action'] == "search") {
 	$i = 0;
 	$number = count($wheres);
 	foreach ($wheres as $expression) {
-		$whereExpression .= $expression[0];
+		$whereExp .= $expression[0];
 		foreach ($expression[1] as $value) {
 			$values[] = $value;
 		}
 		$i++;
 		if ($i != $number) {
-			$whereExpression .= " AND ";
+			$whereExp .= " AND ";
 		}
 	}
 	
 	
-	if ($whereExpression) {
-		$whereExpression .= " AND";
+	if ($whereExp) {
+		$whereExp .= " AND ";
 	}
-	$result = $_db->query('SELECT o.id AS id FROM orders AS o, orders_tickets AS t WHERE ' . $whereExpression . ' o.id = t.`order` GROUP BY o.id ' . $having . ' ORDER BY id DESC', $values);
+	$whereExp = " WHERE " . $whereExp . " o.id = t.`order` ";
+	$fromExp = " FROM orders AS o, orders_tickets AS t ";
+	$groupExp = "GROUP BY o.id " . $having . " ";
+	$limitExp = " LIMIT " . ($page-1) * $limit . ", " . $limit;
+	$simpleExp = $fromExp . $whereExp . $groupExp;
+	
+	// sums
+	$result = $_db->query('SELECT COUNT(*) AS number FROM (SELECT o.id ' . $simpleExp . ') AS exp', $values);
+	$sum = $result->fetch();
+	$pages = ceil($sum['number'] / 10);
+	
+	$result = $_db->query('SELECT o.id AS id' . $simpleExp . 'ORDER BY id DESC' . $limitExp, $values);
 	while ($row = $result->fetch()) {
 		$_tpl->assign("order", OrderManager::getOrderById($row['id']));
 		$code .= $_tpl->fetch("members/orders_row.tpl");
-		
 	}
 	
 	$response = array(
 		"ok" => true,
-		"page" => 1,
-		"pages" => 10,
+		"page" => $page,
+		"pages" => $pages,
 		"results" => $code
 	);
 	

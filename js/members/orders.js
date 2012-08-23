@@ -3,14 +3,20 @@ var Search = function (s, r) {
 	var searchBox = s;
 	var currentCriteria = {};
 	var currentPage = 1;
+	var currentPages = 0;
 	var timer;
 	var __this = this;
 	
 	this.search = function (page) {
-		if (!page) page = currentPage;
+		if (!page) {
+			page = currentPage;
+		} else {
+			currentPage = page;
+		}
 		
 		$.getJSON("/mitglieder/buchungen", {action: "search", page: page, search: currentCriteria}, function (data) {
 			showResults(data.results);
+			updatePageNav(data.pages);
 		});
 	}
 	
@@ -42,6 +48,30 @@ var Search = function (s, r) {
 		timer = setTimeout(function () {
 			__this.search();
 		}, 500);
+	}
+	
+	var updatePageNav = function (pages) {
+		var pageBox = $(".pages", resultsBox);
+		
+		if (pages != currentPages) {
+			pageBox.empty();
+			for (i = 0; i < pages; i++) {
+				pageBox.append($("<span>").html(i+1).click(changePage));
+				if (i != pages - 1) {
+					pageBox.append(", ");
+				}
+			}
+			currentPages = pages;
+		}
+		
+		$("span", pageBox).removeClass("current").eq(currentPage-1).addClass("current");
+	}
+	
+	var changePage = function () {
+		var page = $(this).html();
+		if (page != currentPage) {
+			__this.search(page);
+		}
 	}
 	
 	this.setCriteria = function (c) {
