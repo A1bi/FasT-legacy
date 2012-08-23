@@ -15,9 +15,21 @@ var Search = function (s, r) {
 		}
 		
 		$.getJSON("/mitglieder/buchungen", {action: "search", page: page, search: currentCriteria}, function (data) {
-			showResults(data.results);
-			updatePageNav(data.pages);
+			if (data.pages) {
+				showResults(data.results);
+				updatePageNav(data.pages);
+				var hide = false;
+			} else {
+				var hide = true;
+			}
+			
+			hideResults(hide);
 		});
+	}
+	
+	var hideResults = function (hide) {
+		resultsBox.find(".rows").toggle(!hide);
+		resultsBox.find(".noRows").toggle(hide);
 	}
 	
 	var showResults = function (results) {
