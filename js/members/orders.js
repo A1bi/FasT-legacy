@@ -3,7 +3,6 @@ var Search = function (s, r) {
 	var searchBox = s;
 	var currentCriteria = {};
 	var currentPage = 1;
-	var currentPages = 0;
 	var timer;
 	var __this = this;
 	
@@ -63,20 +62,29 @@ var Search = function (s, r) {
 	}
 	
 	var updatePageNav = function (pages) {
-		var pageBox = $(".pages", resultsBox);
-		
-		if (pages != currentPages) {
-			pageBox.empty();
-			for (i = 0; i < pages; i++) {
-				pageBox.append($("<span>").html(i+1).click(changePage));
-				if (i != pages - 1) {
+		var pageBox = $(".pages", resultsBox).empty();
+
+		var gap = false;
+		var minDiff = 2;
+		for (i = 0; i < pages; i++) {
+			var page = i + 1;
+			var diff = Math.abs(currentPage - page);
+			if (diff <= minDiff || page == 1 || page == pages) {
+				var span = $("<span>").html(i+1).click(changePage);
+				if (page == currentPage) span.addClass("current");
+				pageBox.append(span);
+				
+				if (page != pages) {
 					pageBox.append(", ");
 				}
+				gap = false;
+				
+			} else if (!gap) {
+				pageBox.append("...");
+				gap = true;
 			}
-			currentPages = pages;
+			
 		}
-		
-		$("span", pageBox).removeClass("current").eq(currentPage-1).addClass("current");
 	}
 	
 	var changePage = function () {
