@@ -7,7 +7,7 @@ RewriteRule ^tickets$ /index.php?page=order_front
 RewriteRule ^tickets/bestellen /order.php
 RewriteRule ^mitglieder/einstellungen /members/settings.php
 RewriteRule ^mitglieder/buchungen/([0-9]+) /members/order.php?id=$1 [QSA]
-RewriteRule ^mitglieder/buchungen/offen /members/orders.php?action=showOpen
+RewriteRule ^mitglieder/buchungen/offen /members/orders.php?action=showOpen [QSA]
 RewriteRule ^mitglieder/buchungen/neu /members/orders.php?action=new [QSA]
 RewriteRule ^mitglieder/buchungen /members/orders.php
 RewriteRule ^mitglieder/statistik /members/stats.php

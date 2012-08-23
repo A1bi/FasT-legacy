@@ -1,7 +1,7 @@
-{include file="members/head.tpl" title="Ticketbestellungen - Bestellung aufnehmen"}
+{include file="members/head.tpl" title="Buchungen - Neue Buchung abgeschlossen"}
 <div class="hl section">Bestellung aufnehmen</div>
 
-<div class="back"><a href="/mitglieder/bestellungen">Zurück zur Übersicht</a></div>
+<div class="back"><a href="/mitglieder/buchungen">Zurück zur Übersicht</a></div>
 
 <div class="box">
 	<div class="top">

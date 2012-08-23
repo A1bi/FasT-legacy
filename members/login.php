@@ -4,7 +4,7 @@ include('../include/members.php');
 function redirectToMembers() {
 	global $_user;
 	
-	redirectTo("/mitglieder" . (($_user['group'] == 2) ? "/bestellungen" : ""));
+	redirectTo("/mitglieder" . (($_user['group'] == 2) ? "/buchungen/offen" : ""));
 }
 
 if ($_user['id']) {

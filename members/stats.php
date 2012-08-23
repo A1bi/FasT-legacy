@@ -72,9 +72,13 @@ if ($_GET['ajax'] && $_GET['action'] == "getStats") {
 			"Bestellungen" => array(OrderType::Online => "Online", OrderType::Manual => "Normal", OrderType::Free => "Freikarten"),
 			"Vorverkaufsstellen" => $retails,
 			"Gesamt" => array("-1,0" => "ohne Freikarten", "-1,1" => "mit Freikarten")
-		),
-		"selected" => OrderType::Retail.",".$_GET['retail']
+		)
 	);
+	if (isset($_GET['retail'])) {
+		$options['selected'] = OrderType::Retail.",".$_GET['retail'];
+	} else {
+		$options['selected'] = "-1,1";
+	}
 	
 	$_tpl->assign("orderTypes", $options);
 	$_tpl->display("members/stats.tpl");

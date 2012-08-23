@@ -1,7 +1,7 @@
 {$payMethods[OrderPayMethod::Transfer]="Überweisung"}
 {$payMethods[OrderPayMethod::CashUpFront]="Bar im Voraus"}
 {$payMethods[OrderPayMethod::CashLater]="Bar an der Abendkasse"}
-{include file="members/head.tpl" title="Ticketbestellungen - Neue Buchung" jsfile="members/orders_new" cssfiles=["members/orders"]}
+{include file="members/head.tpl" title="Buchungen - Neue Buchung" jsfile="members/orders_new" cssfiles=["members/orders"]}
 <div class="hl section">Bestellung aufnehmen</div>
 
 <div class="back"><a href="?">Zurück zur Übersicht</a></div>

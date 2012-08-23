@@ -25,9 +25,7 @@ function whereArray($column, $array) {
 	if (is_array($array)) {
 		$values = array();
 		foreach ($array as $value) {
-			if (intval($value)) {
-				$values[] = $value;
-			}
+			$values[] = intval($value);
 		}
 		
 		$wheres[] = whereIn($column, $values);

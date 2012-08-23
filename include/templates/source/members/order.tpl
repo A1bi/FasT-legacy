@@ -3,16 +3,15 @@
 {$payment=$order->getPayment()}
 {$tickets=$order->getTickets()}
 {$isFree=$order->getType() == OrderType::Free}
-{if $isFree}{$terminus="Reservierung"}{else}{$terminus="Bestellung"}{/if}
-{$statuses[OrderStatus::Placed]="{$terminus} aufgenommen"}
+{$statuses[OrderStatus::Placed]="Buchung aufgenommen"}
 {$statuses[OrderStatus::WaitingForApproval]="Warte auf Freischaltung.."}
 {$statuses[OrderStatus::WaitingForPayment]="Warte auf Zahlung.."}
 {$statuses[OrderStatus::WaitingForPaymentLater]="Warte auf Zahlung an der Abendkasse.."}
 {$statuses[OrderStatus::Approved]="Überprüft, Lastschrift ausstehend.."}
 {$statuses[OrderStatus::Finished]="<span class=\"finished\">Abgeschlossen</span>"}
 {$statuses[OrderStatus::Cancelled]="<span class=\"cancelled\">Storniert</span>"}
-{$events[OrderEvent::Placed]="{$terminus} aufgegeben"}
-{$events[OrderEvent::Approved]="Bestellung als geprüft markiert"}
+{$events[OrderEvent::Placed]="Buchung aufgenommen"}
+{$events[OrderEvent::Approved]="Buchung als geprüft markiert"}
 {$events[OrderEvent::Disapproved]="Überprüfung wieder aufgehoben"}
 {$events[OrderEvent::MarkedAsPaid]="Als bezahlt markiert"}
 {$events[OrderEvent::Charged]="Lastschrift eingereicht"}
@@ -27,9 +26,9 @@
 {$payMethods[OrderPayMethod::Transfer]="Überweisung"}
 {$payMethods[OrderPayMethod::CashUpFront]="Bar im Voraus"}
 {$payMethods[OrderPayMethod::CashLater]="Bar an der Abendkasse"}
-{include file="members/head.tpl" title="{$terminus}sdetails" jsfile="members/orders" cssfiles=["members/order"] pageBelongsTo="{if $isFree}free{else}orders{/if}"}
+{include file="members/head.tpl" title="Buchungsdetails" jsfile="members/orders" cssfiles=["members/order"] pageBelongsTo="{if $isFree}free{else}orders{/if}"}
 
-<div class="hl section">{$terminus}sdetails</div>
+<div class="hl section">Buchungsdetails</div>
 
 <div class="back"><a href="{if $isFree}freikarten{else}bestellungen{/if}">Zurück zur Übersicht</a></div>
 
@@ -40,7 +39,7 @@
 		</div>
 		<div class="con">
 			<div class="type">{$types[$order->getType()]}</div>
-			{if $smarty.get.edit}<form action="?id={$order->getId()}&amp;action=edit" method="post">{/if}
+			{if $smarty.get.edit}<form action="?action=edit" method="post">{/if}
 			<table>
 				<tr>
 					<td class="left">ON:</td>
@@ -150,25 +149,27 @@
 		<div class="con">
 			<ul>
 				{if $isFree}
-				<li><a href="?id={$order->getId()}&amp;action=delete" class="delete">Reservierung löschen</a></li>
+				<li><a href="?action=delete" class="delete">Reservierung löschen</a></li>
 				{else}
 				{if !$order->isCancelled()}
 				{if $order->getStatus() == OrderStatus::WaitingForApproval}
-				<li><a href="?id={$order->getId()}&amp;action=approve">Für Lastschrift freischalten</a></li>
+				<li><a href="?action=approve">Für Lastschrift freischalten</a></li>
 				{/if}
 				{if $order->getStatus() == OrderStatus::WaitingForPayment || $order->getStatus() == OrderStatus::WaitingForPaymentLater}
-				<li><a href="?id={$order->getId()}&amp;action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
+				<li><a href="?action=markPaid" class="markPaid">Als bezahlt markieren</a></li>
 				{if $address['email']}
-				<li><a href="?id={$order->getId()}&amp;action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
+				<li><a href="?action=sendPayReminder" class="sendPayReminder">Zahlungserinnerung senden</a></li>
 				{/if}
 				{/if}
 				{if $order->getStatus() == OrderStatus::Approved}
-				<li><a href="?id={$order->getId()}&amp;action=approve&amp;undo=1">Freischaltung aufheben</a></li>
+				<li><a href="?action=approve&amp;undo=1">Freischaltung aufheben</a></li>
 				{/if}
 				<li><a href="#" id="cancelBtn">Stornieren</a></li>
 				{/if}
 				{/if}
-				<li><a href="?id={$order->getId()}&amp;edit=1">Angaben bearbeiten</a></li>
+				{if !$smarty.get.edit}
+				<li><a href="?edit=1">Angaben bearbeiten</a></li>
+				{/if}
 			</ul>
 		</div>
 	</div>
@@ -177,7 +178,7 @@
 			Bestellung stornieren
 		</div>
 		<div class="con">
-			<form action="?id={$order->getId()}&amp;action=cancel" method="post">
+			<form action="?action=cancel" method="post">
 			Grund:<br />
 			<input type="text" name="reason" />
 			<div class="hcen">
@@ -234,7 +235,7 @@
 			{/foreach}
 		</table>
 		{else}
-		<em>Für diese {$terminus} liegt bisher kein Eintrag im Protokoll vor.</em>
+		<em>Für diese Buchung liegt bisher kein Eintrag im Protokoll vor.</em>
 		{/if}
 	</div>
 </div>

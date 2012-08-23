@@ -1,4 +1,4 @@
-{include file="members/head.tpl" title="Ticketbestellungen" cssfiles=["members/orders"] jsfile="members/orders" head="members/orders_open_head.tpl" pageBelongsTo="ordersOpen"}
+{include file="members/head.tpl" title="Offene Buchungen" cssfiles=["members/orders"] jsfile="members/orders" head="members/orders_open_head.tpl" pageBelongsTo="ordersOpen"}
 <div class="hl section">
 	Offene Buchungen
 </div>

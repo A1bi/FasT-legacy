@@ -58,9 +58,9 @@ if (!empty($_GET['action'])) {
 	}
 	
 	if ($_GET['goto'] == "orders") {
-		redirectTo("bestellungen");
+		redirectTo("buchungen");
 	} else {
-		redirectTo("?id=".$order->getId());
+		redirectTo("?");
 	}
 
 } else {
