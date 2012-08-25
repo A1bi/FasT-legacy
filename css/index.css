@@ -11,7 +11,7 @@
 	background: url(/gfx/theater/montevideo/index_bg.png) no-repeat bottom;
 	
 }
-.teaser, .teaser a, .teaser .hl {
+.teaser .title, .teaser a, .teaser .hl {
 	text-shadow: 1px 1px 6px black;
 	color: white;
 }
@@ -31,4 +31,55 @@
 	left: 29px;
 	font-family: "Qlassik", "Arial";
 	font-size: 28px;
+}
+.teaser .news {
+	position: absolute;
+	bottom: 60px;
+	right: 25px;
+	background: white;
+	padding: 7px 15px;
+	text-align: center;
+	font-size: 18px;
+	background: white;
+	background: rgba(255, 255, 255, .9);
+	box-shadow: 1px 1px 5px black;
+	border-radius: 10px;
+	-moz-animation: spin 1s;
+	-moz-animation-delay: 1s;
+	-moz-animation-fill-mode: both;
+	-webkit-animation: spin 1s;
+	-webkit-animation-delay: 1s;
+	-webkit-animation-fill-mode: both;
+	-o-animation: spin 1s;
+	-o-animation-delay: 1s;
+	-o-animation-fill-mode: both;
+}
+.teaser .news .big {
+	font-size: 26px;
+	margin-top: 5px;
+	font-weight: bold;
+}
+@-moz-keyframes spin {
+	from {
+		-moz-transform: rotate(-720deg) scale(0);
+	}
+	to {
+		-moz-transform: rotate(0deg) scale(1);
+	}
+}
+@-webkit-keyframes spin {
+	from {
+		-webkit-transform: rotate(-720deg) scale(0);
+	}
+	to {
+		-webkit-transform: rotate(0deg) scale(1);
+	}
+}
+@-o-keyframes spin {
+	from {
+		-o-transform: rotate(-720deg) scale(0);
+	}
+	to {
+		-o-transform: rotate(0deg) scale(1);
+	}
 }
