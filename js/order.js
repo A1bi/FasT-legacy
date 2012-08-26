@@ -348,6 +348,8 @@ var order = new function () {
 				
 				$(".stepCon.finish .sId").html(order.sId);
 				showNext();
+				
+				if (piwikTracker) piwikTracker.trackGoal(1, order.total);
 			} else {
 				alert("error: "+data.error);
 			}
