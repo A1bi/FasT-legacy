@@ -83,3 +83,9 @@
 		-o-transform: rotate(0deg) scale(1);
 	}
 }
+.status {
+	text-align: center;
+	margin: 15px;
+	font-weight: bold;
+	font-size: 18px;
+}
