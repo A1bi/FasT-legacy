@@ -8,10 +8,9 @@
 	height: 500px;
 	margin: auto;
 	margin-top: 30px;
-	background: url(/gfx/theater/montevideo/index_bg.png) no-repeat bottom;
-	
+	background: url(/gfx/theater/montevideo/index_bg.png) no-repeat bottom;	
 }
-.teaser .title, .teaser a, .teaser .hl {
+.teaser, .teaser .hl {
 	text-shadow: 1px 1px 6px black;
 	color: white;
 }

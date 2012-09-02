@@ -12,15 +12,8 @@
 			<div class="title">
 				Eine Komödie für die ganze Familie
 			</div>
-			<div class="news">
-				Wegen großer Nachfrage:
-				<div class="big shadow">Zusatzvorstellung</div>
-				am 2. September um 19 Uhr
-			</div>
 			<div class="bottom">
-				<a href="/theater/montevideo">Das Stück</a> |
-				<a href="/termine">Termine</a> |
-				<a href="/tickets">Karten bestellen</a>
+				Vielen Dank an unser tolles Publikum!
 			</div>
 		</div>
 {include file="foot.tpl"}
