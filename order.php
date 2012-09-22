@@ -3,11 +3,16 @@ include('./include/main.php');
 
 $_db = new database;
 loadComponent("orderManager");
+OrderManager::init();
 loadComponent("ticketStats");
+
+$dates = OrderManager::getDates();
+if (array_pop($dates) + 86400 < time()) {
+	$_tpl->display("order_none.tpl");exit;
+}
 
 if ($_GET['ajax']) {
 	$response = array();
-	OrderManager::init();
 	$stats = new TicketStats;
 	
 	switch ($_POST['action']) {
