@@ -54,9 +54,9 @@
 				<li class="spacer"></li>
 				<li><a href="/theater">Theaterstücke</a></li>
 				<li class="spacer"></li>
-				<li><a href="/gallery">Fotogalerie</a></li>
+				<li><a href="/galerie">Fotogalerie</a></li>
 				<li class="spacer"></li>
-				<li><a href="/gbook">Gästebuch</a></li>
+				<li><a href="/gästebuch">Gästebuch</a></li>
 			</ul>
 			<div class="bottom"></div>
 		</div>

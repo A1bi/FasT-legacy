@@ -1,5 +1,5 @@
 {include file="head.tpl" title="Gästebuch - Neuer Eintrag" cssfile="gbook"}
-		<form action="/gbook/new" method="post">
+		<form action="/gästebuch/new" method="post">
 		<input type="hidden" name="codenr" value="{$code}" />
 		<br />
 		<div class="box">

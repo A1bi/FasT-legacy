@@ -15,7 +15,7 @@ if ($_GET['action'] == "new") {
 		} else {
 			$_db->query('INSERT INTO gbook (name, text) VALUES (?, ?)', array($_POST['name'], $_POST['text']));
 			mail("albi@albisigns.de", "Neuer Eintrag FasT", "guck halt nach!");
-			redirectTo("/gbook");
+			redirectTo("/gästebuch");
 		}
 	}
 
@@ -39,7 +39,7 @@ if ($_GET['action'] == "new") {
 		if ($s == $_GET['page']) {
 			$navi .= $s;
 		} else {
-			$navi .= "<a href=\"/gbook/$s\">$s</a>";
+			$navi .= "<a href=\"/gästebuch/$s\">$s</a>";
 		}
 		if ($s != $pages) {
 			$navi .= ", ";

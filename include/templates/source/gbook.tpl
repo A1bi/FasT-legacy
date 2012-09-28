@@ -4,7 +4,7 @@
 		</div>
 		Wir würden uns sehr über einen Eintrag in unserem Gästebuch freuen.
 		<div class="new">
-			<a href="/gbook/new">eintragen</a>
+			<a href="/gästebuch?action=new">eintragen</a>
 		</div>
 		<div class="pages">
 			Seite: {$navi}

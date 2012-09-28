@@ -8,7 +8,7 @@
 				{$gallery.title}
 			</div>
 			<div class="con">
-				<a href="/gallery/{$gallery.id}">
+				<a href="/galerie/{$gallery.id}">
 				{foreach $gallery.pics as $pic}
 					<div class="pic{if $pic@first} first{elseif $pic@last} last{/if}" style="background-image: url(/gfx/cache/gallery/{$gallery.id}/small/{$pic.id}.jpg);"></div>
 				{/foreach}
