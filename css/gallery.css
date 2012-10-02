@@ -20,27 +20,84 @@
 .box .pic.last {
 	border-radius: 0 0 10px 0;
 }
-.nextpic {
+
+
+.picFrame {
+	position: relative;
+	width: 600px;
+	margin: auto;
+	background: black;
+	overflow: auto;
+}
+.picFrame .pic {
+	position: relative;
+	margin: auto;
+}
+.picFrame .directions, .picFrame .directions div {
 	position: absolute;
 	top: 0px;
+	height: 100%;
+}
+.picFrame .directions {
+	width: 100%;
+	cursor: pointer;
+}
+.picFrame .directions > div div {
+	opacity: 0;
+	-moz-transition: opacity .3s;
+}
+.picFrame:hover .directions .space {
+	opacity: .4;
+}
+.picFrame:hover .directions .arrow {
+	opacity: .6;
+}
+.picFrame .directions .space {
+	width: 50px;
+	background: white;
+}
+.picFrame .directions .arrow {
+	width: 40px;
+	height: 95px;
+	top: 100px;
+	background: url(/gfx/gallery/arrows.png);
+}
+.picFrame .next {
+	right: 0px;
+	width: 60%;
+}
+.picFrame .next .space {
 	right: 0px;
 }
-.prevpic {
-	position: absolute;
-	top: 0px;
+.picFrame .next .arrow {
+	background-position: 40px 0px;
+	right: 3px;
+}
+.picFrame .prev {
 	left: 0px;
+	width: 40%;
 }
-.fullpic {
+.picFrame .prev .arrow {
+	left: 3px;
+}
+.picFrame .bar {
+	position: absolute;
+	bottom: 0px;
+	background: rgba(0, 0, 0, .6);
+	color: white;
+	font-size: 13px;
+	width: 100%;
+	border-top: 1px solid black;
+}
+.picFrame .bar .number {
+	padding: 7px;
+	color: #cccccc;
+	float: left;
+}
+.picFrame .bar .desc {
+
+}
+.info div {
+	margin-top: 10px;
 	text-align: center;
-	font-size: 14px;
-	min-height: 400px;
-}
-.picnavi {
-	border: 1px #cccccc solid;
-	width: 300px;
-	margin: auto;
-	margin-top: 50px;
-	padding: 3px;
-	font-size: 16px;
-	border-radius: 15px;
 }

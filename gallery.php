@@ -5,36 +5,13 @@ $_db = new database;
 if (!empty($_GET['id'])) {
 	if (!$_GET['pic']) $_GET['pic'] = 1;
 
-	$result = $_db->query('SELECT title, copyright FROM gallery WHERE id = ?', array($_GET['id']));
+	$result = $_db->query('SELECT id, title, copyright FROM gallery WHERE id = ?', array($_GET['id']));
 	$gallery = $result->fetch();
 
-	$result = $_db->query('SELECT COUNT(*) as count FROM gallery_pics WHERE gallery = ?', array($_GET['id']));
-	$pics = $result->fetch();
-	$pics = $pics['count'];
+	$result = $_db->query('SELECT id, text FROM gallery_pics WHERE gallery = ? ORDER BY pos ASC', array($_GET['id']));
+	$pics = $result->fetchAll();
 
-	$result = $_db->query('SELECT * FROM gallery_pics WHERE gallery = ? ORDER BY pos ASC LIMIT '.(intval($_GET['pic'])-1).', 1', array($_GET['id']));
-	$pic = $result->fetch();
-
-	$s = 1;
-	while ($s <= $pics) {
-		if ($s == $_GET['pic']) {
-			$navi .= $s;
-		} elseif ($s > $_GET['pic']+2 && $s < $pics) {
-			$navi .= " ... ";
-			$s = $pics-1;
-		} elseif ($s > 1 && $s < $_GET['pic']-2) {
-			$navi .= " ... ";
-			$s = $_GET['pic']-3;
-		} else {
-			$navi .= '<a href="/gallery/'.$pic['gallery'].'/'.$s.'#pic">'.$s.'</a>';
-		}
-		if ($s != $pics) {
-			$navi .= ", ";
-		}
-		$s++;
-	}
-
-	$_tpl->assign(array("pic" => $pic, "gallery" => $gallery, "pics" => $pics, "navi" => $navi));
+	$_tpl->assign(array("pics" => $pics, "gallery" => $gallery));
 	$_tpl->display("gallery_show.tpl");
 
 } else {

@@ -1,6 +1,6 @@
 <?php
 class resize {
-	var $sizes=array("small" => array("h", 145), "slide" => array("w", 550), "medium" => array("w", 500));
+	var $sizes=array("small" => array("h", 145), "slide" => array("w", 550), "medium" => array("w", 600));
 	function resizepic($pic,$dir,$size) {
 		global $_base;
 		$format=array("", "gif", "jpeg", "png");
