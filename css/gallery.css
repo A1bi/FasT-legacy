@@ -32,6 +32,10 @@
 .picFrame .pic {
 	position: relative;
 	margin: auto;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	-ms-user-select: none;
 }
 .picFrame .directions, .picFrame .directions div {
 	position: absolute;

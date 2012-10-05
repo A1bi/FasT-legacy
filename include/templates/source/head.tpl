@@ -58,7 +58,6 @@
 				<li class="spacer"></li>
 				<li><a href="/gästebuch">Gästebuch</a></li>
 			</ul>
-			<div class="bottom"></div>
 		</div>
 	</div>
 	<div id="right">

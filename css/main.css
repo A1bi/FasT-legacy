@@ -112,9 +112,8 @@ h3 {
 }
 #navi ul {
 	position: relative;
-	left: 37px;
 	list-style: none;
-	margin: 0px;
+	margin: 0px 0px 0px 37px;
 	padding: 0px;
 	font-family: "Qlassik", "Arial";
 }
@@ -144,19 +143,19 @@ h3 {
 	);
 	padding: 0px;
 	height: 2px;
-	width: 55%;
+	width: 60%;
 }
 #navi ul li:nth-of-type(2) {
-	width: 70%;
+	width: 75%;
 }
 #navi ul li:nth-of-type(4) {
-	width: 67%;
+	width: 72%;
 }
 #navi ul li:nth-of-type(6) {
-	width: 63%;
+	width: 68%;
 }
 #navi ul li:nth-of-type(8) {
-	width: 59%;
+	width: 64%;
 }
 
 /* content space */
