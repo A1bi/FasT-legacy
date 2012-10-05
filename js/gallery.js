@@ -3,6 +3,7 @@ function Gallery(g) {
 	var gallery = g;
 	var pics = [];
 	var cur = -1;
+	var path = "/gfx/cache/gallery/" + gallery + "/medium/";
 	
 	this.addPics = function (p) {
 		$.extend(pics, p);
@@ -11,8 +12,12 @@ function Gallery(g) {
 	var updatePic = function () {
 		var curPic = pics[cur];
 		
-		$(".pic img").attr("src", "/gfx/cache/gallery/" + gallery + "/medium/" + curPic.id + ".jpg").load(function () {
+		$(".pic img").attr("src", path + curPic.id + ".jpg").load(function () {
 			$(this).parent().css({width: $(this).width()});
+			
+			var nextPic = pics[getIndex(1)];
+			var preload = new Image();
+			preload.src = path + nextPic.id + ".jpg";
 		});
 		
 		var numbers = $(".bar .number span");
@@ -22,20 +27,30 @@ function Gallery(g) {
 		$(".bar .desc").html(curPic.text);
 	}
 	
-	var goNext = function () {
-		if (++cur >= pics.length) {
-			cur = 0;
+	var getIndex = function (direction) {
+		var tmp = cur + direction;
+		
+		if (tmp < 0) {
+			tmp = pics.length - 1;
+		} else if (tmp >= pics.length) {
+			tmp = 0;
 		}
+		
+		return tmp;
+	}
+	
+	var go = function (direction) {
+		cur = getIndex(direction);
 		
 		updatePic();
 	}
 	
+	var goNext = function () {
+		go(1);
+	}
+	
 	var goPrev = function () {
-		if (--cur < 0) {
-			cur = pics.length - 1;
-		}
-		
-		updatePic();
+		go(-1);
 	}
 	
 	var registerEvents = function () {
