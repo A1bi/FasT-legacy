@@ -3,6 +3,8 @@ include('../include/members.php');
 
 limitAccess(array(2));
 
+set_time_limit(0);
+
 switch ($_GET['action']) {
 	
 	case "gallerySize":
