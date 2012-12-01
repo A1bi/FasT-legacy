@@ -1,0 +1,109 @@
+/* adjust content space for microsite */
+#content > .top {
+	background: url(/gfx/theater/krippenweihnacht/content_top.png) no-repeat;
+	height: 229px;
+}
+#content > .content {
+	background: url(/gfx/theater/krippenweihnacht/content_bg.png) repeat-y;
+	padding: 1px 65px;
+	height: 459px;
+	min-height: 0px;
+}
+#content > .bottom {
+	background: url(/gfx/theater/krippenweihnacht/content_bottom.png) no-repeat;
+	height: 0px;
+	padding-top: 135px;
+}
+.prices {
+	margin: 15px;
+}
+.stores ul {
+	margin: 15px;
+}
+.hl {
+	font-size: 30px;
+}
+
+.chooser {
+	overflow: auto;
+	width: 80%;
+	margin: auto;
+	border-radius: 10px;
+	box-shadow: 0px 0px 4px #cccccc;
+	background: #004e95;
+}
+.chooser .item {
+	float: left;
+	width: 25%;
+	text-align: center;
+	padding: 5px 0px;
+	color: #ffffff;
+	cursor: pointer;
+}
+.chooser .item.chosen {
+	font-weight: bold;
+	background: #01335d;
+	background: -moz-linear-gradient(bottom, #01335d, #0061bb);
+	background: -webkit-linear-gradient(bottom, #01335d, #0061bb);
+	background: -o-linear-gradient(bottom, #01335d, #0061bb);
+	background: -ms-linear-gradient(bottom, #01335d, #0061bb);
+}
+.infos {
+	position: relative;
+	margin-top: 20px;
+}
+.info {
+	position: absolute;
+	width: 100%;
+	top: 0px;
+	opacity: 0;
+	-moz-transition: opacity .3s;
+	-webkit-transition: opacity .3s;
+	-o-transition: opacity .3s;
+	-ms-transition: opacity .3s;
+}
+.info.shown {
+	opacity: 1;
+}
+
+.info.dates .date {
+	text-align: center;
+	font-size: 20px;
+	text-shadow: 0px 0px 5px #cccccc;
+	color: #004e95;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+.info.dates .date b {
+	color: #01335d;
+}
+.info.dates .stores {
+	margin-bottom: 25px;
+}
+.info.dates .stores span {
+	color: #cccccc;
+	padding: 0px 3px;
+}
+.info.timetable table, .info.catering table {
+	width: 80%;
+	margin: 15px auto;
+	border: 1px solid #004e95;
+	border-radius: 10px;
+}
+.info.timetable td:first-child, .info.catering td:first-child {
+	width: 20%;
+	vertical-align: top;
+	font-weight: bold;
+	color: #004e95;
+}
+.info.timetable td, .info.catering td {
+	padding: 7px 5px;
+	border-bottom: 1px solid #cccccc;
+	border-spacing: 0px;
+}
+.info.timetable tr:last-child td, .info.catering tr:last-child td {
+	border-bottom: none;
+}
+.info.catering td:first-child {
+	width: 40%;
+}

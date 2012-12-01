@@ -1,4 +1,4 @@
-{include file="head.tpl" cssfiles=["index"]}
+{include file="head.tpl" cssfiles=["index"] jsfiles=[["index", 0]]}
 		<div class="hl">
 			Herzlich willkommen!
 		</div>
@@ -6,14 +6,14 @@
 			Die Freilichtbühne am schiefen Turm heißt Sie herzlich willkommen auf unserer Homepage!
 		</div>
 		<div class="teaser" title="Das Haus in Montevideo">
-			<div class="hl">
-				Sommernachtstheater 2012
-			</div>
-			<div class="title">
-				Eine Komödie für die ganze Familie
-			</div>
 			<div class="bottom">
-				Vielen Dank an unser tolles Publikum!
+				<a href="/termine">Alle Infos hier!</a>
+			</div>
+		</div>
+		<div class="ad">
+			<span class="disclaimer">Mit freundlicher Unterstützung von:</span>
+			<div>
+				<a href="http://www.lotto-rlp.de" target="_blank"><img src="/gfx/misc/ad-lotto.png" alt="" /></a>
 			</div>
 		</div>
 {include file="foot.tpl"}

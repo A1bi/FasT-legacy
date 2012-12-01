@@ -5,86 +5,36 @@
 .teaser {
 	position: relative;
 	width: 610px;
-	height: 500px;
-	margin: auto;
-	margin-top: 30px;
-	background: url(/gfx/theater/montevideo/index_bg.png) no-repeat bottom;	
-}
-.teaser, .teaser .hl {
-	text-shadow: 1px 1px 6px black;
-	color: white;
-}
-.teaser .hl {
-	padding-top: 20px;
-}
-.teaser .title {
-	position: absolute;
-	top: 95px;
-	left: 420px;
-	font-size: 20px;
-	width: 170px;
+	height: 230px;
+	margin: 60px auto;
+	background: url(/gfx/theater/krippenweihnacht/index_bg.png) no-repeat bottom;	
 }
 .teaser .bottom {
 	position: absolute;
-	bottom: 10px;
-	left: 29px;
+	bottom: 15px;
+	left: 20px;
 	font-family: "Qlassik", "Arial";
 	font-size: 28px;
 }
-.teaser .news {
+.teaser a {
+	color: #0061bb;
+}
+.ad {
+	position: relative;
+	margin-top: 30px;
+	text-align: center;
+}
+.ad .disclaimer {
+	color: #cccccc;
+	font-size: 12px;
+	padding: 0px 5px;
+}
+.ad .line {
 	position: absolute;
-	bottom: 60px;
-	right: 25px;
-	background: white;
-	padding: 7px 15px;
-	text-align: center;
-	font-size: 18px;
-	background: white;
-	background: rgba(255, 255, 255, .9);
-	box-shadow: 1px 1px 5px black;
-	border-radius: 10px;
-	-moz-animation: spin 1s;
-	-moz-animation-delay: 1s;
-	-moz-animation-fill-mode: both;
-	-webkit-animation: spin 1s;
-	-webkit-animation-delay: 1s;
-	-webkit-animation-fill-mode: both;
-	-o-animation: spin 1s;
-	-o-animation-delay: 1s;
-	-o-animation-fill-mode: both;
+	height: 1px;
+	background: #cccccc;
+	top: 0px;
 }
-.teaser .news .big {
-	font-size: 26px;
-	margin-top: 5px;
-	font-weight: bold;
-}
-@-moz-keyframes spin {
-	from {
-		-moz-transform: rotate(-720deg) scale(0);
-	}
-	to {
-		-moz-transform: rotate(0deg) scale(1);
-	}
-}
-@-webkit-keyframes spin {
-	from {
-		-webkit-transform: rotate(-720deg) scale(0);
-	}
-	to {
-		-webkit-transform: rotate(0deg) scale(1);
-	}
-}
-@-o-keyframes spin {
-	from {
-		-o-transform: rotate(-720deg) scale(0);
-	}
-	to {
-		-o-transform: rotate(0deg) scale(1);
-	}
-}
-.status {
-	text-align: center;
-	margin: 15px;
-	font-weight: bold;
-	font-size: 18px;
+.ad div {
+	margin-top: 10px;
 }
