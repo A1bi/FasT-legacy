@@ -1,8 +1,8 @@
 {include file="head.tpl" cssfile="montevideo" jsfiles=[["montevideo", 0]] title="Das Haus in Montevideo - eine Komödie von Curt Goetz"}
 	<div class="info">
-		Die „Freilichtbühne am schiefen Turm“ präsentiert im Jahr 2012 den immer jungen Lacherfolg:
+		Die „Freilichtbühne am schiefen Turm“ präsentierte im Jahr 2012 den immer jungen Lacherfolg:
 		<br />„<em>Das Haus in Montevideo</em>“ von Curt Goetz.
-		<p>Nach der hochdramatischen „<a href="/theater/hexenjagd">Hexenjagd</a>“ im vergangenen Jahr erleben Sie dieses Jahr einen besonderen Theaterklassiker für die ganze Familie, natürlich wieder unter der bewährten Regie von Helmut Mattern.</p>
+		<p>Nach der hochdramatischen „<a href="/theater/hexenjagd">Hexenjagd</a>“ im vorherigen Jahr erlebten die Zuschauer in diesem Jahr einen besonderen Theaterklassiker für die ganze Familie, natürlich wieder unter der bewährten Regie von Helmut Mattern.</p>
 		<p>Besuchen Sie unsere wundervolle Freilichtbühne und folgen Sie uns in die fünfziger Jahre.
 		<br />Auf nach Montevideo!</p>
 	</div>
@@ -210,7 +210,5 @@
 				</div>
 			</div>
 		</div>
-		<h2>Termine und Kartenvorverkauf</h2>
-		<p>Jetzt <a href="/termine">Termine</a> anschauen und Ihre Karten schnell und bequem online bestellen.</p>
 	</div>
 {include file="foot.tpl"}
